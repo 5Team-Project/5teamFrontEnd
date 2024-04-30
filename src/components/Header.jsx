@@ -1,14 +1,33 @@
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import IconTextLogo from '../assets/images/IconTextLogo.svg';
+import { useLocation } from 'react-router-dom';
 
 const Header = () => {
+  const [showButton, setShowButton] = useState(false);
+  const location = useLocation();
+
+  useEffect(() => {
+    const currentPath = location.pathname;
+
+    if (currentPath === '/' || currentPath === '/list') {
+      setShowButton(true);
+    } else {
+      setShowButton(false);
+    }
+  }, [location]);
+
   return (
     <HeaderWrapper>
       <HeaderBox>
         <Logo href="/">
           <img src={IconTextLogo} alt="롤링로고" />
         </Logo>
-        <ButtonMakeNewPaper>롤링 페이퍼 만들기</ButtonMakeNewPaper>
+        <ButtonWrapper>
+          {showButton && (
+            <ButtonMakeNewPaper>롤링 페이퍼 만들기</ButtonMakeNewPaper>
+          )}
+        </ButtonWrapper>
       </HeaderBox>
     </HeaderWrapper>
   );
@@ -35,6 +54,10 @@ const Logo = styled.a`
   height: 30px;
 `;
 
+const ButtonWrapper = styled.div`
+  width: 157px;
+  height: 40px;
+`;
 const ButtonMakeNewPaper = styled.button`
   width: 157px;
   height: 40px;
