@@ -7,7 +7,6 @@ import ListPopular from '../components/ListPopular';
 import ListRecent from '../components/ListRecent';
 
 import dummyData from '../dummyData.json';
-import ListCard from '../components/ListCard';
 import Header from '../components/Header';
 
 const ListPage = () => {
@@ -34,7 +33,6 @@ const ListPage = () => {
 };
 
 const ListMainContainer = styled.main`
-  /* background-color: ${(props) => props.theme.colors.PURPLE}; */
   width: 1200px;
   margin: 0 auto;
 `;
@@ -48,6 +46,7 @@ const ListContent = styled.article`
 `;
 
 const ToPostPageDiv = styled.div`
+  margin-top: 50px;
   display: flex;
   align-items: center;
   justify-content: center;
