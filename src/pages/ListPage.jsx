@@ -8,6 +8,7 @@ import ListRecent from '../components/ListRecent';
 
 import dummyData from '../dummyData.json';
 import ListCard from '../components/ListCard';
+import Header from '../components/Header';
 
 const ListPage = () => {
   const [listData, setListData] = useState([]);
@@ -20,7 +21,7 @@ const ListPage = () => {
 
   return (
     <ListMainContainer>
-      <header></header>
+      <Header />
       <ListContent>
         <ListPopular listData={listData} />
         <ListRecent listData={listData} />

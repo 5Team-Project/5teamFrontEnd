@@ -41,7 +41,7 @@ const HeaderWrapper = styled.header`
 
 const HeaderBox = styled.div`
   max-width: 1207px;
-  width: 100%
+  width: 100%;
   height: 64px;
   padding: 11px 0;
   margin: 0 auto;
