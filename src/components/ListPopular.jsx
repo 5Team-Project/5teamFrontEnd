@@ -71,8 +71,8 @@ const ListPopularMain = styled.div`
 
 const ListBtnLeft = styled.button`
   position: absolute;
-  left: 0;
-  top: 140px;
+  left: -20px;
+  top: 150px;
 
   border: 1px solid #dadcdf;
   border-radius: 64px;
@@ -91,8 +91,8 @@ const ListBtnLeft = styled.button`
 
 const ListBtnRight = styled.button`
   position: absolute;
-  right: 0;
-  top: 100px;
+  right: -20px;
+  top: 150px;
 
   border: 1px solid #dadcdf;
   border-radius: 64px;
