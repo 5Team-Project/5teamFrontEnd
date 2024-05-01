@@ -24,7 +24,7 @@ const ListCard = ({ data }) => {
       default:
         setBgColor(theme.colors.ORANGE);
     }
-  }, []);
+  }, [data.backgroundColor]);
 
   if (!bgColor) return;
 

@@ -12,7 +12,7 @@ const ListRecent = ({ listData }) => {
 
     setSortData(
       [...listData].sort(function (a, b) {
-        return Date(b.createAt) - Date(b.createAt);
+        return new Date(b.createAt) - new Date(a.createAt);
       }),
     );
   }, [listData]);
