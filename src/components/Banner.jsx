@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { Theme } from '../styles/Theme';
 import BannerImageExampleCards from '../assets/images/BannerImageExampleCards.svg';
 import BannerImageExampleEmojis from '../assets/images/BannerImageExampleEmojis.png';
+import { Link } from 'react-router-dom';
 
 const Banner = () => {
   return (
@@ -38,7 +39,9 @@ const Banner = () => {
         </BannerWrapper>
       </ContentWrapper>
       <ButtonWrapper>
-        <ButtonToLink>구경해보기</ButtonToLink>
+        <ButtonToLink>
+          <Link to={'/list'}>구경해보기</Link>
+        </ButtonToLink>
       </ButtonWrapper>
     </ContentContainer>
   );
@@ -138,5 +141,10 @@ const ButtonToLink = styled.button`
   height: 56px;
   border-radius: 12px;
   background-color: ${({ theme }) => theme.colors.PURPLE};
+
+  & a {
+    text-decoration: none;
+    color: #000;
+  }
 `;
 export default Banner;

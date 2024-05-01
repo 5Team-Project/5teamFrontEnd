@@ -4,6 +4,7 @@ import GlobalStyle from './styles/GlobalStyle';
 import { ThemeProvider } from 'styled-components';
 import TestComponents from './components/TestComponents';
 import LandingPage from './pages/landingPage/LandingPage';
+import ListPage from './pages/ListPage';
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<LandingPage />} />
+          <Route path="/list" element={<ListPage/>}/>
         </Routes>
       </BrowserRouter>
     </ThemeProvider>
