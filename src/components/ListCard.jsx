@@ -3,9 +3,15 @@ import { Link } from 'react-router-dom';
 import styled, { ThemeContext } from 'styled-components';
 
 const ListCard = ({ data }) => {
+  const [isBgImg, setIsBgImg] = useState();
+
   const [bgColor, setBgColor] = useState('');
 
   const theme = useContext(ThemeContext);
+
+  useEffect(() => {
+    setIsBgImg(!!data.backgroundImageURL);
+  }, [data.backgroundImageURL]);
 
   useEffect(() => {
     switch (data.backgroundColor) {
@@ -29,7 +35,14 @@ const ListCard = ({ data }) => {
   if (!bgColor) return;
 
   return (
-    <ListCardWrap to={`/post${data.id}`} style={{ backgroundColor: bgColor }}>
+    <ListCardWrap
+      to={`/post${data.id}`}
+      style={
+        isBgImg
+          ? { backgroundImage: `url(${data.backgroundImageURL})` }
+          : { backgroundColor: bgColor }
+      }
+    >
       <ListCardMain>
         <ListCardName>To. {data.name}</ListCardName>
         <ListCardSenders>이미지</ListCardSenders>
@@ -62,6 +75,10 @@ const ListCardWrap = styled(Link)`
 
   text-decoration: none;
   color: #000;
+
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
 `;
 
 const ListCardMain = styled.div`

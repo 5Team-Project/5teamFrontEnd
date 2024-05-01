@@ -1,17 +1,20 @@
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
+
+import Header from '../components/Header';
+
 import ListPopular from '../components/ListPopular';
 import ListRecent from '../components/ListRecent';
 import ListData from '../dummyListData.json';
-import Header from '../components/Header';
 
 const ListPage = () => {
   const [listData, setListData] = useState([]);
+  const [listIdData, setListIdData] = useState([]);
 
   useEffect(() => {
     setListData(ListData);
-  }, []);
+  }, [ListData]);
 
   if (!listData[0]) return;
 
