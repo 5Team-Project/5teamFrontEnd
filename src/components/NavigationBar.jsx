@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { Theme } from '../styles/Theme';
 import WriterCount from './WriterCount';
+import ReactionCount from './ReactionCount';
 
 const NavigationBar = () => {
   return (
@@ -10,7 +11,7 @@ const NavigationBar = () => {
         <PostStats>
           <WriterCount />
           <Divider />
-          <ReactionCount>like eyesHeart grenade</ReactionCount>
+          <ReactionCount />
           <Divider />
           <Actions>
             <ActionButtons>add</ActionButtons>
@@ -56,15 +57,11 @@ const Divider = styled.div`
   background-color: ${({ theme }) => theme.colors.GRAY};
 `;
 
-const ReactionCount = styled.div`
-  height: 36px;
-`;
-
 const Actions = styled.div`
   height: 36px;
   display: flex;
   justify-content: space-between;
-  gap: 8px;
+  gap: 14px;
 `;
 
 const ActionButtons = styled.button`
