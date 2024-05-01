@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { Theme } from '../styles/Theme';
 import WriterCount from './WriterCount';
 import ReactionCount from './ReactionCount';
+import Actions from './Actions';
 
 const NavigationBar = () => {
   return (
@@ -13,11 +14,7 @@ const NavigationBar = () => {
           <Divider />
           <ReactionCount />
           <Divider />
-          <Actions>
-            <ActionButtons>add</ActionButtons>
-            <ActionButtons>share</ActionButtons>
-            <ActionButtons>edit</ActionButtons>
-          </Actions>
+          <Actions />
         </PostStats>
       </NavBox>
     </NavWrapper>
@@ -32,7 +29,7 @@ const NavWrapper = styled.nav`
 
 const NavBox = styled.div`
   max-width: 1207px;
-  width: 100%
+  width: 100%;
   height: 64px;
   padding: 11px 0;
   margin: 0 auto;
@@ -55,25 +52,6 @@ const Divider = styled.div`
   width: 1px;
   height: 90%;
   background-color: ${({ theme }) => theme.colors.GRAY};
-`;
-
-const Actions = styled.div`
-  height: 36px;
-  display: flex;
-  justify-content: space-between;
-  gap: 14px;
-`;
-
-const ActionButtons = styled.button`
-  height: 36px;
-  padding: 8px;
-  border-radius: 6px;
-  border: 1px solid ${({ theme }) => theme.colors.GRAY};
-
-  font-size: 16px;
-  line-height: 20px;
-  letter-spacing: -0.01em;
-  text-align: center;
 `;
 
 export default NavigationBar;
