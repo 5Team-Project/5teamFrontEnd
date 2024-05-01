@@ -6,9 +6,19 @@ import ListCard from './ListCard';
 import { useEffect, useState } from 'react';
 
 const ListPopular = ({ listData }) => {
+  const [sortData, setSortData] = useState([]);
+
+  useEffect(() => {
+    if (!listData) return;
+
+    setSortData(
+      [...listData].sort(function (a, b) {
+        return b.messageCount - a.messageCount;
+      }),
+    );
+  }, [listData]);
+
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [isNext, setIsNext] = useState(true);
-  const [isPrev, setIsPrev] = useState(true);
 
   const handlePrev = () => {
     const newIndex =
@@ -25,7 +35,7 @@ const ListPopular = ({ listData }) => {
     <ListPopularWrap>
       <ListPopularSpan>인기 롤링 페이퍼 🔥</ListPopularSpan>
 
-      <ListBtnLeft onClick={handlePrev} disabled={!isPrev}>
+      <ListBtnLeft onClick={handlePrev}>
         <img src={arrowLeft} alt="왼쪽 화살표" />
       </ListBtnLeft>
       <ListCarousel>
@@ -34,12 +44,12 @@ const ListPopular = ({ listData }) => {
             transform: `translateX(-${currentIndex * 295}px)`,
           }}
         >
-          {listData.map((data) => (
+          {sortData.map((data) => (
             <ListCard key={data.id} data={data} />
           ))}
         </ListPopularMain>
       </ListCarousel>
-      <ListBtnRight onClick={handleNext} disabled={!isNext}>
+      <ListBtnRight onClick={handleNext}>
         <img src={arrowRight} alt="오른쪽 화살표" />
       </ListBtnRight>
     </ListPopularWrap>
@@ -78,7 +88,7 @@ const ListPopularMain = styled.div`
 
 const ListBtnLeft = styled.button`
   position: absolute;
-  left: -20px;
+  left: -10px;
   top: 150px;
 
   border: 1px solid #dadcdf;
@@ -102,7 +112,7 @@ const ListBtnLeft = styled.button`
 
 const ListBtnRight = styled.button`
   position: absolute;
-  right: -20px;
+  right: -10px;
   top: 150px;
 
   border: 1px solid #dadcdf;

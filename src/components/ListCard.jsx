@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import styled, { ThemeContext } from 'styled-components';
 
 const ListCard = ({ data }) => {
@@ -28,12 +29,13 @@ const ListCard = ({ data }) => {
   if (!bgColor) return;
 
   return (
-    <ListCardWrap style={{ backgroundColor: bgColor }}>
+    <ListCardWrap to={`/post${data.id}`} style={{ backgroundColor: bgColor }}>
       <ListCardMain>
         <ListCardName>To. {data.name}</ListCardName>
         <ListCardSenders>이미지</ListCardSenders>
         <ListCardMsgCount>{data.messageCount}명이 작성했어요</ListCardMsgCount>
       </ListCardMain>
+
       <ListCardEmojiWrap>
         <ListCardEmoji>👍10</ListCardEmoji>
         <ListCardEmoji>✌️2</ListCardEmoji>
@@ -45,10 +47,11 @@ const ListCard = ({ data }) => {
 
 export default ListCard;
 
-const ListCardWrap = styled.div`
+const ListCardWrap = styled(Link)`
   display: flex;
   flex-direction: column;
 
+  text-align: start;
   width: 275px;
   height: 260px;
 
@@ -56,11 +59,15 @@ const ListCardWrap = styled.div`
   border: 1px solid #0000001a;
 
   padding: 30px 24px 20px;
+
+  text-decoration: none;
+  color: #000;
 `;
 
 const ListCardMain = styled.div`
   display: flex;
   flex-direction: column;
+
   gap: 12px;
   flex-grow: 3;
 `;
