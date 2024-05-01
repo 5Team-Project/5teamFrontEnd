@@ -13,7 +13,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<LandingPage />} />
-          <Route path="/list" element={<ListPage/>}/>
+          <Route path="/list" element={<ListPage />} />
         </Routes>
       </BrowserRouter>
     </ThemeProvider>
