@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { Theme } from '../styles/Theme';
+import WriterCount from './WriterCount';
 
 const NavigationBar = () => {
   return (
@@ -7,7 +8,7 @@ const NavigationBar = () => {
       <NavBox>
         <Title>To. AnitaMaxWynn</Title>
         <PostStats>
-          <WriterCount>written!</WriterCount>
+          <WriterCount />
           <Divider />
           <ReactionCount>like eyesHeart grenade</ReactionCount>
           <Divider />
@@ -53,10 +54,6 @@ const Divider = styled.div`
   width: 1px;
   height: 90%;
   background-color: ${({ theme }) => theme.colors.GRAY};
-`;
-
-const WriterCount = styled.div`
-  height: 28px;
 `;
 
 const ReactionCount = styled.div`
