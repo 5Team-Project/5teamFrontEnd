@@ -6,14 +6,14 @@ import styled from 'styled-components';
 import ListPopular from '../components/ListPopular';
 import ListRecent from '../components/ListRecent';
 
-import dummyData from '../dummyData.json';
+import ListData from '../dummyListData.json';
 import Header from '../components/Header';
 
 const ListPage = () => {
   const [listData, setListData] = useState([]);
 
   useEffect(() => {
-    setListData(dummyData);
+    setListData(ListData);
   }, []);
 
   if (!listData[0]) return;

@@ -1,0 +1,200 @@
+[
+  {
+    "id": 1,
+    "name": "정민재",
+    "backgroundColor": "beige",
+    "backgroundImageURL": "",
+    "createAt": "2024-04-30",
+    "messageCount": "1",
+    "recentMessage": "",
+    "reactionCount": 0,
+    "topReactions": ""
+  },
+  {
+    "id": 2,
+    "name": "정민재",
+    "backgroundColor": "purple",
+    "backgroundImageURL": "",
+    "createAt": "2024-04-30",
+    "messageCount": "6",
+    "recentMessage": "",
+    "reactionCount": 0,
+    "topReactions": ""
+  },
+  {
+    "id": 3,
+    "name": "정민재",
+    "backgroundColor": "blue",
+    "backgroundImageURL": "",
+    "createAt": "2024-04-30",
+    "messageCount": "2",
+    "recentMessage": "",
+    "reactionCount": 0,
+    "topReactions": ""
+  },
+  {
+    "id": 4,
+    "name": "정민재",
+    "backgroundColor": "green",
+    "backgroundImageURL": "",
+    "createAt": "2024-04-30",
+    "messageCount": "18",
+    "recentMessage": "",
+    "reactionCount": 0,
+    "topReactions": ""
+  },
+  {
+    "id": 5,
+    "name": "정민재",
+    "backgroundColor": "beige",
+    "backgroundImageURL": "url",
+    "createAt": "2024-04-30",
+    "messageCount": "54",
+    "recentMessage": "",
+    "reactionCount": 6,
+    "topReactions": ""
+  },
+  {
+    "id": 6,
+    "name": "정민재",
+    "backgroundColor": "beige",
+    "backgroundImageURL": "url",
+    "createAt": "2024-04-30",
+    "messageCount": "2",
+    "recentMessage": "",
+    "reactionCount": 6,
+    "topReactions": ""
+  },
+  {
+    "id": 7,
+    "name": "정민재",
+    "backgroundColor": "beige",
+    "backgroundImageURL": "url",
+    "createAt": "2024-04-30",
+    "messageCount": "1",
+    "recentMessage": "",
+    "reactionCount": 6,
+    "topReactions": ""
+  },
+  {
+    "id": 8,
+    "name": "정민재",
+    "backgroundColor": "beige",
+    "backgroundImageURL": "url",
+    "createAt": "2024-04-30",
+    "messageCount": "14",
+    "recentMessage": "",
+    "reactionCount": 6,
+    "topReactions": ""
+  },
+  {
+    "id": 9,
+    "name": "정민재",
+    "backgroundColor": "beige",
+    "backgroundImageURL": "url",
+    "createAt": "2024-04-30",
+    "messageCount": "0",
+    "recentMessage": "",
+    "reactionCount": 6,
+    "topReactions": ""
+  },
+  {
+    "id": 10,
+    "name": "정민재",
+    "backgroundColor": "beige",
+    "backgroundImageURL": "url",
+    "createAt": "2024-04-30",
+    "messageCount": "0",
+    "recentMessage": "",
+    "reactionCount": 6,
+    "topReactions": ""
+  },
+  {
+    "id": 11,
+    "name": "정민재",
+    "backgroundColor": "beige",
+    "backgroundImageURL": "url",
+    "createAt": "2024-04-30",
+    "messageCount": "0",
+    "recentMessage": "",
+    "reactionCount": 6,
+    "topReactions": ""
+  },
+  {
+    "id": 12,
+    "name": "정민재",
+    "backgroundColor": "beige",
+    "backgroundImageURL": "url",
+    "createAt": "2024-04-30",
+    "messageCount": "0",
+    "recentMessage": "",
+    "reactionCount": 6,
+    "topReactions": ""
+  },
+  {
+    "id": 13,
+    "name": "정민재",
+    "backgroundColor": "beige",
+    "backgroundImageURL": "url",
+    "createAt": "2024-04-30",
+    "messageCount": "0",
+    "recentMessage": "",
+    "reactionCount": 6,
+    "topReactions": ""
+  },
+  {
+    "id": 14,
+    "name": "정민재",
+    "backgroundColor": "beige",
+    "backgroundImageURL": "url",
+    "createAt": "2024-04-30",
+    "messageCount": "0",
+    "recentMessage": "",
+    "reactionCount": 6,
+    "topReactions": ""
+  },
+  {
+    "id": 15,
+    "name": "정민재",
+    "backgroundColor": "beige",
+    "backgroundImageURL": "url",
+    "createAt": "2024-04-30",
+    "messageCount": "0",
+    "recentMessage": "",
+    "reactionCount": 6,
+    "topReactions": ""
+  },
+  {
+    "id": 16,
+    "name": "정민재",
+    "backgroundColor": "beige",
+    "backgroundImageURL": "url",
+    "createAt": "2024-04-30",
+    "messageCount": "0",
+    "recentMessage": "",
+    "reactionCount": 6,
+    "topReactions": ""
+  },
+  {
+    "id": 17,
+    "name": "정민재",
+    "backgroundColor": "beige",
+    "backgroundImageURL": "url",
+    "createAt": "2024-04-30",
+    "messageCount": "0",
+    "recentMessage": "",
+    "reactionCount": 6,
+    "topReactions": ""
+  },
+  {
+    "id": 18,
+    "name": "정민재",
+    "backgroundColor": "beige",
+    "backgroundImageURL": "url",
+    "createAt": "2024-04-30",
+    "messageCount": "0",
+    "recentMessage": "",
+    "reactionCount": 6,
+    "topReactions": ""
+  }
+]

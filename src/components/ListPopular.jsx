@@ -3,20 +3,21 @@ import arrowRight from '../assets/images/arrow_right.svg';
 
 import styled from 'styled-components';
 import ListCard from './ListCard';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const ListPopular = ({ listData }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isNext, setIsNext] = useState(true);
+  const [isPrev, setIsPrev] = useState(true);
 
   const handlePrev = () => {
     const newIndex =
-      currentIndex === 0 ? listData.length - 1 : currentIndex - 1;
+      (currentIndex - 1 + listData.length - 3) % (listData.length - 3);
     setCurrentIndex(newIndex);
   };
 
   const handleNext = () => {
-    const newIndex =
-      currentIndex === listData.length - 1 ? 0 : currentIndex + 1;
+    const newIndex = (currentIndex + 1) % (listData.length - 3);
     setCurrentIndex(newIndex);
   };
 
@@ -24,19 +25,21 @@ const ListPopular = ({ listData }) => {
     <ListPopularWrap>
       <ListPopularSpan>인기 롤링 페이퍼 🔥</ListPopularSpan>
 
-      <ListBtnLeft onClick={handlePrev}>
+      <ListBtnLeft onClick={handlePrev} disabled={!isPrev}>
         <img src={arrowLeft} alt="왼쪽 화살표" />
       </ListBtnLeft>
       <ListCarousel>
         <ListPopularMain
-          style={{ transform: `translateX(-${currentIndex * 275}px)` }}
+          style={{
+            transform: `translateX(-${currentIndex * 295}px)`,
+          }}
         >
           {listData.map((data) => (
             <ListCard key={data.id} data={data} />
           ))}
         </ListPopularMain>
       </ListCarousel>
-      <ListBtnRight onClick={handleNext}>
+      <ListBtnRight onClick={handleNext} disabled={!isNext}>
         <img src={arrowRight} alt="오른쪽 화살표" />
       </ListBtnRight>
     </ListPopularWrap>
@@ -52,12 +55,14 @@ const ListPopularWrap = styled.section`
 
 const ListPopularSpan = styled.span`
   font-size: 24px;
+
   font-weight: 700;
   line-height: 36px;
   letter-spacing: -0.01em;
 `;
 
 const ListCarousel = styled.div`
+  width: 1180px;
   margin-top: 16px;
   overflow: hidden;
   display: flex;
@@ -65,6 +70,8 @@ const ListCarousel = styled.div`
 
 const ListPopularMain = styled.div`
   display: flex;
+  padding: 0 10px;
+  justify-content: space-around;
   gap: 20px;
   transition: transform 0.5s ease;
 `;
@@ -87,6 +94,10 @@ const ListBtnLeft = styled.button`
   justify-content: center;
 
   z-index: 1;
+
+  &:disabled {
+    display: none;
+  }
 `;
 
 const ListBtnRight = styled.button`
@@ -107,4 +118,8 @@ const ListBtnRight = styled.button`
   justify-content: center;
 
   z-index: 1;
+
+  &:disabled {
+    display: none;
+  }
 `;
