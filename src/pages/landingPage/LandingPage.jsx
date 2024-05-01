@@ -5,7 +5,6 @@ import NavigationBar from '../../components/NavigationBar';
 const LandingPage = () => {
   return (
     <>
-      <Header />
       <NavigationBar />
       <Banner />
     </>

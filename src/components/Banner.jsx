@@ -10,7 +10,7 @@ const Banner = () => {
       <ContentWrapper>
         <BannerWrapper>
           <BannerDescriptionBox>
-            <BannerNumberTag>Point. 01</BannerNumberTag>
+            <BannerNumberTag>Point.01</BannerNumberTag>
             <BannerTextBox>
               <BannerLabel>
                 누구나 손쉽게, 온라인 <br />
@@ -23,7 +23,7 @@ const Banner = () => {
         </BannerWrapper>
         <BannerWrapper>
           <BannerDescriptionBox>
-            <BannerNumberTag>Point. 02</BannerNumberTag>
+            <BannerNumberTag>Point.02</BannerNumberTag>
             <BannerTextBox>
               <BannerLabel>
                 서로에게 이모지로 감정을 <br />
