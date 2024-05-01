@@ -59,9 +59,10 @@ const ButtonWrapper = styled.div`
   height: 40px;
 `;
 const ButtonMakeNewPaper = styled.button`
+  font: Pretendard;
   width: 157px;
   height: 40px;
-  padding: 8px 16px;
+  padding: 8px 8px;
   border-radius: 6px;
   border: 1px solid #cccccc;
 
