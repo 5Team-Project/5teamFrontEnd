@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
-const DropRelative = () => {
+const DropRelative = ({ onChange }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState('지인');
-
   const toggleDropdown = () => setIsOpen(!isOpen);
-
   const selectItem = (item) => {
     setSelectedItem(item);
+    onChange(item);
     setIsOpen(false);
   };
 

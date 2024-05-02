@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
-const DropdownFont = () => {
+const DropdownFont = ({ onChange }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState('Noto Sans');
-
   const toggleDropdown = () => setIsOpen(!isOpen);
 
   const selectItem = (item) => {
     setSelectedItem(item);
+    onChange(item);
     setIsOpen(false);
   };
 

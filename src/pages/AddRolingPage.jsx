@@ -13,6 +13,8 @@ const AddRollingPaper = () => {
   const [isInputError, setIsInputError] = useState(false);
   const [relationship, setRelationship] = useState('지인');
   const [font, setFont] = useState('Noto Sans');
+  const [selectedRelationship, setSelectedRelationship] = useState('지인');
+  const [selectedFont, setSelectedFont] = useState('Noto Sans');
   const [selectedImage, setSelectedImage] = useState('');
 
   const handleInputChange = (e) => {
@@ -31,11 +33,11 @@ const AddRollingPaper = () => {
   };
 
   const handleRelationshipChange = (value) => {
-    setRelationship(value);
+    setSelectedRelationship(value);
   };
 
   const handleFontChange = (value) => {
-    setFont(value);
+    setSelectedFont(value);
   };
 
   const handleImageSelect = (imageUrl) => {
@@ -50,13 +52,13 @@ const AddRollingPaper = () => {
 
   const handleSubmit = async () => {
     const data = {
-      team: '5팀', //더미데이터의 팀
-      recipientId: 6713, //임의 id
+      team: '5팀',
+      recipientId: 6713,
       sender: inputValue,
       profileImageURL: selectedImage,
-      relationship,
+      relationship: selectedRelationship,
       content: quillValue,
-      font,
+      font: selectedFont,
     };
 
     try {
