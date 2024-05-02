@@ -6,27 +6,30 @@ import ReactionCount from './ReactionCount';
 import Actions from './Actions';
 import { getData } from '../api/getData';
 import React, { useEffect, useState } from 'react';
+import DropReactions from './DropReactions';
 
 const NavigationBar = () => {
-  const [title, setTitle] = useState('AnitaMaxWynn');
-  const [data, setData] = useState({});
+  const [title, setTitle] = useState('Dear');
+  const [count, setCount] = useState(0);
+  const [recent, setRecent] = useState([]);
+  const [reaction, setReaction] = useState([]);
 
   useEffect(() => {
-    const queryData = '3-1/recipients/2629/';
     const handleLoad = async () => {
+      const queryData = '/3-1/recipients/2629/';
       try {
         const res = await getData(queryData);
         if (res) {
-          setData(res);
           setTitle(res.name);
-          console.log(res);
+          setCount(res.messageCount);
+          setRecent(res.recentMessages);
+          setReaction(res.topReactions);
         }
       } catch (e) {
         console.error(e);
       }
-      handleLoad();
-      console.log(data);
     };
+    handleLoad();
   }, []);
 
   return (
@@ -37,10 +40,11 @@ const NavigationBar = () => {
           <span>{title}</span>
         </Title>
         <PostStats>
-          <WriterCountIcon />
-          <WriterCountText />
+          <WriterCountIcon count={count} recent={recent} />
+          <WriterCountText count={count} />
           <Divider />
-          <ReactionCount />
+          <ReactionCount reaction={reaction} />
+          <DropReactions />
           <Divider />
           <Actions />
         </PostStats>
