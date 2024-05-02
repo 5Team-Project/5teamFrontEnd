@@ -6,21 +6,20 @@ import Header from '../components/Header';
 
 import ListPopular from '../components/ListPopular';
 import ListRecent from '../components/ListRecent';
-import ListData from '../dummyListData.json';
+
+import ListRecipientsData from '../DummyListRecipientsData.json';
 
 const ListPage = () => {
   const [listData, setListData] = useState([]);
-  const [listIdData, setListIdData] = useState([]);
 
   useEffect(() => {
-    setListData(ListData);
-  }, [ListData]);
+    setListData(ListRecipientsData);
+  }, [ListRecipientsData]);
 
   if (!listData[0]) return;
 
   return (
     <ListMainContainer>
-      <Header />
       <ListContent>
         <ListPopular listData={listData} />
         <ListRecent listData={listData} />
