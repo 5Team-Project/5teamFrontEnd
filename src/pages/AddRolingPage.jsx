@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import ProfileImageComponent from '../components/ProfileComponents';
 import DropdownRelative from '../components/DropRelative';
 import ReactQuillContext from '../utils/ReactQuill';
@@ -7,12 +7,30 @@ import DropdownFont from '../components/DropFont';
 
 const AddRollingPaper = () => {
   const [inputValue, setInputValue] = useState('');
+  const [quillValue, setQuillValue] = useState('');
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+  const [isInputError, setIsInputError] = useState(false);
 
-  const handleInputChange = (value) => {
-    setInputValue(value);
+  const handleInputChange = (e) => {
+    setInputValue(e.target.value);
+    setIsInputError(false);
   };
 
-  const isButtonDisabled = !inputValue;
+  const handleInputBlur = () => {
+    if (inputValue.trim() === '') {
+      setIsInputError(true);
+    }
+  };
+
+  const handleQuillChange = (value) => {
+    setQuillValue(value);
+  };
+
+  useEffect(() => {
+    const isInputEmpty = inputValue.trim() === '';
+    const isQuillEmpty = quillValue === '' || quillValue === '<p><br></p>';
+    setIsButtonDisabled(isInputEmpty || isQuillEmpty);
+  }, [inputValue, quillValue]);
 
   return (
     <>
@@ -21,8 +39,12 @@ const AddRollingPaper = () => {
           <LabelStyle>From.</LabelStyle>
           <InputFrom
             placeholder="이름을 입력해 주세요."
+            value={inputValue}
             onChange={handleInputChange}
+            onBlur={handleInputBlur}
+            isError={isInputError}
           />
+          {isInputError && <ErrorMessage>값을 입력해 주세요.</ErrorMessage>}
         </FromContainer>
         <ProfileContainer>
           <LabelStyle>프로필 이미지</LabelStyle>
@@ -34,7 +56,7 @@ const AddRollingPaper = () => {
         </RelationContainer>
         <ContentContainer>
           <LabelStyle>내용을 입력해 주세요</LabelStyle>
-          <ReactQuillContext />
+          <ReactQuillContext value={quillValue} onChange={handleQuillChange} />
         </ContentContainer>
         <FontContainer>
           <LabelStyle>폰트 선택</LabelStyle>
@@ -82,6 +104,11 @@ const InputFrom = styled.input`
   border-radius: 8px;
   margin-top: 10px;
   border: 1px solid #cccccc;
+  ${(props) =>
+    props.isError &&
+    css`
+      border-color: red;
+    `}
 `;
 
 const ProfileContainer = styled.div`
@@ -139,5 +166,11 @@ const SubmitButton = styled.button`
       color: ${({ theme }) => theme.colors.WHITE};
       cursor: not-allowed;
     `}
+`;
+
+const ErrorMessage = styled.div`
+  color: red;
+  font-size: 14px;
+  margin-top: 5px;
 `;
 export default AddRollingPaper;

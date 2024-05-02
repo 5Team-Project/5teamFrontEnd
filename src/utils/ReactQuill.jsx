@@ -1,14 +1,14 @@
 import ReactQuill from 'react-quill';
-import { useState } from 'react';
 import styled from 'styled-components';
 import 'react-quill/dist/quill.snow.css';
 
 const ReactQuillTemplate = (props) => {
-  const [quillValue, setQuillValue] = useState('');
+  const { value, onChange } = props;
 
   const handleQuillChange = (content, delta, source, editor) => {
-    setQuillValue(editor.getContents());
+    onChange(editor.getHTML());
   };
+
   const formats = [
     'bold',
     'italic',
@@ -31,6 +31,7 @@ const ReactQuillTemplate = (props) => {
       ],
     ],
   };
+
   return (
     <>
       <StyledEditorContainer>
@@ -39,7 +40,7 @@ const ReactQuillTemplate = (props) => {
           theme="snow"
           modules={modules}
           formats={formats}
-          value={quillValue || ''}
+          value={value || ''}
           onChange={handleQuillChange}
         />
       </StyledEditorContainer>
@@ -54,4 +55,5 @@ const StyledEditorContainer = styled.div`
   }
   height: 100%;
 `;
+
 export default ReactQuillTemplate;

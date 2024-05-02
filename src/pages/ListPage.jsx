@@ -1,11 +1,8 @@
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-
 import styled from 'styled-components';
-
 import ListPopular from '../components/ListPopular';
 import ListRecent from '../components/ListRecent';
-
 import ListData from '../dummyListData.json';
 import Header from '../components/Header';
 

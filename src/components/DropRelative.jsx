@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
-const Dropdown = () => {
+const DropRelative = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState('지인');
 
@@ -80,4 +80,4 @@ const DropdownItem = styled.li`
     border-radius: 8px;
   }
 `;
-export default Dropdown;
+export default DropRelative;
