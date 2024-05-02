@@ -1,16 +1,44 @@
 import styled from 'styled-components';
 import { Theme } from '../styles/Theme';
-import WriterCount from './WriterCount';
+import WriterCountIcon from './WriterCountIcon';
+import WriterCountText from './WriterCountText';
 import ReactionCount from './ReactionCount';
 import Actions from './Actions';
+import { getData } from '../api/getData';
+import React, { useEffect, useState } from 'react';
 
 const NavigationBar = () => {
+  const [title, setTitle] = useState('AnitaMaxWynn');
+  const [data, setData] = useState({});
+
+  useEffect(() => {
+    const queryData = '3-1/recipients/2629/';
+    const handleLoad = async () => {
+      try {
+        const res = await getData(queryData);
+        if (res) {
+          setData(res);
+          setTitle(res.name);
+          console.log(res);
+        }
+      } catch (e) {
+        console.error(e);
+      }
+      handleLoad();
+      console.log(data);
+    };
+  }, []);
+
   return (
     <NavWrapper>
       <NavBox>
-        <Title>To. AnitaMaxWynn</Title>
+        <Title>
+          <span>To. </span>
+          <span>{title}</span>
+        </Title>
         <PostStats>
-          <WriterCount />
+          <WriterCountIcon />
+          <WriterCountText />
           <Divider />
           <ReactionCount />
           <Divider />
@@ -38,8 +66,12 @@ const NavBox = styled.div`
 `;
 
 const Title = styled.a`
-  width: 106px;
-  height: 30px;
+  height: 42px;
+  font-size: ${({ theme }) => theme.fontsize.TITLE};
+  font-weight: ${({ theme }) => theme.fontweight.BOLD};
+  line-height: 45px;
+  letter-spacing: -0.01em;
+  text-align: left;
 `;
 
 const PostStats = styled.div`

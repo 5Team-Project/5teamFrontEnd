@@ -1,12 +1,10 @@
-import instance from './Axios';
+import { instance } from './Axios';
 
-const getData = async (url) => {
+export const getData = async (url) => {
   try {
-    const { data } = await instance.get(url);
-    return data;
-  } catch (e) {
-    console.error(e);
+    const res = await instance.get(url);
+    return res.data;
+  } catch (error) {
+    console.error(error);
   }
 };
-
-export default getData;
