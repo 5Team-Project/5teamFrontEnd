@@ -1,11 +1,12 @@
 import styled from 'styled-components';
 import { Theme } from '../styles/Theme';
-import React, { useState } from 'react';
+import React from 'react';
+import { getData } from '../api/getData';
 
-const WriterCountText = () => {
+const WriterCountText = ({ count }) => {
   return (
     <WriterCountTextWrapper>
-      <span>102</span>
+      <span>{count}</span>
       <CountText>명이 작성했어요!</CountText>
     </WriterCountTextWrapper>
   );
