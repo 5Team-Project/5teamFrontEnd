@@ -1,26 +1,22 @@
 import styled from 'styled-components';
 import { Theme } from '../styles/Theme';
-import React, { useState } from 'react';
+import React from 'react';
 import TestImage from '../assets/images/ProfileForTest.png';
 
-const WriterCountIcon = () => {
+const WriterCountIcon = ({ count, recent }) => {
   return (
-    <>
-      <WriterCountIconWrapper>
-        <ProfileImageBox style={{ left: '0px' }}>
-          <ProfileImage src={TestImage} alt="프로필이미지" />
-        </ProfileImageBox>
-        <ProfileImageBox style={{ left: '14px' }}>
-          <ProfileImage src={TestImage} alt="프로필이미지" />
-        </ProfileImageBox>
-        <ProfileImageBox style={{ left: '28px' }}>
-          <ProfileImage src={TestImage} alt="프로필이미지" />
-        </ProfileImageBox>
-        <CountButton style={{ left: '42px' }}>
-          <CountWriter>+99</CountWriter>
-        </CountButton>
-      </WriterCountIconWrapper>
-    </>
+    <WriterCountIconWrapper>
+      {recent.map((profile) => {
+        return (
+          <ProfileImageBox key={profile.id}>
+            <ProfileImage src={profile.profileImageURL} alt="P" />
+          </ProfileImageBox>
+        );
+      })}
+      <CountButton style={{ left: '42px' }}>
+        <CountWriter>+{count - 3}</CountWriter>
+      </CountButton>
+    </WriterCountIconWrapper>
   );
 };
 
@@ -35,6 +31,12 @@ const ProfileImageBox = styled.div`
   width: 28px;
   height: 28px;
   position: absolute;
+  &:nth-child(2) {
+    left: 14px;
+  }
+  &:nth-child(3) {
+    left: 28px;
+  }
 `;
 
 const ProfileImage = styled.img`
