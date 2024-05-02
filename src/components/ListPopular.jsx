@@ -63,9 +63,9 @@ const ListPopularWrap = styled.section`
 `;
 
 const ListPopularSpan = styled.span`
-  font-size: 24px;
+  font-size: ${({ theme }) => theme.fontsize.M_TITLE};
+  font-weight: ${({ theme }) => theme.fontweight.BOLD};
 
-  font-weight: 700;
   line-height: 36px;
   letter-spacing: -0.01em;
 `;
@@ -93,7 +93,7 @@ const ListBtnLeft = styled.button`
   border: 1px solid #dadcdf;
   border-radius: 64px;
 
-  background-color: #ffffffe5;
+  background-color: ${({ theme }) => theme.colors.WHITE}e5;
 
   width: 40px;
   height: 40px;
@@ -117,7 +117,7 @@ const ListBtnRight = styled.button`
   border: 1px solid #dadcdf;
   border-radius: 64px;
 
-  background-color: #ffffffe5;
+  background-color: ${({ theme }) => theme.colors.WHITE}e5;
 
   width: 40px;
   height: 40px;

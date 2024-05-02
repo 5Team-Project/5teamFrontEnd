@@ -1,0 +1,82 @@
+[
+  {
+    "id": 4806,
+    "recipientId": 2629,
+    "sender": "율민",
+    "profileImageURL": "https://picsum.photos/id/547/100/100",
+    "relationship": "지인",
+    "content": "<p>카드 생성</p>",
+    "font": "Noto Sans",
+    "createdAt": "2024-01-31T10:08:35.900855Z"
+  },
+  {
+    "id": 4805,
+    "recipientId": 2629,
+    "sender": "선영",
+    "profileImageURL": "https://picsum.photos/id/571/100/100",
+    "relationship": "지인",
+    "content": "<p>카드</p><p>생성</p>",
+    "font": "나눔손글씨 손편지체",
+    "createdAt": "2024-01-31T10:08:28.631687Z"
+  },
+  {
+    "id": 4804,
+    "recipientId": 2629,
+    "sender": "유연",
+    "profileImageURL": "https://picsum.photos/id/522/100/100",
+    "relationship": "지인",
+    "content": "<p>카드 생성</p><p><br></p>",
+    "font": "Noto Sans",
+    "createdAt": "2024-01-31T10:08:20.361050Z"
+  },
+  {
+    "id": 4803,
+    "recipientId": 2629,
+    "sender": "재명",
+    "profileImageURL": "https://picsum.photos/id/571/100/100",
+    "relationship": "지인",
+    "content": "<p>카드 생성</p>",
+    "font": "Noto Sans",
+    "createdAt": "2024-01-31T10:08:12.656541Z"
+  },
+  {
+    "id": 4802,
+    "recipientId": 2629,
+    "sender": "선영",
+    "profileImageURL": "https://picsum.photos/id/268/100/100",
+    "relationship": "동료",
+    "content": "<p>대한사람 대한으로</p><p>길이 보전하세</p>",
+    "font": "나눔명조",
+    "createdAt": "2024-01-31T10:07:03.724670Z"
+  },
+  {
+    "id": 4801,
+    "recipientId": 2629,
+    "sender": "율민",
+    "profileImageURL": "https://picsum.photos/id/494/100/100",
+    "relationship": "동료",
+    "content": "<p>무궁화 삼천리</p><p>화려강산</p>",
+    "font": "Pretendard",
+    "createdAt": "2024-01-31T10:06:44.686957Z"
+  },
+  {
+    "id": 4800,
+    "recipientId": 2629,
+    "sender": "유연",
+    "profileImageURL": "https://picsum.photos/id/571/100/100",
+    "relationship": "동료",
+    "content": "<p>하느님이 보우하사</p><p>우리나라 만세</p>",
+    "font": "나눔손글씨 손편지체",
+    "createdAt": "2024-01-31T10:06:31.353556Z"
+  },
+  {
+    "id": 4768,
+    "recipientId": 2629,
+    "sender": "재명",
+    "profileImageURL": "https://picsum.photos/id/571/100/100",
+    "relationship": "동료",
+    "content": "<p>아싸 1빠</p>",
+    "font": "Pretendard",
+    "createdAt": "2024-01-31T07:39:57.946276Z"
+  }
+]

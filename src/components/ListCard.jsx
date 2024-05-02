@@ -2,10 +2,26 @@ import { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled, { ThemeContext } from 'styled-components';
 
+import ListMessagesData from '../DummyListMessagesData.json';
+import ListReactionsData from '../DummyListReactionsData.json';
+
+import WriterCountIcon from './WriterCountIcon';
+import WriterCountText from './WriterCountText';
+import ReactionCount from './ReactionCount';
+
 const ListCard = ({ data }) => {
+  const [isBgImg, setIsBgImg] = useState();
+
   const [bgColor, setBgColor] = useState('');
 
+  const [ListMessages, setListMessages] = useState([]);
+  const [ListReactions, setListReactions] = useState([]);
+
   const theme = useContext(ThemeContext);
+
+  useEffect(() => {
+    setIsBgImg(!!data.backgroundImageURL);
+  }, [data.backgroundImageURL]);
 
   useEffect(() => {
     switch (data.backgroundColor) {
@@ -24,23 +40,42 @@ const ListCard = ({ data }) => {
       default:
         setBgColor(theme.colors.ORANGE);
     }
-  }, []);
+  }, [data.backgroundColor]);
+
+  useEffect(() => {
+    setListMessages(
+      [...ListMessagesData].sort(function (a, b) {
+        return new Date(b.createdAt) - new Date(a.createdAt);
+      }),
+    );
+  }, [ListMessagesData]);
+
+  useEffect(() => {
+    setListReactions(
+      [...ListReactionsData].sort(function (a, b) {
+        return b.count - a.count;
+      }),
+    );
+  }, [ListReactionsData]);
 
   if (!bgColor) return;
 
   return (
-    <ListCardWrap to={`/post${data.id}`} style={{ backgroundColor: bgColor }}>
+    <ListCardWrap
+      to={`/post/${data.id}`}
+      style={
+        isBgImg
+          ? { backgroundImage: `url(${data.backgroundImageURL})` }
+          : { backgroundColor: bgColor }
+      }
+    >
       <ListCardMain>
         <ListCardName>To. {data.name}</ListCardName>
-        <ListCardSenders>이미지</ListCardSenders>
-        <ListCardMsgCount>{data.messageCount}명이 작성했어요</ListCardMsgCount>
+        <WriterCountIcon />
+        <WriterCountText />
       </ListCardMain>
 
-      <ListCardEmojiWrap>
-        <ListCardEmoji>👍10</ListCardEmoji>
-        <ListCardEmoji>✌️2</ListCardEmoji>
-        <ListCardEmoji>😊3</ListCardEmoji>
-      </ListCardEmojiWrap>
+      <ReactionCount />
     </ListCardWrap>
   );
 };
@@ -56,12 +91,16 @@ const ListCardWrap = styled(Link)`
   height: 260px;
 
   border-radius: 16px;
-  border: 1px solid #0000001a;
+  border: 1px solid ${({ theme }) => theme.colors.BLACK}1a;
 
   padding: 30px 24px 20px;
 
   text-decoration: none;
-  color: #000;
+  color: ${({ theme }) => theme.colors.BLACK};
+
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
 `;
 
 const ListCardMain = styled.div`
@@ -73,42 +112,8 @@ const ListCardMain = styled.div`
 `;
 
 const ListCardName = styled.span`
-  font-size: 24px;
-  font-weight: 700;
+  font-size: ${({ theme }) => theme.fontsize.M_TITLE};
+  font-weight: ${({ theme }) => theme.fontweight.BOLD};
   line-height: 36px;
   letter-spacing: -0.01em;
-`;
-
-const ListCardSenders = styled.div``;
-
-const ListCardMsgCount = styled.span`
-  font-size: 16px;
-  font-weight: 700;
-  line-height: 26px;
-  letter-spacing: -0.01em;
-`;
-
-const ListCardEmojiWrap = styled.div`
-  padding-top: 20px;
-  border-top: 1px solid #0000001f;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-`;
-
-const ListCardEmoji = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 2px;
-
-  padding: 8px 12px;
-  border-radius: 32px;
-
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 20px;
-  color: #fff;
-
-  background: #0000008a;
 `;

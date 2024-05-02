@@ -12,7 +12,7 @@ const ListRecent = ({ listData }) => {
 
     setSortData(
       [...listData].sort(function (a, b) {
-        return Date(b.createAt) - Date(b.createAt);
+        return new Date(b.createdAt) - new Date(a.createdAt);
       }),
     );
   }, [listData]);
@@ -37,6 +37,7 @@ const ListRecent = ({ listData }) => {
       <ListBtnLeft onClick={handlePrev}>
         <img src={arrowLeft} alt="왼쪽 화살표" />
       </ListBtnLeft>
+
       <ListCarousel>
         <ListRecentMain
           style={{
@@ -48,6 +49,7 @@ const ListRecent = ({ listData }) => {
           ))}
         </ListRecentMain>
       </ListCarousel>
+
       <ListBtnRight onClick={handleNext}>
         <img src={arrowRight} alt="오른쪽 화살표" />
       </ListBtnRight>
@@ -93,7 +95,7 @@ const ListBtnLeft = styled.button`
   border: 1px solid #dadcdf;
   border-radius: 64px;
 
-  background-color: #ffffffe5;
+  background-color: ${({ theme }) => theme.colors.WHITE}e5;
 
   width: 40px;
   height: 40px;
@@ -117,7 +119,7 @@ const ListBtnRight = styled.button`
   border: 1px solid #dadcdf;
   border-radius: 64px;
 
-  background-color: #ffffffe5;
+  background-color: ${({ theme }) => theme.colors.WHITE}e5;
 
   width: 40px;
   height: 40px;

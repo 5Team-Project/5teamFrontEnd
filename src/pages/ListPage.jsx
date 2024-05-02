@@ -1,23 +1,25 @@
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
+
+import Header from '../components/Header';
+
 import ListPopular from '../components/ListPopular';
 import ListRecent from '../components/ListRecent';
-import ListData from '../dummyListData.json';
-import Header from '../components/Header';
+
+import ListRecipientsData from '../DummyListRecipientsData.json';
 
 const ListPage = () => {
   const [listData, setListData] = useState([]);
 
   useEffect(() => {
-    setListData(ListData);
-  }, []);
+    setListData(ListRecipientsData);
+  }, [ListRecipientsData]);
 
   if (!listData[0]) return;
 
   return (
     <ListMainContainer>
-      <Header />
       <ListContent>
         <ListPopular listData={listData} />
         <ListRecent listData={listData} />
