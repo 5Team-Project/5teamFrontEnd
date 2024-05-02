@@ -2,29 +2,18 @@ import styled from 'styled-components';
 import { Theme } from '../styles/Theme';
 import React, { useState } from 'react';
 
-const ReactionCount = () => {
-  const [likes, setLikes] = useState(0);
-
-  const handleReactions = () => {
-    setLikes(likes + 1);
-  };
+const ReactionCount = ({ reaction }) => {
   return (
     <ReactionCountWrapper>
       <ReactionButtonBox>
-        <ReactionButtons onClick={handleReactions}>
-          <span>&#x1F354; </span>
-          {likes}
-        </ReactionButtons>
-        <ReactionButtons onClick={handleReactions}>
-          <span>&#x1F354; </span>
-          {likes}
-        </ReactionButtons>
-        <ReactionButtons onClick={handleReactions}>
-          <span>&#x1F354; </span>
-          {likes}
-        </ReactionButtons>
+        {reaction.map((emoji) => {
+          return (
+            <ReactionButtons key={emoji.id}>
+              {emoji.emoji} {emoji.count}
+            </ReactionButtons>
+          );
+        })}
       </ReactionButtonBox>
-      <AddReactions>V</AddReactions>
     </ReactionCountWrapper>
   );
 };
@@ -51,8 +40,4 @@ const ReactionButtons = styled.button`
   font-weight: ${({ theme }) => theme.fontweight.REGULAR};
 `;
 
-const AddReactions = styled.button`
-  width: 36px;
-  height: 36px;
-`;
 export default ReactionCount;

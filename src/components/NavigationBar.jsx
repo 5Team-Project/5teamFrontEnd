@@ -11,6 +11,7 @@ const NavigationBar = () => {
   const [title, setTitle] = useState('Dear');
   const [count, setCount] = useState(0);
   const [recent, setRecent] = useState([]);
+  const [reaction, setReaction] = useState([]);
 
   useEffect(() => {
     const handleLoad = async () => {
@@ -21,6 +22,7 @@ const NavigationBar = () => {
           setTitle(res.name);
           setCount(res.messageCount);
           setRecent(res.recentMessages);
+          setReaction(res.topReactions);
         }
       } catch (e) {
         console.error(e);
@@ -40,7 +42,7 @@ const NavigationBar = () => {
           <WriterCountIcon count={count} recent={recent} />
           <WriterCountText count={count} />
           <Divider />
-          <ReactionCount />
+          <ReactionCount reaction={reaction} />
           <Divider />
           <Actions />
         </PostStats>
