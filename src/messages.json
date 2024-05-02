@@ -1,0 +1,79 @@
+[
+  {
+    "id": 0,
+    "team": "5",
+    "recipientId": 0,
+    "sender": "홍길동",
+    "profileImageURL": "https://sprint-fe-project.s3.ap-northeast-2.amazonaws.com/Sprint_Mission/user/5/1712836642035/bbb.jpeg",
+    "relationship": "친구",
+    "content": "안녕! 배고파",
+    "font": "Noto Sans",
+    "createdAt": "2024-04-01T11:58:07.926Z"
+  },
+  {
+    "id": 1,
+    "team": "5",
+    "recipientId": 0,
+    "sender": "길김동",
+    "profileImageURL": "https://sprint-fe-project.s3.ap-northeast-2.amazonaws.com/Sprint_Mission/user/5/1712836525455/aaa.jpeg",
+    "relationship": "지인",
+    "content": "안녕! 너도 배코프니 나도 배고파",
+    "font": "Pretendard",
+    "createdAt": "2024-04-13T11:58:07.926Z"
+  },
+  {
+    "id": 2,
+    "team": "5",
+    "recipientId": 0,
+    "sender": "이길동",
+    "profileImageURL": "https://sprint-fe-project.s3.ap-northeast-2.amazonaws.com/Sprint_Mission/user/5/1712835624538/dry.jpeg",
+    "relationship": "지인",
+    "content": "배고파 배고파 배고파 배고파 배고파 배고파 배고파 배고파 배고파 배고파 배고파 배고파 배고파 배고파 배고파 배고파 배고파 배고파 배고파 배고파 배고파 배고파 배고파 배고파 배고파 배고파 배고파 배고파 배고파 배고파 배고파 배고파 배고파 배고파 배고파 배고파 배고파 배고파 배고파 배고파 배고파 배고파 배고파 배고파 배고파 배고파 배고파 배고파 배고파 배고파 배고파 배고파 배고파 배고파 배고파 배고파 배고파 배고파 배고파 배고파 배고파 배고파 배고파 배고파",
+    "font": "나눔명조",
+    "createdAt": "2024-04-12T11:58:07.926Z"
+  },
+  {
+    "id": 3,
+    "team": "5",
+    "recipientId": 0,
+    "sender": "박말동",
+    "profileImageURL": "https://sprint-fe-project.s3.ap-northeast-2.amazonaws.com/Sprint_Mission/user/5/1712835759947/coffee.jpeg",
+    "relationship": "동료",
+    "content": "안녕! 밥먹어",
+    "font": "나눔손글씨 손편지체",
+    "createdAt": "2024-04-14T11:58:07.926Z"
+  },
+  {
+    "id": 4,
+    "team": "5",
+    "recipientId": 0,
+    "sender": "최코드",
+    "profileImageURL": "https://sprint-fe-project.s3.ap-northeast-2.amazonaws.com/Sprint_Mission/user/5/1712836642035/bbb.jpeg",
+    "relationship": "친구",
+    "content": "안녕! 밥먹어",
+    "font": "나눔명조",
+    "createdAt": "2024-04-15T11:58:07.926Z"
+  },
+  {
+    "id": 5,
+    "team": "5",
+    "recipientId": 0,
+    "sender": "가서윤",
+    "profileImageURL": "https://sprint-fe-project.s3.ap-northeast-2.amazonaws.com/Sprint_Mission/user/5/1712836642035/bbb.jpeg",
+    "relationship": "가족",
+    "content": "안녕! 배고파",
+    "font": "Noto Sans",
+    "createdAt": "2024-04-16T11:58:07.926Z"
+  },
+  {
+    "id": 6,
+    "team": "5",
+    "recipientId": 0,
+    "sender": "나민준",
+    "profileImageURL": "https://sprint-fe-project.s3.ap-northeast-2.amazonaws.com/Sprint_Mission/user/5/1712836642035/bbb.jpeg",
+    "relationship": "친구",
+    "content": "안녕! 배고파",
+    "font": "Pretendard",
+    "createdAt": "2024-04-17T11:58:07.926Z"
+  }
+]
