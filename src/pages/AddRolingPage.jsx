@@ -4,12 +4,16 @@ import ProfileImageComponent from '../components/ProfileComponents';
 import DropdownRelative from '../components/DropRelative';
 import ReactQuillContext from '../utils/ReactQuill';
 import DropdownFont from '../components/DropFont';
+import { PostMessages } from '../api/postMessage';
 
 const AddRollingPaper = () => {
   const [inputValue, setInputValue] = useState('');
   const [quillValue, setQuillValue] = useState('');
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const [isInputError, setIsInputError] = useState(false);
+  const [relationship, setRelationship] = useState('지인');
+  const [font, setFont] = useState('Noto Sans');
+  const [selectedImage, setSelectedImage] = useState('');
 
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
@@ -26,11 +30,42 @@ const AddRollingPaper = () => {
     setQuillValue(value);
   };
 
+  const handleRelationshipChange = (value) => {
+    setRelationship(value);
+  };
+
+  const handleFontChange = (value) => {
+    setFont(value);
+  };
+
+  const handleImageSelect = (imageUrl) => {
+    setSelectedImage(imageUrl);
+  };
+
   useEffect(() => {
     const isInputEmpty = inputValue.trim() === '';
     const isQuillEmpty = quillValue === '' || quillValue === '<p><br></p>';
     setIsButtonDisabled(isInputEmpty || isQuillEmpty);
   }, [inputValue, quillValue]);
+
+  const handleSubmit = async () => {
+    const data = {
+      team: '5팀', //더미데이터의 팀
+      recipientId: 6713, //임의 id
+      sender: inputValue,
+      profileImageURL: selectedImage,
+      relationship,
+      content: quillValue,
+      font,
+    };
+
+    try {
+      const response = await PostMessages(data);
+      console.log('작성 성공:', response);
+    } catch (error) {
+      console.error('작성 실패:', error);
+    }
+  };
 
   return (
     <>
@@ -48,11 +83,14 @@ const AddRollingPaper = () => {
         </FromContainer>
         <ProfileContainer>
           <LabelStyle>프로필 이미지</LabelStyle>
-          <ProfileImageComponent />
+          <ProfileImageComponent onImageSelect={handleImageSelect} />
         </ProfileContainer>
         <RelationContainer>
           <LabelStyle>상대와의 관계</LabelStyle>
-          <DropdownRelative />
+          <DropdownRelative
+            value={relationship}
+            onChange={handleRelationshipChange}
+          />
         </RelationContainer>
         <ContentContainer>
           <LabelStyle>내용을 입력해 주세요</LabelStyle>
@@ -60,10 +98,12 @@ const AddRollingPaper = () => {
         </ContentContainer>
         <FontContainer>
           <LabelStyle>폰트 선택</LabelStyle>
-          <DropdownFont />
+          <DropdownFont value={font} onChange={handleFontChange} />
         </FontContainer>
         <ButtonContainer>
-          <SubmitButton disabled={isButtonDisabled}>생성하기</SubmitButton>
+          <SubmitButton disabled={isButtonDisabled} onClick={handleSubmit}>
+            생성하기
+          </SubmitButton>
         </ButtonContainer>
       </AddPaperWrapper>
     </>

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 const DropdownFont = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedItem, setSelectedItem] = useState('Noto San');
+  const [selectedItem, setSelectedItem] = useState('Noto Sans');
 
   const toggleDropdown = () => setIsOpen(!isOpen);
 
@@ -20,8 +20,8 @@ const DropdownFont = () => {
       </DropdownHeader>
       {isOpen && (
         <DropdownList>
-          <DropdownItem onClick={() => selectItem('Noto San')}>
-            Noto San
+          <DropdownItem onClick={() => selectItem('Noto Sans')}>
+            Noto Sans
           </DropdownItem>
           <DropdownItem onClick={() => selectItem('Pretendard')}>
             Pretendard
@@ -29,11 +29,8 @@ const DropdownFont = () => {
           <DropdownItem onClick={() => selectItem('나눔명조')}>
             나눔명조
           </DropdownItem>
-          <DropdownItem onClick={() => selectItem('나눔손글씨 ')}>
-            나눔손글씨{' '}
-          </DropdownItem>
-          <DropdownItem onClick={() => selectItem('나눔손글씨 ')}>
-            손편지체{' '}
+          <DropdownItem onClick={() => selectItem('나눔손글씨 손편지체')}>
+            나눔손글씨 손편지체
           </DropdownItem>
         </DropdownList>
       )}

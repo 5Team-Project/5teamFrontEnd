@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import defaultImage from '../assets/images/defaultimg.png';
 import { getProfileImg } from '../api/getProfileImg';
 
-const ProfileImageComponent = () => {
+const ProfileImageComponent = ({ onImageSelect }) => {
   const [selectedImage, setSelectedImage] = useState('');
   const [imageOptions, setImageOptions] = useState([]);
 
@@ -16,12 +16,12 @@ const ProfileImageComponent = () => {
         console.error(error);
       }
     };
-
     fetchProfileImages();
   }, []);
 
   const handleImageClick = (imageUrl) => {
     setSelectedImage(imageUrl);
+    onImageSelect(imageUrl); // 선택된 이미지 URL을 부모 컴포넌트로 전달
   };
 
   return (
@@ -45,7 +45,6 @@ const ProfileImageComponent = () => {
     </ProfileContainer>
   );
 };
-
 const ProfileContainer = styled.div`
   display: flex;
   flex-direction: row;
