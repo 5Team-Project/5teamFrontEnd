@@ -6,6 +6,7 @@ import ReactionCount from './ReactionCount';
 import Actions from './Actions';
 import { getData } from '../api/getData';
 import React, { useEffect, useState } from 'react';
+import DropReactions from './DropReactions';
 
 const NavigationBar = () => {
   const [title, setTitle] = useState('Dear');
@@ -43,6 +44,7 @@ const NavigationBar = () => {
           <WriterCountText count={count} />
           <Divider />
           <ReactionCount reaction={reaction} />
+          <DropReactions />
           <Divider />
           <Actions />
         </PostStats>

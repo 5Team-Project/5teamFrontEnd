@@ -34,6 +34,9 @@ const ReactionButtons = styled.button`
   height: 36px;
   border-radius: 32px;
   padding: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background: rgba(0, 0, 0, 0.54);
   color: ${({ theme }) => theme.colors.WHITE};
   font-size: ${({ theme }) => theme.fontsize.MEDIUM};
