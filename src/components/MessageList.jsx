@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { ThemeContext } from 'styled-components';
 
 const formatDate = (value) => {
   const date = new Date(value);
@@ -29,6 +29,8 @@ const MessageListItem = ({ message }) => {
   );
 };
 const MessageList = ({ messages }) => {
+  const themeContext = useContext(ThemeContext);
+
   return (
     <MessageListContainter>
       {messages.map((message) => {
