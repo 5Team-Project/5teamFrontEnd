@@ -37,7 +37,7 @@ const ReactionButtons = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  background: rgba(0, 0, 0, 0.54);
+  background: ${({ theme }) => theme.colors.BLACK}8a;
   color: ${({ theme }) => theme.colors.WHITE};
   font-size: ${({ theme }) => theme.fontsize.MEDIUM};
   font-weight: ${({ theme }) => theme.fontweight.REGULAR};

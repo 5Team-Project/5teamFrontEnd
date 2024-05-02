@@ -1,23 +1,30 @@
+import { getData } from '../api/getData';
+
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-import Header from '../components/Header';
-
 import ListPopular from '../components/ListPopular';
 import ListRecent from '../components/ListRecent';
-
-import ListRecipientsData from '../DummyListRecipientsData.json';
 
 const ListPage = () => {
   const [listData, setListData] = useState([]);
 
+  const [idData, setIdData] = useState([]);
+
   useEffect(() => {
-    setListData(ListRecipientsData);
-  }, [ListRecipientsData]);
+    const handleLoad = async () => {
+      try {
+        const { results } = await getData('/6-5/recipients/');
+        setListData(results);
+      } catch (e) {
+        console.error(e);
+      }
+    };
+    handleLoad();
+  }, []);
 
-  if (!listData[0]) return;
-
+  if (listData === null) return;
   return (
     <ListMainContainer>
       <ListContent>

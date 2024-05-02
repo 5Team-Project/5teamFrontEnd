@@ -20,13 +20,14 @@ const ListPopular = ({ listData }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const handlePrev = () => {
-    const newIndex =
-      (currentIndex - 1 + listData.length - 3) % (listData.length - 3);
+    const length = listData.length;
+    const newIndex = (currentIndex - 1 + length - 3) % (length - 3);
     setCurrentIndex(newIndex);
   };
 
   const handleNext = () => {
-    const newIndex = (currentIndex + 1) % (listData.length - 3);
+    const length = listData.length;
+    const newIndex = (currentIndex + 1) % (length - 3);
     setCurrentIndex(newIndex);
   };
 
@@ -56,6 +57,7 @@ const ListPopular = ({ listData }) => {
 };
 
 export default ListPopular;
+
 const ListPopularWrap = styled.section`
   margin-top: 100px;
   max-width: 1200px;
