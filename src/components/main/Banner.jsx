@@ -19,7 +19,9 @@ const Banner = () => {
               <BannerText>로그인 없이 자유롭게 만들어요.</BannerText>
             </BannerTextBox>
           </BannerDescriptionBox>
-          <BannerImage src={BannerImageExampleCards} alt="메세지 카드 예시" />
+          <BannerImageBox>
+            <BannerImage src={BannerImageExampleCards} alt="메세지 카드 예시" />
+          </BannerImageBox>
         </BannerWrapper>
         <BannerWrapper>
           <BannerDescriptionBox>
@@ -32,10 +34,12 @@ const Banner = () => {
               <BannerText>롤링 페이퍼에 이모지를 추가할 수 있어요.</BannerText>
             </BannerTextBox>
           </BannerDescriptionBox>
-          <BannerImage
-            src={BannerImageExampleEmojis}
-            alt="이모지 리액션 예시"
-          />
+          <BannerImageBox>
+            <BannerImage
+              src={BannerImageExampleEmojis}
+              alt="이모지 리액션 예시"
+            />
+          </BannerImageBox>
         </BannerWrapper>
       </ContentWrapper>
       <ButtonWrapper>
@@ -48,28 +52,36 @@ const Banner = () => {
 };
 
 const ContentContainer = styled.main`
-  width: 1200px;
+  max-width: 1248px;
+  width: 100%;
   margin: 124px auto;
   display: flex;
   flex-direction: column;
   gap: 24px;
+
+  @media ${({ theme }) => theme.device.Mobile} {
+    margin: 42px auto;
+  }
 `;
 
 const ContentWrapper = styled.div`
-  width: 1200px;
+  max-width: 1248px;
+  width: 100%;
+  padding: 0 24px;
   display: flex;
   flex-direction: column;
   gap: 30px;
 `;
 
 const BannerWrapper = styled.section`
-  width: 1200px;
+  max-width: 1200px;
   height: 324px;
   padding: 60px 0;
   border-radius: 16px;
   background-color: ${({ theme }) => theme.colors.SURFACE};
   display: flex;
   justify-content: space-between;
+  gap: 36px;
 
   &:nth-child(odd) {
     padding-left: 60px;
@@ -77,8 +89,20 @@ const BannerWrapper = styled.section`
   &:nth-child(even) {
     flex-direction: row-reverse;
     padding-right: 192px;
+
+    @media ${({ theme }) => theme.device.Tablet} {
+      flex-direction: column;
+      padding: 60px;
+    }
+  }
+
+  @media ${({ theme }) => theme.device.Tablet} {
+    height: 440px;
+    flex-direction: column;
+    padding: 60px;
   }
 `;
+
 const BannerDescriptionBox = styled.article`
   display: flex;
   flex-direction: column;
@@ -112,6 +136,18 @@ const BannerLabel = styled.h2`
   letter-spacing: -0.01em;
   text-align: left;
   color: #181818;
+
+  @media ${({ theme }) => theme.device.Tablet} {
+    br {
+      display: none;
+    }
+  }
+  @media ${({ theme }) => theme.device.Mobile} {
+    font-size: ${({ theme }) => theme.fontsize.LARGE_TXT};
+    br {
+      display: block;
+    }
+  }
 `;
 
 const BannerText = styled.p`
@@ -123,14 +159,29 @@ const BannerText = styled.p`
   color: #555555;
 `;
 
+const BannerImageBox = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  overflow-x: scroll;
+  overflow: visible;
+  white-space: nowrap;
+`;
+
 const BannerImage = styled.img`
   width: 720px;
-  height: 204px;
+  height: 100%;
+
+  @media ${({ theme }) => theme.device.Mobile} {
+    width: 540px;
+    height: 100%;
+  }
 `;
 
 const ButtonWrapper = styled.div`
-  width: 1200px;
+  max-width: 1248px;
   height: 104px;
+  padding: 0 24px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -141,10 +192,18 @@ const ButtonToLink = styled.button`
   height: 56px;
   border-radius: 12px;
   background-color: ${({ theme }) => theme.colors.PURPLE};
+  padding: 14px 24px;
+  border-radius: 12px;
+  font-size: ${({ theme }) => theme.fontsize.LARGE_TXT};
 
   & a {
     text-decoration: none;
     color: #000;
+  }
+
+  @media ${({ theme }) => theme.device.Tablet} {
+    max-width: 1200px;
+    width: 100%;
   }
 `;
 export default Banner;

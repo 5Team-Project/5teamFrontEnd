@@ -84,6 +84,8 @@ const Title = styled.a`
     position: absolute;
     bottom: 75px;
     right: 24px;
+    font-size: ${({ theme }) => theme.fontsize.TITLE};
+    font-weight: ${({ theme }) => theme.fontweight.REGULAR};
   }
 `;
 

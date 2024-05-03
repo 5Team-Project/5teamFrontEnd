@@ -34,6 +34,10 @@ const ActionWrapper = styled.div`
   :active {
     background-color: ${({ theme }) => theme.colors.PURPLE};
   }
+
+  @media ${({ theme }) => theme.device.Mobile} {
+    gap: 7px;
+  }
 `;
 
 const ActionButtons = styled.button`
@@ -50,11 +54,23 @@ const ActionButtons = styled.button`
   display: flex;
   align-items: center;
   gap: 4px;
+
+  @media ${({ theme }) => theme.device.Mobile} {
+    width: 36px;
+    padding: 6px 9px;
+    p {
+      display: none;
+    }
+  }
 `;
 
 const Icons = styled.img`
   width: 24px;
   height: 24px;
+  @media ${({ theme }) => theme.device.Mobile} {
+    width: 18px;
+    height: 18px;
+  }
 `;
 
 export default Actions;
