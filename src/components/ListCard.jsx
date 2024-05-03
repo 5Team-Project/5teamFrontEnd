@@ -1,22 +1,38 @@
+import { getData } from '../api/getData';
+
 import { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled, { ThemeContext } from 'styled-components';
-import ListMessagesData from '../DummyListMessagesData.json';
-import ListReactionsData from '../DummyListReactionsData.json';
+
 import WriterCountIcon from './WriterCountIcon';
 import WriterCountText from './WriterCountText';
 import ReactionCount from './ReactionCount';
 
 const ListCard = ({ data }) => {
+  const theme = useContext(ThemeContext);
+
+  const [count, setCount] = useState(0);
+  const [recent, setRecent] = useState([]);
+  const [reaction, setReaction] = useState([]);
+
+  useEffect(() => {
+    const handleLoad = async () => {
+      const queryData = `/6-5/recipients/${data.id}/`;
+      try {
+        const res = await getData(queryData);
+        setCount(res.messageCount);
+        setRecent(res.recentMessages);
+        setReaction(res.topReactions);
+      } catch (e) {
+        console.error(e);
+      }
+    };
+    handleLoad();
+  }, []);
+
   const [isBgImg, setIsBgImg] = useState();
 
   const [bgColor, setBgColor] = useState('');
-
-  const [ListMessages, setListMessages] = useState([]);
-  const [ListReactions, setListReactions] = useState([]);
-
-  const theme = useContext(ThemeContext);
-
   useEffect(() => {
     setIsBgImg(!!data.backgroundImageURL);
   }, [data.backgroundImageURL]);
@@ -40,22 +56,6 @@ const ListCard = ({ data }) => {
     }
   }, [data.backgroundColor]);
 
-  useEffect(() => {
-    setListMessages(
-      [...ListMessagesData].sort(function (a, b) {
-        return new Date(b.createdAt) - new Date(a.createdAt);
-      }),
-    );
-  }, [ListMessagesData]);
-
-  useEffect(() => {
-    setListReactions(
-      [...ListReactionsData].sort(function (a, b) {
-        return b.count - a.count;
-      }),
-    );
-  }, [ListReactionsData]);
-
   if (!bgColor) return;
 
   return (
@@ -67,13 +67,12 @@ const ListCard = ({ data }) => {
           : { backgroundColor: bgColor }
       }
     >
-      <ListCard Main>
+      <ListCardMain Main>
         <ListCardName>To. {data.name}</ListCardName>
-        <WriterCountIcon />
-        <WriterCountText />
-      </ListCard>
-
-      <ReactionCount />
+        <WriterCountIcon count={count} recent={recent} />
+        <WriterCountText count={count} isBgImg={isBgImg} />
+      </ListCardMain>
+      <ReactionCount reaction={reaction} />
     </ListCardWrap>
   );
 };
@@ -90,7 +89,6 @@ const ListCardWrap = styled(Link)`
 
   border-radius: 16px;
   border: 1px solid ${({ theme }) => theme.colors.BLACK};
-h
   padding: 30px 24px 20px;
 
   text-decoration: none;

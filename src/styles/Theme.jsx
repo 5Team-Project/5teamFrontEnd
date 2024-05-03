@@ -25,3 +25,29 @@ export const Theme = {
     REGULAR: '400',
   },
 };
+
+/*
+색상
+color: ${({ theme }) => theme.colors.PURPLE};
+color: ${({ theme }) => theme.colors.ORANGE};
+color: ${({ theme }) => theme.colors.BLUE};
+color: ${({ theme }) => theme.colors.GREEN};
+color: ${({ theme }) => theme.colors.GRAY};
+color: ${({ theme }) => theme.colors.DARKGRAY};
+color: ${({ theme }) => theme.colors.WHITE};
+color: ${({ theme }) => theme.colors.RED};
+color: ${({ theme }) => theme.colors.BLACK};
+color: ${({ theme }) => theme.colors.SURFACE};
+
+글자 크기
+font-size: ${({ theme }) => theme.fontsize.TITLE};
+font-size: ${({ theme }) => theme.fontsize.M_TITLE};
+font-size: ${({ theme }) => theme.fontsize.S_TITLE};
+font-size: ${({ theme }) => theme.fontsize.MEDIUM_TXT};
+font-size: ${({ theme }) => theme.fontsize.SMALL_TXT};
+font-size: ${({ theme }) => theme.fontsize.MINI_TXT};
+
+글자 두께
+font-weight: ${({ theme }) => theme.fontweight.BOLD};
+font-weight: ${({ theme }) => theme.fontweight.REGULAR};
+*/
