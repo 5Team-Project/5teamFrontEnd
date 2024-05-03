@@ -120,6 +120,15 @@ const AddPaperWrapper = styled.div`
   gap: 50px;
   opacity: 0px;
   flex-direction: column;
+
+  //모바일
+  @media (max-width: 767px) {
+    padding: 10px 20px;
+  }
+  //테블릿
+  @media (max-width: 1200px) {
+    padding: 49px 24px;
+  }
 `;
 
 const FromContainer = styled.div`

@@ -58,6 +58,7 @@ const ListRecent = ({ listData }) => {
 };
 
 export default ListRecent;
+
 const ListRecentWrap = styled.section`
   margin-top: 100px;
   max-width: 1200px;

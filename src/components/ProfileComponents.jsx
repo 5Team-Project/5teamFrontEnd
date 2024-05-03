@@ -21,7 +21,7 @@ const ProfileImageComponent = ({ onImageSelect }) => {
 
   const handleImageClick = (imageUrl) => {
     setSelectedImage(imageUrl);
-    onImageSelect(imageUrl); // 선택된 이미지 URL을 부모 컴포넌트로 전달
+    onImageSelect(imageUrl);
   };
 
   return (
@@ -81,11 +81,23 @@ const OptionsContainer = styled.div`
   justify-content: center;
   flex-direction: column;
   margin-left: 40px;
+
+  //모바일
+  @media (max-width: 767px) {
+    width: 300px;
+    height: 122px;
+  }
 `;
 
 const OptionImageContainer = styled.div`
   display: flex;
   flex-direction: row;
+
+  //모바일
+  @media (max-width: 767px) {
+    flex-wrap: wrap;
+    width: 120%;
+  }
 `;
 
 const OptionImage = styled.img`

@@ -1,10 +1,8 @@
 import { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled, { ThemeContext } from 'styled-components';
-
 import ListMessagesData from '../DummyListMessagesData.json';
 import ListReactionsData from '../DummyListReactionsData.json';
-
 import WriterCountIcon from './WriterCountIcon';
 import WriterCountText from './WriterCountText';
 import ReactionCount from './ReactionCount';
@@ -69,11 +67,11 @@ const ListCard = ({ data }) => {
           : { backgroundColor: bgColor }
       }
     >
-      <ListCardMain>
+      <ListCard Main>
         <ListCardName>To. {data.name}</ListCardName>
         <WriterCountIcon />
         <WriterCountText />
-      </ListCardMain>
+      </ListCard>
 
       <ReactionCount />
     </ListCardWrap>
@@ -91,8 +89,8 @@ const ListCardWrap = styled(Link)`
   height: 260px;
 
   border-radius: 16px;
-  border: 1px solid ${({ theme }) => theme.colors.BLACK}1a;
-
+  border: 1px solid ${({ theme }) => theme.colors.BLACK};
+h
   padding: 30px 24px 20px;
 
   text-decoration: none;
