@@ -40,13 +40,18 @@ const HeaderWrapper = styled.header`
 `;
 
 const HeaderBox = styled.div`
-  max-width: 1207px;
+  max-width: 1200px;
   width: 100%;
   height: 64px;
   padding: 11px 0;
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
+
+  @media ${({ theme }) => theme.device.Tablet} {
+    max-width: 728px;
+    padding: 11px 24px;
+  }
 `;
 
 const Logo = styled.a`
@@ -58,6 +63,7 @@ const ButtonWrapper = styled.div`
   width: 157px;
   height: 40px;
 `;
+
 const ButtonMakeNewPaper = styled.button`
   width: 157px;
   height: 40px;
@@ -65,7 +71,8 @@ const ButtonMakeNewPaper = styled.button`
   border-radius: 6px;
   border: 1px solid #cccccc;
 
-  font-size: 16px;
+  font-size: ${({ theme }) => theme.fontsize.MEDIUM_TXT};
+  font-weight: ${({ theme }) => theme.fontweight.BOLD};
   line-height: 26px;
   letter-spacing: -0.01em;
   text-align: center;
