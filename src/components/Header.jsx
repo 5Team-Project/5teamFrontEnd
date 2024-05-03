@@ -40,16 +40,19 @@ const HeaderWrapper = styled.header`
 `;
 
 const HeaderBox = styled.div`
-  max-width: 1200px;
+  max-width: 1248px;
   width: 100%;
   height: 64px;
-  padding: 11px 0;
+  padding: 11px 24px;
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
 
   @media ${({ theme }) => theme.device.Tablet} {
-    max-width: 728px;
+    padding: 11px 24px;
+  }
+
+  @media ${({ theme }) => theme.device.Mobile} {
     padding: 11px 24px;
   }
 `;
@@ -62,6 +65,10 @@ const Logo = styled.a`
 const ButtonWrapper = styled.div`
   width: 157px;
   height: 40px;
+
+  @media ${({ theme }) => theme.device.Mobile} {
+    width: 142px;
+  }
 `;
 
 const ButtonMakeNewPaper = styled.button`
@@ -76,6 +83,10 @@ const ButtonMakeNewPaper = styled.button`
   line-height: 26px;
   letter-spacing: -0.01em;
   text-align: center;
+
+  @media ${({ theme }) => theme.device.Mobile} {
+    width: 142px;
+  }
 `;
 
 export default Header;
