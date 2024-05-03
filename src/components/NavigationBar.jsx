@@ -16,7 +16,7 @@ const NavigationBar = () => {
 
   useEffect(() => {
     const handleLoad = async () => {
-      const queryData = '/6-5/recipients/2629/';
+      const queryData = '/6-5/recipients/6723/';
       try {
         const res = await getData(queryData);
         if (res) {
