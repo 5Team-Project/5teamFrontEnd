@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-import ListPopular from '../components/ListPopular';
-import ListRecent from '../components/ListRecent';
+import ListPopular from '../components/list/ListPopular';
+import ListRecent from '../components/list/ListRecent';
 
 const ListPage = () => {
   const [listData, setListData] = useState([]);

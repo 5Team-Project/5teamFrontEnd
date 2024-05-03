@@ -1,12 +1,12 @@
-import { getData } from '../api/getData';
+import { getData } from '../../api/getData';
 
 import { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled, { ThemeContext } from 'styled-components';
 
-import WriterCountIcon from './WriterCountIcon';
-import WriterCountText from './WriterCountText';
-import ReactionCount from './ReactionCount';
+import WriterCountIcon from '../WriterCountIcon';
+import WriterCountText from '../WriterCountText';
+import ReactionCount from '../ReactionCount';
 
 const ListCard = ({ data }) => {
   const theme = useContext(ThemeContext);
