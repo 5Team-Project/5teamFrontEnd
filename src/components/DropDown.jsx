@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
-const DropRelative = ({ onChange }) => {
+const Dropdown = ({ items, defaultValue, onChange }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedItem, setSelectedItem] = useState('지인');
+  const [selectedItem, setSelectedItem] = useState(defaultValue);
+
   const toggleDropdown = () => setIsOpen(!isOpen);
+
   const selectItem = (item) => {
     setSelectedItem(item);
     onChange(item);
@@ -19,10 +21,11 @@ const DropRelative = ({ onChange }) => {
       </DropdownHeader>
       {isOpen && (
         <DropdownList>
-          <DropdownItem onClick={() => selectItem('지인')}>지인</DropdownItem>
-          <DropdownItem onClick={() => selectItem('친구')}>친구</DropdownItem>
-          <DropdownItem onClick={() => selectItem('동료')}>동료</DropdownItem>
-          <DropdownItem onClick={() => selectItem('가족')}>가족</DropdownItem>
+          {items.map((item) => (
+            <DropdownItem key={item} onClick={() => selectItem(item)}>
+              {item}
+            </DropdownItem>
+          ))}
         </DropdownList>
       )}
     </DropdownContainer>
@@ -73,10 +76,10 @@ const DropdownList = styled.ul`
 const DropdownItem = styled.li`
   padding: 8px 16px;
   cursor: pointer;
-
   &:hover {
     background-color: ${({ theme }) => theme.colors.SURFACE};
     border-radius: 8px;
   }
 `;
-export default DropRelative;
+
+export default Dropdown;

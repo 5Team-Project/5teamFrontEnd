@@ -8,6 +8,7 @@ const GlobalStyle = createGlobalStyle`
     p {
       margin: 0;
     }
+    font: 'Pretendard', sans-serif;  
   }
   body {
     padding: 0;

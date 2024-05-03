@@ -67,7 +67,7 @@ const ListCard = ({ data }) => {
           : { backgroundColor: bgColor }
       }
     >
-      <ListCardMain>
+      <ListCardMain Main>
         <ListCardName>To. {data.name}</ListCardName>
         <WriterCountIcon count={count} recent={recent} />
         <WriterCountText count={count} isBgImg={isBgImg} />
@@ -88,8 +88,7 @@ const ListCardWrap = styled(Link)`
   height: 260px;
 
   border-radius: 16px;
-  border: 1px solid ${({ theme }) => theme.colors.BLACK}1a;
-
+  border: 1px solid ${({ theme }) => theme.colors.BLACK};
   padding: 30px 24px 20px;
 
   text-decoration: none;

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import defaultImage from '../assets/images/defaultimg.png';
 import { getProfileImg } from '../api/getProfileImg';
 
-const ProfileImageComponent = () => {
+const ProfileImageComponent = ({ onImageSelect }) => {
   const [selectedImage, setSelectedImage] = useState('');
   const [imageOptions, setImageOptions] = useState([]);
 
@@ -16,12 +16,12 @@ const ProfileImageComponent = () => {
         console.error(error);
       }
     };
-
     fetchProfileImages();
   }, []);
 
   const handleImageClick = (imageUrl) => {
     setSelectedImage(imageUrl);
+    onImageSelect(imageUrl);
   };
 
   return (
@@ -45,7 +45,6 @@ const ProfileImageComponent = () => {
     </ProfileContainer>
   );
 };
-
 const ProfileContainer = styled.div`
   display: flex;
   flex-direction: row;
@@ -82,11 +81,23 @@ const OptionsContainer = styled.div`
   justify-content: center;
   flex-direction: column;
   margin-left: 40px;
+
+  //모바일
+  @media (max-width: 767px) {
+    width: 300px;
+    height: 122px;
+  }
 `;
 
 const OptionImageContainer = styled.div`
   display: flex;
   flex-direction: row;
+
+  //모바일
+  @media (max-width: 767px) {
+    flex-wrap: wrap;
+    width: 120%;
+  }
 `;
 
 const OptionImage = styled.img`
