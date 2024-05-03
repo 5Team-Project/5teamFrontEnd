@@ -9,12 +9,12 @@ const WriterCountIcon = ({ count, recent }) => {
       {recent.map((profile) => {
         return (
           <ProfileImageBox key={profile.id}>
-            <ProfileImage src={profile.profileImageURL} alt="P" />
+            <ProfileImage src={profile.profileImageURL} alt="profile" />
           </ProfileImageBox>
         );
       })}
-      <CountButton style={{ left: '42px' }}>
-        <CountWriter>+{count - 3}</CountWriter>
+      <CountButton style={count <= 3 ? { display: 'none' } : { left: '42px' }}>
+        <CountWriter>{count <= 3 ? `` : `+${count - 3}`}</CountWriter>
       </CountButton>
     </WriterCountIconWrapper>
   );
