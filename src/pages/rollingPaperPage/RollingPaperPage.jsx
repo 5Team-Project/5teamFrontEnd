@@ -6,14 +6,14 @@ import { useContext } from 'react';
 const RollingPaperPage = () => {
   const themeContext = useContext(ThemeContext);
   return (
-    <MessageListContainter>
+    <MessageMainContainer>
       <MessageList messages={messages} />
-    </MessageListContainter>
+    </MessageMainContainer>
   );
 };
 export default RollingPaperPage;
 
-const MessageListContainter = styled.div`
-  background-color: ${({ theme }) => theme.colors.ORANGE};
+const MessageMainContainer = styled.div`
   margin: 0 auto;
+  background-color: ${({ theme }) => theme.colors.ORANGE};
 `;

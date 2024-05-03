@@ -1,4 +1,12 @@
 import styled, { ThemeContext } from 'styled-components';
+import { useContext } from 'react';
+
+const RELATIONSHIPS = {
+  가족: 'GREEN',
+  동료: 'PURPLE',
+  친구: 'BLUE',
+  지인: 'ORANGE',
+};
 
 const formatDate = (value) => {
   const date = new Date(value);
@@ -10,14 +18,18 @@ const formatDate = (value) => {
 };
 const MessageListItem = ({ message }) => {
   return (
-    <MessageContainter font={message.font}>
+    <MessageContainter>
       <ProfileContainer>
         <ProfileImgWrap>
           <ProfileImg src={message.profileImageURL} alt="프로필 이미지" />
         </ProfileImgWrap>
         <ProfileTextWrap>
-          <p>From.{message.sender}</p>
-          <p>{message.relationship}</p>
+          <p>
+            From. <SenderName>{message.sender}</SenderName>
+          </p>
+          <ProfileRelation relation={message.relationship}>
+            {message.relationship}
+          </ProfileRelation>
         </ProfileTextWrap>
       </ProfileContainer>
       <MessageHr />
@@ -47,6 +59,7 @@ const MessageList = ({ messages }) => {
 export default MessageList;
 
 const MessageListContainter = styled.ul`
+  width: 1200px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-auto-rows: 280px;
@@ -81,6 +94,24 @@ const ProfileTextWrap = styled.div`
   display: flex;
   flex-direction: column;
   gap: 6px;
+  font-size: ${({ theme }) => theme.fontsize.S_TITLE};
+  font-weight: ${({ theme }) => theme.fontweight.REGULAR};
+`;
+const SenderName = styled.span`
+  font-weight: ${({ theme }) => theme.fontweight.BOLD};
+`;
+const ProfileRelation = styled.div`
+  width: 41px;
+  height: 20px;
+  text-align: center;
+  border-radius: 4px;
+  padding: 0px 8px;
+  line-height: 150%;
+  color: ${({ theme }) => theme.colors.WHITE};
+  background-color: ${({ relation, theme }) =>
+    theme.colors[RELATIONSHIPS[relation]] ??
+    theme.colors[RELATIONSHIPS['지인']]};
+  font-size: ${({ theme }) => theme.fontsize.SMALL_TXT};
 `;
 const MessageHr = styled.hr`
   color: #eeeeee;
@@ -97,4 +128,6 @@ const MessageText = styled.div`
   height: 106px;
   overflow: hidden;
   text-overflow: ellipsis;
+  font-size: ${({ theme }) => theme.fontsize.MEDIUM_TXT};
+  font-weight: ${({ theme }) => theme.fontweight.REGULAR};
 `;
