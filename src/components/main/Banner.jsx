@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Theme } from '../styles/Theme';
+import { Theme } from '../../styles/Theme';
 import BannerImageExampleCards from '../assets/images/BannerImageExampleCards.svg';
 import BannerImageExampleEmojis from '../assets/images/BannerImageExampleEmojis.png';
 import { Link } from 'react-router-dom';

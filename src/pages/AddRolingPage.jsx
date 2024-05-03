@@ -1,9 +1,9 @@
 import styled, { css } from 'styled-components';
 import { useState, useEffect } from 'react';
-import ProfileImageComponent from '../components/ProfileComponents';
-import DropdownRelative from '../components/DropRelative';
+import ProfileImageComponent from '../components/postMessage/ProfileComponents';
+import DropdownRelative from '../components/postMessage/DropRelative';
 import ReactQuillContext from '../utils/ReactQuill';
-import DropdownFont from '../components/DropFont';
+import DropdownFont from '../components/postMessage/DropFont';
 import { PostMessages } from '../api/postMessage';
 
 const AddRollingPaper = () => {
