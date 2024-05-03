@@ -5,6 +5,10 @@ const GlobalStyle = createGlobalStyle`
   ${reset}
   * {
     box-sizing: border-box;
+    p {
+      margin: 0;
+    }
+    font: 'Pretendard', sans-serif;  
   }
   body {
     padding: 0;
