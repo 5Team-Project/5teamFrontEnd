@@ -6,6 +6,7 @@ import LandingPage from './pages/LandingPage/LandingPage';
 import ListPage from './pages/ListPage';
 import AddRollingPaper from './pages/AddRolingPage';
 import Header from './components/Header';
+import RollingPaperPage from './pages/rollingPaperPage/RollingPaperPage';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path="/" element={<LandingPage />} />
           <Route path="/list" element={<ListPage />} />
           <Route path="/test" element={<AddRollingPaper />} />
+          <Route path="/post" element={<RollingPaperPage />} />
         </Routes>
       </BrowserRouter>
     </ThemeProvider>
