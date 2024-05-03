@@ -1,5 +1,5 @@
 import messages from '../../messages.json';
-import MessageList from '../../components/MessageList';
+import MessageList from '../../components/postlist/MessageList';
 import styled, { ThemeContext } from 'styled-components';
 import { useContext } from 'react';
 

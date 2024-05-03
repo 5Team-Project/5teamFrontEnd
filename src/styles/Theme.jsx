@@ -24,6 +24,11 @@ export const Theme = {
     BOLD: '700',
     REGULAR: '400',
   },
+  device: {
+    PC: `screen and (max-width: 1920px)`,
+    Tablet: `screen and (max-width: 1200px)`,
+    Mobile: `screen and (max-width: 768px)`,
+  },
 };
 
 /*
@@ -50,4 +55,9 @@ font-size: ${({ theme }) => theme.fontsize.MINI_TXT};
 글자 두께
 font-weight: ${({ theme }) => theme.fontweight.BOLD};
 font-weight: ${({ theme }) => theme.fontweight.REGULAR};
+
+반응형
+@media ${({theme}) => theme.device.PC} {}
+@media ${({theme}) => theme.device.Tablet} {}
+@media ${({theme}) => theme.device.Mobile} {}
 */

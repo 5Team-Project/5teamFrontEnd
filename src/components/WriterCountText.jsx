@@ -23,6 +23,10 @@ const WriterCountTextWrapper = styled.div`
   font-weight: ${({ theme }) => theme.fontweight.BOLD};
   height: 27px;
   line-height: 30px;
+
+  @media ${({ theme }) => theme.device.Tablet} {
+    display: none;
+  }
 `;
 
 const CountText = styled.span`

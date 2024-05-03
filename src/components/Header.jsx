@@ -40,10 +40,10 @@ const HeaderWrapper = styled.header`
 `;
 
 const HeaderBox = styled.div`
-  max-width: 1207px;
+  max-width: 1248px;
   width: 100%;
   height: 64px;
-  padding: 11px 0;
+  padding: 11px 24px;
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
@@ -57,19 +57,28 @@ const Logo = styled.a`
 const ButtonWrapper = styled.div`
   width: 157px;
   height: 40px;
+
+  @media ${({ theme }) => theme.device.Mobile} {
+    width: 142px;
+  }
 `;
+
 const ButtonMakeNewPaper = styled.button`
-  font: Pretendard;
   width: 157px;
   height: 40px;
   padding: 8px 8px;
   border-radius: 6px;
   border: 1px solid #cccccc;
 
-  font-size: 16px;
+  font-size: ${({ theme }) => theme.fontsize.MEDIUM_TXT};
+  font-weight: ${({ theme }) => theme.fontweight.BOLD};
   line-height: 26px;
   letter-spacing: -0.01em;
   text-align: center;
+
+  @media ${({ theme }) => theme.device.Mobile} {
+    width: 142px;
+  }
 `;
 
 export default Header;

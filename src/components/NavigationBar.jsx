@@ -40,11 +40,13 @@ const NavigationBar = () => {
           <span>{title}</span>
         </Title>
         <PostStats>
-          <WriterCountIcon count={count} recent={recent} />
-          <WriterCountText count={count} />
-          <Divider />
-          <ReactionCount reaction={reaction} />
-          <DropReactions />
+          <PostStatsBox>
+            <WriterCountIcon count={count} recent={recent} />
+            <WriterCountText count={count} />
+            <Divider />
+            <ReactionCount reaction={reaction} />
+            <DropReactions />
+          </PostStatsBox>
           <Divider />
           <Actions />
         </PostStats>
@@ -57,13 +59,14 @@ const NavWrapper = styled.nav`
   width: 100%;
   height: 64px;
   border-bottom: 1px solid ${({ theme }) => theme.colors.GRAY};
+  position: relative;
 `;
 
 const NavBox = styled.div`
-  max-width: 1207px;
+  max-width: 1248px;
   width: 100%;
   height: 64px;
-  padding: 11px 0;
+  padding: 11px 24px;
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
@@ -76,18 +79,41 @@ const Title = styled.a`
   line-height: 45px;
   letter-spacing: -0.01em;
   text-align: left;
+
+  @media ${({ theme }) => theme.device.Mobile} {
+    position: absolute;
+    bottom: 75px;
+    right: 24px;
+    font-size: ${({ theme }) => theme.fontsize.TITLE};
+    font-weight: ${({ theme }) => theme.fontweight.REGULAR};
+  }
 `;
 
 const PostStats = styled.div`
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  gap: 14px;
+
+  @media ${({ theme }) => theme.device.Mobile} {
+    width: 100%;
+    justify-content: space-between;
+  }
 `;
+
+const PostStatsBox = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
 const Divider = styled.div`
   width: 1px;
   height: 90%;
   background-color: ${({ theme }) => theme.colors.GRAY};
+  margin: 0 14px;
+
+  @media ${({ theme }) => theme.device.Tablet} {
+    display: none;
+    margin: 0;
+  }
 `;
 
 export default NavigationBar;

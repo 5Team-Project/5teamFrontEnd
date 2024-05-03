@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Theme } from '../../styles/Theme';
 import React, { useState } from 'react';
-import TestImage from '../assets/images/ProfileForTest.png';
+import TestImage from '../../assets/images/ProfileForTest.png';
 
 const MessageModal = ({ content }) => {
   const [isOpen, setIsOpen] = useState(false);

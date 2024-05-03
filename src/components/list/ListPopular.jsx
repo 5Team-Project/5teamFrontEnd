@@ -1,5 +1,5 @@
-import arrowLeft from '../assets/images/arrow_left.svg';
-import arrowRight from '../assets/images/arrow_right.svg';
+import arrowLeft from '../../assets/images/arrow_left.svg';
+import arrowRight from '../../assets/images/arrow_right.svg';
 import styled from 'styled-components';
 import ListCard from './ListCard';
 import { useEffect, useState } from 'react';
