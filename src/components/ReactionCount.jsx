@@ -21,6 +21,7 @@ const ReactionCount = ({ reaction }) => {
 const ReactionCountWrapper = styled.div`
   height: 36px;
   display: flex;
+  margin-right: 14px;
 `;
 
 const ReactionButtonBox = styled.div`

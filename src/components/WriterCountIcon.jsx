@@ -25,6 +25,11 @@ const WriterCountIconWrapper = styled.div`
   height: 28px;
   display: flex;
   position: relative;
+  margin-right: 14px;
+
+  @media ${({ theme }) => theme.device.Tablet} {
+    display: none;
+  }
 `;
 
 const ProfileImageBox = styled.div`

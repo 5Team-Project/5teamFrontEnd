@@ -47,14 +47,6 @@ const HeaderBox = styled.div`
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
-
-  @media ${({ theme }) => theme.device.Tablet} {
-    padding: 11px 24px;
-  }
-
-  @media ${({ theme }) => theme.device.Mobile} {
-    padding: 11px 24px;
-  }
 `;
 
 const Logo = styled.a`
