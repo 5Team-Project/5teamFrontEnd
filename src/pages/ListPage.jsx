@@ -10,8 +10,6 @@ import ListRecent from '../components/list/ListRecent';
 const ListPage = () => {
   const [listData, setListData] = useState([]);
 
-  const [idData, setIdData] = useState([]);
-
   useEffect(() => {
     const handleLoad = async () => {
       try {
@@ -39,8 +37,14 @@ const ListPage = () => {
 };
 
 const ListMainContainer = styled.main`
-  width: 1200px;
+  max-width: 1200px;
   margin: 0 auto;
+  @media ${({ theme }) => theme.device.Tablet} {
+    max-width: 768px;
+  }
+  @media ${({ theme }) => theme.device.Mobile} {
+    max-width: 360px;
+  }
 `;
 
 const ListContent = styled.article`
@@ -52,7 +56,7 @@ const ListContent = styled.article`
 `;
 
 const ToPostPageDiv = styled.div`
-  margin-top: 50px;
+  margin-top: 25px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -72,6 +76,20 @@ const ToPostPageDiv = styled.div`
 
     text-decoration: none;
     color: #fff;
+  }
+
+  @media ${({ theme }) => theme.device.Tablet} {
+    margin-top: 10px;
+    & a {
+      width: 760px;
+      height: 56px;
+    }
+  }
+  @media ${({ theme }) => theme.device.Mobile} {
+    & a {
+      width: 360px;
+      height: 56px;
+    }
   }
 `;
 

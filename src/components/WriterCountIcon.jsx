@@ -2,21 +2,45 @@ import styled from 'styled-components';
 import { Theme } from '../styles/Theme';
 import React from 'react';
 import TestImage from '../assets/images/ProfileForTest.png';
+import { useLocation } from 'react-router-dom';
 
 const WriterCountIcon = ({ count, recent }) => {
+  const location = useLocation().pathname;
+  const isListPage = location === '/list';
   return (
-    <WriterCountIconWrapper>
-      {recent.map((profile) => {
-        return (
-          <ProfileImageBox key={profile.id}>
-            <ProfileImage src={profile.profileImageURL} alt="profile" />
-          </ProfileImageBox>
-        );
-      })}
-      <CountButton style={count <= 3 ? { display: 'none' } : { left: '42px' }}>
-        <CountWriter>{count <= 3 ? `` : `+${count - 3}`}</CountWriter>
-      </CountButton>
-    </WriterCountIconWrapper>
+    <>
+      {!isListPage ? (
+        <WriterCountIconWrapper>
+          {recent.map((profile) => {
+            return (
+              <ProfileImageBox key={profile.id}>
+                <ProfileImage src={profile.profileImageURL} alt="profile" />
+              </ProfileImageBox>
+            );
+          })}
+          <CountButton
+            style={count <= 3 ? { display: 'none' } : { left: '42px' }}
+          >
+            <CountWriter>{count <= 3 ? `` : `+${count - 3}`}</CountWriter>
+          </CountButton>
+        </WriterCountIconWrapper>
+      ) : (
+        <WriterCountIconWrapperList>
+          {recent.map((profile) => {
+            return (
+              <ProfileImageBox key={profile.id}>
+                <ProfileImage src={profile.profileImageURL} alt="profile" />
+              </ProfileImageBox>
+            );
+          })}
+          <CountButton
+            style={count <= 3 ? { display: 'none' } : { left: '42px' }}
+          >
+            <CountWriter>{count <= 3 ? `` : `+${count - 3}`}</CountWriter>
+          </CountButton>
+        </WriterCountIconWrapperList>
+      )}
+    </>
   );
 };
 
@@ -30,6 +54,13 @@ const WriterCountIconWrapper = styled.div`
   @media ${({ theme }) => theme.device.Tablet} {
     display: none;
   }
+`;
+const WriterCountIconWrapperList = styled.div`
+  width: 70px;
+  height: 28px;
+  display: flex;
+  position: relative;
+  margin-right: 14px;
 `;
 
 const ProfileImageBox = styled.div`
