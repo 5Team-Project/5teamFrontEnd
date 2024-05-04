@@ -70,6 +70,7 @@ const ButtonMakeNewPaper = styled.button`
   border-radius: 6px;
   border: 1px solid #cccccc;
 
+  font-family: 'Pretendard', sans-serif;
   font-size: ${({ theme }) => theme.fontsize.MEDIUM_TXT};
   font-weight: ${({ theme }) => theme.fontweight.BOLD};
   line-height: 26px;
