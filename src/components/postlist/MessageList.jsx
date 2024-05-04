@@ -1,5 +1,7 @@
 import styled, { ThemeContext } from 'styled-components';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
+import { formatDate } from '../../utils/formatDate';
+import MessageModal from './MessageModal';
 
 const RELATIONSHIPS = {
   가족: 'GREEN',
@@ -8,17 +10,9 @@ const RELATIONSHIPS = {
   지인: 'ORANGE',
 };
 
-const formatDate = (value) => {
-  const date = new Date(value);
-  const year = date.getFullYear();
-  const month = ('0' + (date.getMonth() + 1)).slice(-2);
-  const day = ('0' + date.getDate()).slice(-2);
-
-  return `${year}/${month}/${day}`;
-};
 const MessageListItem = ({ message }) => {
   return (
-    <MessageContainter>
+    <MessageContainer>
       <ProfileContainer>
         <ProfileImgWrap>
           <ProfileImg src={message.profileImageURL} alt="프로필 이미지" />
@@ -37,28 +31,47 @@ const MessageListItem = ({ message }) => {
         <MessageText>{message.content}</MessageText>
         <p>{formatDate(message.createdAt)}</p>
       </MessageTextContainer>
-    </MessageContainter>
+    </MessageContainer>
   );
 };
 const MessageList = ({ messages }) => {
   const themeContext = useContext(ThemeContext);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalData, setModalData] = useState({});
+
+  const handleMessageClick = (data) => {
+    setIsModalOpen(true);
+    setModalData(data);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setModalData({});
+  };
 
   return (
-    <MessageListContainter>
-      {messages.map((message) => {
-        return (
-          <li key={message.id}>
-            <MessageListItem message={message} />
-          </li>
-        );
-      })}
-    </MessageListContainter>
+    <>
+      <MessageModal
+        message={modalData}
+        isModalOpen={isModalOpen}
+        closeModal={closeModal}
+      />
+      <MessageListContainer>
+        {messages.map((message) => {
+          return (
+            <li key={message.id} onClick={() => handleMessageClick(message)}>
+              <MessageListItem message={message} />
+            </li>
+          );
+        })}
+      </MessageListContainer>
+    </>
   );
 };
 
 export default MessageList;
 
-const MessageListContainter = styled.ul`
+const MessageListContainer = styled.ul`
   width: 1200px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -67,7 +80,7 @@ const MessageListContainter = styled.ul`
   grid-row-gap: 28px;
 `;
 
-const MessageContainter = styled.div`
+const MessageContainer = styled.div`
   background-color: WHITE;
   width: 384px;
   height: 280px;

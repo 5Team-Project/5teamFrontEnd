@@ -1,6 +1,8 @@
 export const Theme = {
   colors: {
     PURPLE: '#DCB9FF',
+    PURPLE_D: '#AB57FF',
+    PURPLE_DD: '#6E0AD1',
     ORANGE: '#FFC583',
     BLUE: '#7CD2FF',
     GREEN: '#9BE282',
