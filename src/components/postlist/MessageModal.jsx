@@ -1,30 +1,41 @@
-import styled from 'styled-components';
+import styled, { ThemeContext } from 'styled-components';
 import { Theme } from '../../styles/Theme';
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import TestImage from '../../assets/images/ProfileForTest.png';
+import { formatDate } from '../../utils/formatDate';
 
-const MessageModal = ({ content }) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const handleModalChange = () => {
-    setIsOpen(!isOpen);
-  };
-
-  const MakeModalContent = () => {
-    return (
-      <>
-        <div></div>
-      </>
-    );
-  };
-
+const MakeModalContent = ({ message }) => {
+  const theme = useContext(ThemeContext);
   return (
     <>
-      {isOpen && (
-        <MyModalBG onClick={handleModalChange}>
+      <ModalHeader>
+        <ProfileImageBox>
+          <ProfileImage src={message.profileImageURL} alt="프로필 이미지" />
+        </ProfileImageBox>
+        <SenderBox>
+          <SenderFrom>
+            <span>From.</span>
+            <SenderName>{message.sender}</SenderName>
+          </SenderFrom>
+          <SenderBadge relation={message.relationship}>
+            {message.relationship}
+          </SenderBadge>
+        </SenderBox>
+        <CreatedAt>{formatDate(message.createdAt)}</CreatedAt>
+      </ModalHeader>
+      <MessageBox>{message.content}</MessageBox>
+    </>
+  );
+};
+
+const MessageModal = ({ message, isModalOpen, closeModal }) => {
+  return (
+    <>
+      {isModalOpen && (
+        <MyModalBG onClick={closeModal}>
           <MyModal onClick={(e) => e.stopPropagation()}>
-            내용
-            <TestImg src={TestImage} alt="테스트이미지" />
-            <ModalCloseButton>확인</ModalCloseButton>
+            <MakeModalContent message={message} />
+            <ModalCloseButton onClick={closeModal}>확인</ModalCloseButton>
           </MyModal>
         </MyModalBG>
       )}
@@ -32,8 +43,53 @@ const MessageModal = ({ content }) => {
   );
 };
 
-const TestImg = styled.img`
+const ModalHeader = styled.div`
+  width: 520px;
+  height: 56px;
+`;
+const ProfileImageBox = styled.div`
+  width: 56px;
+  height: 56px;
+`;
+const ProfileImage = styled.img`
+  width: 100%;
   height: 100%;
+  border-radius: 140px;
+  object-fit: cover;
+`;
+const SenderBox = styled.div``;
+const SenderFrom = styled.div`
+  font-size: ${({ theme }) => theme.fontsize.S_TITLE};
+  font-weight: ${({ theme }) => theme.fontweight.REGULAR};
+  color: ${({ theme }) => theme.colors.BLACK};
+
+  &SenderName {
+    font-weight: ${({ theme }) => theme.fontweight.BOLD};
+  }
+`;
+const SenderName = styled.span``;
+
+const SenderBadge = styled.div`
+  width: 41px;
+  height: 20px;
+  text-align: center;
+  border-radius: 4px;
+  padding: 0px 8px;
+  line-height: 150%;
+  color: ${({ theme }) => theme.colors.WHITE};
+  background-color: ${({ relation, theme }) =>
+    theme.colors[relation] ?? theme.colors['지인']};
+  font-size: ${({ theme }) => theme.fontsize.SMALL_TXT};
+`;
+const CreatedAt = styled.div`
+  font-size: ${({ theme }) => theme.fontsize.SMALL_TXT};
+  font-weight: ${({ theme }) => theme.fontweight.REGULAR};
+  color: ${({ theme }) => theme.colors.GRAY};
+`;
+const MessageBox = styled.div`
+  width: 520px;
+  height: 256px;
+  border-top: 1px solid ${({ theme }) => theme.colors.GRAY};
 `;
 
 const MyModalBG = styled.div`
@@ -68,5 +124,8 @@ const ModalCloseButton = styled.button`
   border-radius: 6px;
 
   background-color: ${({ theme }) => theme.colors.PURPLE};
+
+  &:hover {
+  }
 `;
 export default MessageModal;
