@@ -63,15 +63,20 @@ const ListCard = ({ data }) => {
       to={`/post/${data.id}`}
       style={
         isBgImg
-          ? { backgroundImage: `url(${data.backgroundImageURL})` }
+          ? {
+              backgroundImage: `url(${data.backgroundImageURL})`,
+              backgroundColor: bgColor,
+            }
           : { backgroundColor: bgColor }
       }
     >
-      <ListCardMain Main>
+      <ListCardMain>
         <ListCardName>To. {data.name}</ListCardName>
         <WriterCountIcon count={count} recent={recent} />
         <WriterCountText count={count} isBgImg={isBgImg} />
       </ListCardMain>
+
+      {!!reaction.length && <ListCardLine />}
       <ReactionCount reaction={reaction} />
     </ListCardWrap>
   );
@@ -88,7 +93,7 @@ const ListCardWrap = styled(Link)`
   height: 260px;
 
   border-radius: 16px;
-  border: 1px solid ${({ theme }) => theme.colors.BLACK};
+  border: 1px solid ${({ theme }) => theme.colors.BLACK}1a;
   padding: 30px 24px 20px;
 
   text-decoration: none;
@@ -97,6 +102,15 @@ const ListCardWrap = styled(Link)`
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
+
+  @media ${({ theme }) => theme.device.Tablet} {
+    width: 245px;
+    height: 250px;
+  }
+  @media ${({ theme }) => theme.device.Mobile} {
+    width: 315px;
+    height: 300px;
+  }
 `;
 
 const ListCardMain = styled.div`
@@ -112,4 +126,9 @@ const ListCardName = styled.span`
   font-weight: ${({ theme }) => theme.fontweight.BOLD};
   line-height: 36px;
   letter-spacing: -0.01em;
+`;
+
+const ListCardLine = styled.div`
+  border-top: 1px solid ${({ theme }) => theme.colors.BLACK}1f;
+  padding-bottom: 20px;
 `;
