@@ -1,32 +1,27 @@
 import styled, { css } from 'styled-components';
 import { useState, useEffect } from 'react';
+import { Navigate, useNavigate } from 'react-router-dom';
 import ProfileImageComponent from '../components/postMessage/ProfileComponents';
 import DropdownRelative from '../components/postMessage/DropRelative';
 import ReactQuillContext from '../utils/ReactQuill';
 import DropdownFont from '../components/postMessage/DropFont';
 import { PostMessages } from '../api/postMessage';
+import InputComponent from '../components/InputComponents';
 
 const AddRollingPaper = () => {
   const [inputValue, setInputValue] = useState('');
   const [quillValue, setQuillValue] = useState('');
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
-  const [isInputError, setIsInputError] = useState(false);
-  const [relationship, setRelationship] = useState('지인');
-  const [font, setFont] = useState('Noto Sans');
   const [selectedRelationship, setSelectedRelationship] = useState('지인');
   const [selectedFont, setSelectedFont] = useState('Noto Sans');
   const [selectedImage, setSelectedImage] = useState('');
+  const navigate = useNavigate();
 
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
-    setIsInputError(false);
   };
 
-  const handleInputBlur = () => {
-    if (inputValue.trim() === '') {
-      setIsInputError(true);
-    }
-  };
+  const handleInputBlur = () => {};
 
   const handleQuillChange = (value) => {
     setQuillValue(value);
@@ -52,8 +47,6 @@ const AddRollingPaper = () => {
 
   const handleSubmit = async () => {
     const data = {
-      team: '5팀',
-      recipientId: 6713,
       sender: inputValue,
       profileImageURL: selectedImage,
       relationship: selectedRelationship,
@@ -71,17 +64,15 @@ const AddRollingPaper = () => {
 
   return (
     <>
-      <AddPaperWrapper>
+      <AddPaperWrapper onSubmit={handleSubmit}>
         <FromContainer>
           <LabelStyle>From.</LabelStyle>
-          <InputFrom
+          <InputComponent
             placeholder="이름을 입력해 주세요."
             value={inputValue}
             onChange={handleInputChange}
             onBlur={handleInputBlur}
-            isError={isInputError}
           />
-          {isInputError && <ErrorMessage>값을 입력해 주세요.</ErrorMessage>}
         </FromContainer>
         <ProfileContainer>
           <LabelStyle>프로필 이미지</LabelStyle>
@@ -90,7 +81,7 @@ const AddRollingPaper = () => {
         <RelationContainer>
           <LabelStyle>상대와의 관계</LabelStyle>
           <DropdownRelative
-            value={relationship}
+            value={selectedRelationship}
             onChange={handleRelationshipChange}
           />
         </RelationContainer>
@@ -100,25 +91,22 @@ const AddRollingPaper = () => {
         </ContentContainer>
         <FontContainer>
           <LabelStyle>폰트 선택</LabelStyle>
-          <DropdownFont value={font} onChange={handleFontChange} />
+          <DropdownFont value={selectedFont} onChange={handleFontChange} />
         </FontContainer>
         <ButtonContainer>
-          <SubmitButton disabled={isButtonDisabled} onClick={handleSubmit}>
-            생성하기
-          </SubmitButton>
+          <SubmitButton disabled={isButtonDisabled}>생성하기</SubmitButton>
         </ButtonContainer>
       </AddPaperWrapper>
     </>
   );
 };
 
-const AddPaperWrapper = styled.div`
+const AddPaperWrapper = styled.form`
   display: flex;
   padding: 40px 350px;
   width: 100%;
   height: 944px;
   gap: 50px;
-  opacity: 0px;
   flex-direction: column;
 
   //모바일
@@ -135,7 +123,6 @@ const FromContainer = styled.div`
   width: 100%;
   height: 98px;
   gap: 12px;
-  opacity: 0px;
 `;
 
 const LabelStyle = styled.label`
@@ -166,7 +153,6 @@ const ProfileContainer = styled.div`
   width: 100%;
   height: 142px;
   gap: 12px;
-  opacity: 0px;
 `;
 
 const RelationContainer = styled.div`
@@ -175,14 +161,12 @@ const RelationContainer = styled.div`
   width: 320px;
   height: 98px;
   gap: 12px;
-  opacity: 0px;
 `;
 
 const ContentContainer = styled.div`
   width: 100%;
   height: 308px;
   gap: 12px;
-  opacity: 0px;
 `;
 
 const FontContainer = styled.div`
@@ -191,7 +175,6 @@ const FontContainer = styled.div`
   width: 320px;
   height: 98px;
   gap: 12px;
-  opacity: 0px;
   margin-top: 70px;
 `;
 const ButtonContainer = styled.div`
@@ -205,7 +188,7 @@ const SubmitButton = styled.button`
   padding: 14px 24px 14px 24px;
   gap: 10px;
   border-radius: 12px;
-  opacity: 0px;
+
   cursor: pointer;
   background-color: ${({ theme }) => theme.colors.PURPLE};
   color: ${({ theme }) => theme.colors.WHITE};
