@@ -80,7 +80,7 @@ const OptionsContainer = styled.div`
   display: flex;
   justify-content: center;
   flex-direction: column;
-  margin-left: 40px;
+  margin-left: 30px;
 
   //모바일
   @media (max-width: 767px) {
@@ -107,6 +107,10 @@ const OptionImage = styled.img`
   border-radius: 50%;
   object-fit: cover;
   margin: 5px 5px;
+  @media (max-width: 767px) {
+    // 모바일 화면 크기에서
+    margin: 5px 5px; // 가로 여백 조정
+  }
 `;
 
 export default ProfileImageComponent;
