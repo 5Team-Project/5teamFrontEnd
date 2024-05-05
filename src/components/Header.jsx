@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import IconTextLogo from '../assets/images/IconTextLogo.svg';
+import IconTextLogo from '../assets/icons/IconTextLogo.svg';
 import { useLocation } from 'react-router-dom';
 
 const Header = () => {

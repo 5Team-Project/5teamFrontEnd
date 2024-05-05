@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Theme } from '../styles/Theme';
 import React, { useEffect, useState } from 'react';
-import ArrowDown from '../assets/images/Ic_Arrow_down.svg';
+import ArrowDown from '../assets/icons/Ic_Arrow_down.svg';
 import { getData } from '../api/getData';
 
 const DropReactions = () => {

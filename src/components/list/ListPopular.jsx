@@ -1,5 +1,5 @@
-import arrowLeft from '../../assets/images/arrow_left.svg';
-import arrowRight from '../../assets/images/arrow_right.svg';
+import arrowLeft from '../../assets/icons/arrow_left.svg';
+import arrowRight from '../../assets/icons/arrow_right.svg';
 
 import { useEffect, useState } from 'react';
 import useDeviceSize from '../../hooks/useDeviceSize';
