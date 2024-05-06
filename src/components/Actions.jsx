@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import { Theme } from '../styles/Theme';
-import AddReactionIcon from '../assets/images/IconAddReaction.svg';
-import ShareIcon from '../assets/images/IconShare.svg';
-import DeleteIcon from '../assets/images/IconDelete.svg';
+import AddReactionIcon from '../assets/icons/IconAddReaction.svg';
+import ShareIcon from '../assets/icons/IconShare.svg';
+import DeleteIcon from '../assets/icons/IconDelete.svg';
 
 const Actions = () => {
   return (

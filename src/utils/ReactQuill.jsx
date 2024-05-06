@@ -1,9 +1,10 @@
+import React from 'react';
 import ReactQuill from 'react-quill';
 import styled from 'styled-components';
 import 'react-quill/dist/quill.snow.css';
 
 const ReactQuillTemplate = (props) => {
-  const { value, onChange } = props;
+  const { value, onChange, font } = props;
 
   const handleQuillChange = (content, delta, source, editor) => {
     onChange(editor.getHTML());
@@ -18,6 +19,7 @@ const ReactQuillTemplate = (props) => {
     'indent',
     'align',
     'color',
+    'font',
   ];
 
   const modules = {
@@ -29,22 +31,26 @@ const ReactQuillTemplate = (props) => {
         { indent: '-1' },
         { indent: '+1' },
       ],
+      [{ font: font }],
     ],
   };
 
   return (
-    <>
-      <StyledEditorContainer>
-        <ReactQuill
-          style={{ width: '100%', height: '100%', marginTop: '15px' }}
-          theme="snow"
-          modules={modules}
-          formats={formats}
-          value={value || ''}
-          onChange={handleQuillChange}
-        />
-      </StyledEditorContainer>
-    </>
+    <StyledEditorContainer>
+      <ReactQuill
+        style={{
+          width: '100%',
+          height: '100%',
+          marginTop: '15px',
+          fontFamily: font,
+        }}
+        theme="snow"
+        modules={modules}
+        formats={formats}
+        value={value || ''}
+        onChange={handleQuillChange}
+      />
+    </StyledEditorContainer>
   );
 };
 
