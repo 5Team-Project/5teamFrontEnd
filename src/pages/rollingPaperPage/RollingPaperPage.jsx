@@ -9,12 +9,11 @@ const RollingPaperPage = () => {
   const { messageId } = useParams();
   const [messages, setMessages] = useState([]);
 
-  const handleLoadMessage = async () => {
-    const { results } = await getMessage(messageId);
-    setMessages(results);
-  };
-
   useEffect(() => {
+    const handleLoadMessage = async () => {
+      const { results } = await getMessage(messageId);
+      setMessages(results);
+    };
     handleLoadMessage();
   }, []);
 
