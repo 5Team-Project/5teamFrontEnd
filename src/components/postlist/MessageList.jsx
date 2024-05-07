@@ -137,7 +137,7 @@ const MessageTextContainer = styled.div`
   justify-content: space-between;
   gap: 16px;
 `;
-const MessageText = styled.div`
+const MessageText = styled.p`
   height: 106px;
   overflow: hidden;
   text-overflow: ellipsis;
