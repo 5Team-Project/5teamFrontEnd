@@ -64,14 +64,23 @@ const ListCard = ({ data }) => {
       style={
         isBgImg
           ? {
-              backgroundImage: `url(${data.backgroundImageURL})`,
-              backgroundColor: bgColor,
+              backgroundImage: `linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3) ),url(${data.backgroundImageURL})`,
             }
           : { backgroundColor: bgColor }
       }
     >
       <ListCardMain>
-        <ListCardName>To. {data.name}</ListCardName>
+        <ListCardName
+          style={
+            isBgImg
+              ? {
+                  color: `${theme.colors.WHITE}`,
+                }
+              : { color: `${theme.colors.BLACK}` }
+          }
+        >
+          To. {data.name}
+        </ListCardName>
         <WriterCountIcon count={count} recent={recent} />
         <WriterCountText count={count} isBgImg={isBgImg} />
       </ListCardMain>
