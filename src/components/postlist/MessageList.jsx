@@ -33,7 +33,7 @@ const MessageListItem = ({ message }) => {
         <MessageText
           dangerouslySetInnerHTML={{ __html: message.content }}
           style={{ fontFamily: mapFontName(message.font) }}
-        />
+        />{' '}
         <p>{formatDate(message.createdAt)}</p>
       </MessageTextContainer>
     </MessageContainer>
@@ -95,6 +95,7 @@ const MessageContainer = styled.div`
   height: 280px;
   border-radius: 16px;
   padding: 28px 24px 24px 24px;
+  font:;
 `;
 const AddMessageContainer = styled(MessageContainer)`
   display: flex;
@@ -170,10 +171,17 @@ const MessageTextContainer = styled.div`
   justify-content: space-between;
   gap: 16px;
 `;
-const MessageText = styled.p`
-  height: 106px;
+const MessageText = styled.div`
+  height: 104px;
   overflow: hidden;
+  word-wrap: break-word;
+  word-break: break-all;
   text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient:vertical;
+  -webkit-line-clamp:5;
+  line-height: 20px;
+  font: ${({ font }) => font};
   font-size: ${({ theme }) => theme.fontsize.MEDIUM_TXT};
   font-weight: ${({ theme }) => theme.fontweight.REGULAR};
 `;

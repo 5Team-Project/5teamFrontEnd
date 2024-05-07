@@ -19,12 +19,9 @@ const RollingPaperPage = () => {
   }, []);
 
   return (
-    <>
-      <NavigationBar recipientId={messageId} />
-      <MessageMainContainer>
-        <MessageList messages={messages} />
-      </MessageMainContainer>
-    </>
+    <MessageMainContainer>
+      <MessageList messages={messages} />
+    </MessageMainContainer>
   );
 };
 export default RollingPaperPage;
