@@ -1,33 +1,16 @@
 import { getData } from '../api/getData';
 
 import { Link } from 'react-router-dom';
-import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-import ListPopular from '../components/list/ListPopular';
-import ListRecent from '../components/list/ListRecent';
+import ListSort from '../components/list/ListSort';
 
 const ListPage = () => {
-  const [listData, setListData] = useState([]);
-
-  useEffect(() => {
-    const handleLoad = async () => {
-      try {
-        const { results } = await getData('/6-5/recipients/');
-        setListData(results);
-      } catch (e) {
-        console.error(e);
-      }
-    };
-    handleLoad();
-  }, []);
-
-  if (listData === null) return;
   return (
     <ListMainContainer>
       <ListContent>
-        <ListPopular listData={listData} />
-        <ListRecent listData={listData} />
+        <ListSort sort={'like'} />
+        <ListSort />
         <ToPostPageDiv>
           <Link to={'/post'}>나도 만들어보기</Link>
         </ToPostPageDiv>
@@ -72,7 +55,12 @@ const ToPostPageDiv = styled.div`
     height: 56px;
 
     border-radius: 12px;
-    background-color: #9935ff;
+    background-color: ${({ theme }) => theme.colors.PURPLE};
+
+    font-size: ${({ theme }) => theme.fontsize.LARGE_TXT};
+    font-weight: ${({ theme }) => theme.fontweight.BOLD};
+    line-height: 28px;
+    text-align: center;
 
     text-decoration: none;
     color: #fff;

@@ -1,25 +1,48 @@
+import { getData } from '../../api/getData';
 import arrowLeft from '../../assets/icons/arrow_left.svg';
 import arrowRight from '../../assets/icons/arrow_right.svg';
 import { useEffect, useState } from 'react';
-import styled from 'styled-components';
-import ListCard from './ListCard';
+<<<<<<< HEAD:src/components/list/ListRecent.jsx
+=======
 import useDeviceSize from '../../hooks/useDeviceSize';
 
+>>>>>>> develop:src/components/list/ListSort.jsx
+import styled from 'styled-components';
+import ListCard from './ListCard';
+
+<<<<<<< HEAD:src/components/list/ListRecent.jsx
 const ListRecent = ({ listData, theme }) => {
   const [sortData, setSortData] = useState([]);
   const { deviceSize } = useDeviceSize();
+=======
+const ListSort = ({ sort }) => {
+  const [listData, setListData] = useState([]);
+  const [path, setPath] = useState(null);
+>>>>>>> develop:src/components/list/ListSort.jsx
 
   const isDarkMode = theme !== 'light';
 
   useEffect(() => {
-    if (!listData) return;
+    const handleLoad = async () => {
+      if (sort === 'like') setPath(`/6-5/recipients/?sort=like`);
+      else setPath('/6-5/recipients/');
 
-    setSortData(
-      [...listData].sort(function (a, b) {
-        return new Date(b.createdAt) - new Date(a.createdAt);
-      }),
-    );
-  }, [listData]);
+      try {
+        if (path === null) return;
+
+        const { results } = await getData(path);
+        setListData(results);
+      } catch (e) {
+        console.error(e);
+      }
+    };
+    handleLoad();
+  }, [path]);
+
+  const [page, setPage] = useState(0);
+  const [isLoding, setIsLoding] = useState(false);
+
+  const { deviceSize } = useDeviceSize();
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [currentLength, setCurrentLength] = useState(3);
@@ -80,8 +103,12 @@ const ListRecent = ({ listData, theme }) => {
   };
 
   return (
-    <ListRecentWrap>
-      <ListRecentSpan>최근에 만든 롤링 페이퍼 ⭐️️</ListRecentSpan>
+    <ListSortWrap>
+      <ListSortSpan>
+        {sort !== 'like'
+          ? '최근에 만든 롤링 페이퍼 ⭐️️'
+          : '인기 롤링 페이퍼 🔥'}
+      </ListSortSpan>
 
       <ListCarousel
         onTouchStart={handleTouchStart}
@@ -90,7 +117,7 @@ const ListRecent = ({ listData, theme }) => {
       >
         <ListCarouselSize
           currentIndex={currentIndex}
-          sortData={sortData}
+          sortData={listData}
           deviceSize={deviceSize}
         />
       </ListCarousel>
@@ -105,7 +132,7 @@ const ListRecent = ({ listData, theme }) => {
           </ListBtnRight>
         </>
       )}
-    </ListRecentWrap>
+    </ListSortWrap>
   );
 };
 
@@ -126,8 +153,9 @@ const ListCarouselSize = ({ currentIndex, sortData, deviceSize }) => {
         setItemWidth(295);
     }
   }, [deviceSize]);
+
   return (
-    <ListRecentMain
+    <ListSortMain
       style={{
         transform: `translateX(-${currentIndex * itemWidth}px)`,
       }}
@@ -135,25 +163,22 @@ const ListCarouselSize = ({ currentIndex, sortData, deviceSize }) => {
       {sortData.map((data) => (
         <ListCard key={data.id} data={data} />
       ))}
-    </ListRecentMain>
+    </ListSortMain>
   );
 };
 
-export default ListRecent;
+export default ListSort;
 
-const ListRecentWrap = styled.section`
+const ListSortWrap = styled.section`
   margin-top: 40px;
   max-width: 100%;
   position: relative;
-  @media ${({ theme }) => theme.device.Tablet} {
-    margin-top: 25px;
-  }
   @media ${({ theme }) => theme.device.Mobile} {
     margin-top: 20px;
   }
 `;
 
-const ListRecentSpan = styled.span`
+const ListSortSpan = styled.span`
   font-size: ${({ theme }) => theme.fontsize.M_TITLE};
   font-weight: ${({ theme }) => theme.fontweight.BOLD};
 
@@ -176,7 +201,7 @@ const ListCarousel = styled.div`
   }
 `;
 
-const ListRecentMain = styled.div`
+const ListSortMain = styled.div`
   display: flex;
   padding: 0 10px;
   gap: 20px;
