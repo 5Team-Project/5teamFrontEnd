@@ -1,25 +1,61 @@
 import styled from 'styled-components';
-import { Theme } from '../styles/Theme';
 import AddReactionIcon from '../assets/icons/IconAddReaction.svg';
 import ShareIcon from '../assets/icons/IconShare.svg';
 import DeleteIcon from '../assets/icons/IconDelete.svg';
+import { useState } from 'react';
+import EmojiPicker from 'emoji-picker-react';
+import { theme } from 'emoji-picker-react';
+import { useParams } from 'react-router-dom';
+import { postEmojiReactions } from '../api/postEmojiReaction';
 
-const Actions = ({ theme }) => {
-  const isDarkMode = theme !== 'light';
+const Actions = ({ recipientId, updateReactions }) => {
+  const [showPicker, setShowPicker] = useState(false);
+  const [reactionData, setReactionData] = useState({
+    emoji: '',
+    type: 'increase',
+  });
+
+  const handleShowEmojiPicker = () => {
+    setShowPicker(!showPicker);
+  };
+
+  const handleEmojiClick = (emojiData) => {
+    console.log(recipientId);
+    const newReactionData = {
+      ...reactionData,
+      emoji: emojiData.emoji,
+    };
+    console.log(emojiData);
+    console.log(newReactionData);
+
+    postEmojiReactions(newReactionData, recipientId);
+    updateReactions();
+  };
 
   return (
-    <ActionWrapper>
-      <ActionButtons>
-        <Icons src={AddReactionIcon} alt="리액션추가" isDarkMode={isDarkMode} />
-        <p>추가</p>
-      </ActionButtons>
-      <ActionButtons>
-        <Icons src={ShareIcon} alt="공유" isDarkMode={isDarkMode} />
-      </ActionButtons>
-      <ActionButtons>
-        <Icons src={DeleteIcon} alt="삭제" isDarkMode={isDarkMode} />
-      </ActionButtons>
-    </ActionWrapper>
+    <>
+      <ActionWrapper>
+        <ActionButtons onClick={handleShowEmojiPicker}>
+          <Icons src={AddReactionIcon} alt="리액션추가" />
+          <p>추가</p>
+        </ActionButtons>
+        <ActionButtons>
+          <Icons src={ShareIcon} alt="공유" />
+        </ActionButtons>
+        <ActionButtons>
+          <Icons src={DeleteIcon} alt="삭제" />
+        </ActionButtons>
+      </ActionWrapper>
+      <PickerWrapper>
+        <EmojiPicker
+          open={showPicker}
+          onEmojiClick={handleEmojiClick}
+          theme="auto"
+          searchPlaceHolder=" Search your Emoji"
+          searchDisabled={true}
+        />
+      </PickerWrapper>
+    </>
   );
 };
 
@@ -30,11 +66,11 @@ const ActionWrapper = styled.div`
   gap: 14px;
 
   :hover {
-    background-color: ${({ theme }) => theme.colors.GRAY};
+    background-color: ${({ theme }) => theme.colors.PURPLE};
   }
 
   :active {
-    background-color: ${({ theme }) => theme.colors.PURPLE};
+    background-color: ${({ theme }) => theme.colors.PURPLE_D};
   }
 
   @media ${({ theme }) => theme.device.Mobile} {
@@ -82,4 +118,9 @@ const Icons = styled.img`
   }
 `;
 
+const PickerWrapper = styled.div`
+  position: absolute;
+  top: 61px;
+  left: 1147px;
+`;
 export default Actions;

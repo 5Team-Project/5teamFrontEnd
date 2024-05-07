@@ -1,12 +1,12 @@
 import styled from 'styled-components';
 import { Theme } from '../styles/Theme';
-import React, { useState } from 'react';
+import React from 'react';
 
-const ReactionCount = ({ reaction }) => {
+const ReactionCount = ({ reactions }) => {
   return (
     <ReactionCountWrapper>
       <ReactionButtonBox>
-        {reaction.map((emoji) => {
+        {reactions.map((emoji) => {
           return (
             <ReactionButtons key={emoji.id}>
               {emoji.emoji} {emoji.count}

@@ -9,27 +9,26 @@ import { getDataByRecipientId } from '../api/getDataByRecipientId';
 
 const NavigationBar = ({ recipientId }) => {
   const [title, setTitle] = useState('Dear');
-  const [count, setCount] = useState(0);
-  const [recent, setRecent] = useState([]);
-  const [reaction, setReaction] = useState([]);
+  const [messageCount, setMessageCount] = useState(0);
+  const [recentSenders, setRecentSenders] = useState([]);
+  const [reactions, setReactions] = useState([]);
 
   useEffect(() => {
-    const handleLoad = async () => {
-      const queryData = `${recipientId}`;
+    const handleLoadRecipientData = async () => {
       try {
-        const res = await getDataByRecipientId(queryData);
+        const res = await getDataByRecipientId(`${recipientId}/`);
         if (res) {
           setTitle(res.name);
-          setCount(res.messageCount);
-          setRecent(res.recentMessages);
-          setReaction(res.topReactions);
+          setMessageCount(res.messageCount);
+          setRecentSenders(res.recentMessages);
+          setReactions(res.topReactions);
         }
       } catch (e) {
         console.error(e);
       }
     };
-    handleLoad();
-  }, []);
+    handleLoadRecipientData();
+  }, [messageCount, recentSenders, reactions]);
 
   return (
     <NavWrapper>
@@ -40,14 +39,14 @@ const NavigationBar = ({ recipientId }) => {
         </Title>
         <PostStats>
           <PostStatsBox>
-            <WriterCountIcon count={count} recent={recent} />
-            <WriterCountText count={count} />
+            <WriterCountIcon count={messageCount} recent={recentSenders} />
+            <WriterCountText count={messageCount} />
             <Divider />
-            <ReactionCount reaction={reaction} />
-            <DropReactions />
+            <ReactionCount reactions={reactions} />
+            <DropReactions recipientId={recipientId} />
           </PostStatsBox>
           <Divider />
-          <Actions />
+          <Actions recipientId={recipientId} />
         </PostStats>
       </NavBox>
     </NavWrapper>

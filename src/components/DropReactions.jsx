@@ -1,10 +1,9 @@
 import styled from 'styled-components';
-import { Theme } from '../styles/Theme';
 import React, { useEffect, useState } from 'react';
 import ArrowDown from '../assets/icons/Ic_Arrow_down.svg';
-import { getData } from '../api/getData';
+import { getDataByRecipientId } from '../api/getDataByRecipientId';
 
-const DropReactions = ({ theme }) => {
+const DropReactions = ({ theme, recipientId }) => {
   const [reactions, setReactions] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const isDarkMode = theme !== 'light';
@@ -15,9 +14,8 @@ const DropReactions = ({ theme }) => {
 
   useEffect(() => {
     const handleLoadReactions = async () => {
-      const queryData = '3-1/recipients/2629/reactions/';
       try {
-        const res = await getData(queryData);
+        const res = await getDataByRecipientId(`${recipientId}/reactions/`);
         if (res && res.results) {
           setReactions(res.results);
         }
@@ -70,7 +68,7 @@ const ArrowIcon = styled.img`
   width: 36px;
   height: 36px;
   transform: ${(props) => (props.isOpen ? 'rotate(0deg)' : 'rotate(180deg)')};
-  transition: transform 1s;
+  transition: transform 250ms;
 
   filter: ${({ isDarkMode, theme }) =>
     isDarkMode
