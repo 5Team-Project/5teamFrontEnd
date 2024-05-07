@@ -18,9 +18,7 @@ const useDeviceSize = () => {
 
   useEffect(() => {
     const handleResize = throttle(() => {
-      window.requestAnimationFrame(() => {
-        setDeviceSize(getDeviceSize());
-      });
+      setDeviceSize(getDeviceSize());
     }, 200);
 
     window.addEventListener('resize', handleResize);

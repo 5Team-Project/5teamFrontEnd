@@ -1,3 +1,4 @@
+import { getData } from '../../api/getData';
 import arrowLeft from '../../assets/icons/arrow_left.svg';
 import arrowRight from '../../assets/icons/arrow_right.svg';
 
@@ -7,19 +8,31 @@ import useDeviceSize from '../../hooks/useDeviceSize';
 import styled from 'styled-components';
 import ListCard from './ListCard';
 
-const ListPopular = ({ listData }) => {
-  const [sortData, setSortData] = useState([]);
-  const { deviceSize } = useDeviceSize();
+const ListSort = ({ sort }) => {
+  const [listData, setListData] = useState([]);
+  const [path, setPath] = useState(null);
 
   useEffect(() => {
-    if (!listData) return;
+    const handleLoad = async () => {
+      if (sort === 'like') setPath(`/6-5/recipients/?sort=like`);
+      else setPath('/6-5/recipients/');
 
-    setSortData(
-      [...listData].sort(function (a, b) {
-        return b.messageCount - a.messageCount;
-      }),
-    );
-  }, [listData]);
+      try {
+        if (path === null) return;
+
+        const { results } = await getData(path);
+        setListData(results);
+      } catch (e) {
+        console.error(e);
+      }
+    };
+    handleLoad();
+  }, [path]);
+
+  const [page, setPage] = useState(0);
+  const [isLoding, setIsLoding] = useState(false);
+
+  const { deviceSize } = useDeviceSize();
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [currentLength, setCurrentLength] = useState(3);
@@ -46,14 +59,12 @@ const ListPopular = ({ listData }) => {
     const newIndex =
       (currentIndex - 1 + length - currentLength) % (length - currentLength);
     setCurrentIndex(newIndex);
-    console.log(currentIndex);
   };
 
   const handleNext = () => {
     const length = listData.length;
     const newIndex = (currentIndex + 1) % (length - currentLength);
     setCurrentIndex(newIndex);
-    console.log(currentIndex);
   };
 
   // 터치 슬라이드
@@ -82,8 +93,12 @@ const ListPopular = ({ listData }) => {
   };
 
   return (
-    <ListPopularWrap>
-      <ListPopularSpan>인기 롤링 페이퍼 🔥</ListPopularSpan>
+    <ListSortWrap>
+      <ListSortSpan>
+        {sort !== 'like'
+          ? '최근에 만든 롤링 페이퍼 ⭐️️'
+          : '인기 롤링 페이퍼 🔥'}
+      </ListSortSpan>
 
       <ListCarousel
         onTouchStart={handleTouchStart}
@@ -92,7 +107,7 @@ const ListPopular = ({ listData }) => {
       >
         <ListCarouselSize
           currentIndex={currentIndex}
-          sortData={sortData}
+          sortData={listData}
           deviceSize={deviceSize}
         />
       </ListCarousel>
@@ -107,7 +122,7 @@ const ListPopular = ({ listData }) => {
           </ListBtnRight>
         </>
       )}
-    </ListPopularWrap>
+    </ListSortWrap>
   );
 };
 
@@ -130,7 +145,7 @@ const ListCarouselSize = ({ currentIndex, sortData, deviceSize }) => {
   }, [deviceSize]);
 
   return (
-    <ListPopularMain
+    <ListSortMain
       style={{
         transform: `translateX(-${currentIndex * itemWidth}px)`,
       }}
@@ -138,13 +153,13 @@ const ListCarouselSize = ({ currentIndex, sortData, deviceSize }) => {
       {sortData.map((data) => (
         <ListCard key={data.id} data={data} />
       ))}
-    </ListPopularMain>
+    </ListSortMain>
   );
 };
 
-export default ListPopular;
+export default ListSort;
 
-const ListPopularWrap = styled.section`
+const ListSortWrap = styled.section`
   margin-top: 40px;
   max-width: 100%;
   position: relative;
@@ -153,7 +168,7 @@ const ListPopularWrap = styled.section`
   }
 `;
 
-const ListPopularSpan = styled.span`
+const ListSortSpan = styled.span`
   font-size: ${({ theme }) => theme.fontsize.M_TITLE};
   font-weight: ${({ theme }) => theme.fontweight.BOLD};
 
@@ -176,7 +191,7 @@ const ListCarousel = styled.div`
   }
 `;
 
-const ListPopularMain = styled.div`
+const ListSortMain = styled.div`
   display: flex;
   padding: 0 10px;
   gap: 20px;
