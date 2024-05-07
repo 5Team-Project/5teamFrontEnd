@@ -1,4 +1,5 @@
 import React from 'react';
+import PlusIcon from '../../assets/icons/ic_plus.svg';
 import styled, { ThemeContext } from 'styled-components';
 import { useContext, useState } from 'react';
 import { formatDate } from '../../utils/formatDate';
@@ -61,6 +62,11 @@ const MessageList = ({ messages }) => {
         closeModal={closeModal}
       />
       <MessageListContainer>
+        <AddMessageContainer>
+          <MessageAddButton>
+            <Icon src={PlusIcon} alt="메세지 추가" />
+          </MessageAddButton>
+        </AddMessageContainer>
         {messages.map((message) => {
           return (
             <li key={message.id} onClick={() => handleMessageClick(message)}>
@@ -83,7 +89,6 @@ const MessageListContainer = styled.ul`
   grid-column-gap: 24px;
   grid-row-gap: 28px;
 `;
-
 const MessageContainer = styled.div`
   background-color: ${({ theme }) => theme.colors.WHITE};
   width: 384px;
@@ -91,6 +96,30 @@ const MessageContainer = styled.div`
   border-radius: 16px;
   padding: 28px 24px 24px 24px;
 `;
+const AddMessageContainer = styled(MessageContainer)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const Icon = styled.img`
+  height: 24px;
+  width: 24px;
+`;
+const MessageAddButton = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background-color: ${({ theme }) => theme.colors.DARKGRAY};
+  ${Icon} {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+`;
+
 const ProfileContainer = styled.div`
   display: flex;
   flex-direction: row;
