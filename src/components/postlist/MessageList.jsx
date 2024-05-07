@@ -81,7 +81,7 @@ const MessageListContainer = styled.ul`
 `;
 
 const MessageContainer = styled.div`
-  background-color: WHITE;
+  background-color: ${({ theme }) => theme.colors.WHITE};
   width: 384px;
   height: 280px;
   border-radius: 16px;

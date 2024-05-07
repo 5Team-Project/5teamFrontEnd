@@ -96,6 +96,7 @@ const CountWriter = styled.span`
   color: ${({ theme }) => theme.colors.DARKGRAY};
   font-size: ${({ theme }) => theme.fontsize.MINI_TXT};
   font-weight: ${({ theme }) => theme.fontweight.REGULAR};
+
   text-align: left;
 `;
 

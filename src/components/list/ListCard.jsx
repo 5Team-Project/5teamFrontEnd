@@ -65,7 +65,6 @@ const ListCard = ({ data }) => {
         isBgImg
           ? {
               backgroundImage: `url(${data.backgroundImageURL})`,
-              backgroundColor: bgColor,
             }
           : { backgroundColor: bgColor }
       }
@@ -116,7 +115,6 @@ const ListCardWrap = styled(Link)`
 const ListCardMain = styled.div`
   display: flex;
   flex-direction: column;
-
   gap: 12px;
   flex-grow: 3;
 `;

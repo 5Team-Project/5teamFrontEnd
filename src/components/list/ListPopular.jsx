@@ -1,15 +1,14 @@
 import arrowLeft from '../../assets/icons/arrow_left.svg';
 import arrowRight from '../../assets/icons/arrow_right.svg';
-
 import { useEffect, useState } from 'react';
 import useDeviceSize from '../../hooks/useDeviceSize';
-
 import styled from 'styled-components';
 import ListCard from './ListCard';
 
-const ListPopular = ({ listData }) => {
+const ListPopular = ({ listData, theme }) => {
   const [sortData, setSortData] = useState([]);
   const { deviceSize } = useDeviceSize();
+  const isDarkMode = theme !== 'light';
 
   useEffect(() => {
     if (!listData) return;
@@ -99,10 +98,10 @@ const ListPopular = ({ listData }) => {
 
       {deviceSize === 'desktop' && (
         <>
-          <ListBtnLeft onClick={handlePrev}>
+          <ListBtnLeft onClick={handlePrev} isDarkMode={isDarkMode}>
             <img src={arrowLeft} alt="왼쪽 화살표" />
           </ListBtnLeft>
-          <ListBtnRight onClick={handleNext}>
+          <ListBtnRight onClick={handleNext} isDarkMode={isDarkMode}>
             <img src={arrowRight} alt="오른쪽 화살표" />
           </ListBtnRight>
         </>
@@ -214,6 +213,12 @@ const ListBtnLeft = styled.button`
   &:disabled {
     display: none;
   }
+  img {
+    filter: ${({ isDarkMode, theme }) =>
+      isDarkMode
+        ? `invert(1) sepia(1) saturate(0) hue-rotate(0deg) brightness(${theme.darkModeBrightness})`
+        : 'none'};
+  }
 `;
 
 const ListBtnRight = styled.button`
@@ -237,5 +242,11 @@ const ListBtnRight = styled.button`
 
   &:disabled {
     display: none;
+  }
+  img {
+    filter: ${({ isDarkMode, theme }) =>
+      isDarkMode
+        ? `invert(1) sepia(1) saturate(0) hue-rotate(0deg) brightness(${theme.darkModeBrightness})`
+        : 'none'};
   }
 `;

@@ -6,6 +6,7 @@ import NanumPen from '../assets/font/NanumPen.ttf';
 const GlobalStyle = createGlobalStyle`
   ${reset}
 
+
   @font-face {
     font-family: 'NanumMyeongjo';
          url(${NanumMyeongjo}) format('ttf');
@@ -29,11 +30,12 @@ const GlobalStyle = createGlobalStyle`
   p {
     margin: 0;
   }
-
   body {
-    padding: 0;
-    margin: 0;
-    font-family: 'Pretendard', 'NanumMyeongjo', 'NanumPen', sans-serif;
+    font-family: 'Pretendard', sans-serif;
+    background-color: ${({ theme }) =>
+      theme.mode === 'dark' ? theme.colors.BLACK : theme.colors.WHITE};
+    color: ${({ theme }) =>
+      theme.mode === 'dark' ? theme.colors.WHITE : theme.colors.BLACK};
   }
 
   button {
