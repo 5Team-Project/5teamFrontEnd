@@ -1,14 +1,13 @@
 import styled from 'styled-components';
-import { Theme } from '../styles/Theme';
 import WriterCountIcon from './WriterCountIcon';
 import WriterCountText from './WriterCountText';
 import ReactionCount from './ReactionCount';
 import Actions from './Actions';
-import { getData } from '../api/getData';
 import React, { useEffect, useState } from 'react';
 import DropReactions from './DropReactions';
+import { getDataByRecipientId } from '../api/getDataByRecipientId';
 
-const NavigationBar = () => {
+const NavigationBar = ({ recipientId }) => {
   const [title, setTitle] = useState('Dear');
   const [count, setCount] = useState(0);
   const [recent, setRecent] = useState([]);
@@ -16,9 +15,9 @@ const NavigationBar = () => {
 
   useEffect(() => {
     const handleLoad = async () => {
-      const queryData = '/6-5/recipients/6723/';
+      const queryData = `${recipientId}`;
       try {
-        const res = await getData(queryData);
+        const res = await getDataByRecipientId(queryData);
         if (res) {
           setTitle(res.name);
           setCount(res.messageCount);
@@ -59,6 +58,7 @@ const NavWrapper = styled.nav`
   width: 100%;
   height: 64px;
   border-bottom: 1px solid ${({ theme }) => theme.colors.GRAY};
+  background-color: ${({ theme }) => theme.colors.WHITE};
   position: relative;
 `;
 
