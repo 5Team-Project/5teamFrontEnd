@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import defaultImage from '../../assets/images/defaultimg.png';
-import { getProfileImg } from '../../api/getProfileImg';
+import { getProfileImg, getProfileImgs } from '../../api/getProfileImg';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { storage } from '../../utils/firebase';
 
@@ -12,7 +12,7 @@ const ProfileImageComponent = ({ onImageSelect }) => {
   useEffect(() => {
     const fetchProfileImages = async () => {
       try {
-        const response = await getProfileImg();
+        const response = await getProfileImgs();
         setImageOptions(response.imageUrls);
       } catch (error) {
         console.error(error);
@@ -68,9 +68,9 @@ const ProfileImageComponent = ({ onImageSelect }) => {
         <OptionImageContainer>
           {imageOptions.map((imageUrl, index) => (
             <OptionImage
-              key={index} // imageUrl.id 대신 index를 key로 사용
+              key={index}
               src={imageUrl}
-              alt={`Option ${index + 1}`} // imageUrl.id 대신 index를 사용
+              alt={`Option ${index + 1}`}
               onClick={() => handleImageClick(imageUrl)}
             />
           ))}
