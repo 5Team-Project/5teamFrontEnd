@@ -1,42 +1,42 @@
 import { createGlobalStyle } from 'styled-components';
 import reset from 'styled-reset';
-import NanumMyeongjo from '../assets/font/NanumMyeongjo.ttf';
-import NanumPen from '../assets/font/NanumPen.ttf';
+import NanumPenTtf from '../assets/font/NanumPen.ttf';
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
 
-
   @font-face {
     font-family: 'NanumMyeongjo';
-         url(${NanumMyeongjo}) format('ttf');
+    src: url(../assets/font/NanumMyeongjo.ttf) format('truetype');
     font-weight: normal;
     font-style: normal;
   }
 
   @font-face {
     font-family: 'NanumPen';
-    src: local('NanumPen'),
-         url(${NanumPen}) format('ttf');
+    src: url(${NanumPenTtf}) format('truetype');
     font-weight: normal;
     font-style: normal;
   }
 
   * {
-    box-sizing: border-box;
-    font-family: 'Pretendard', 'NanumMyeongjo', 'NanumPen', sans-serif;
-  }
+  box-sizing: border-box;
+  font-family: 'Pretendard', 'NanumMyeongjo', 'NanumPen',  sans-serif;
+}
 
   p {
     margin: 0;
   }
   body {
-    font-family: 'Pretendard', sans-serif;
     background-color: ${({ theme }) =>
       theme.mode === 'dark' ? theme.colors.BLACK : theme.colors.WHITE};
     color: ${({ theme }) =>
       theme.mode === 'dark' ? theme.colors.WHITE : theme.colors.BLACK};
+
+
   }
+
+
 
   button {
     padding: 0;

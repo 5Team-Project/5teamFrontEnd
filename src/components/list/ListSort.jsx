@@ -2,23 +2,14 @@ import { getData } from '../../api/getData';
 import arrowLeft from '../../assets/icons/arrow_left.svg';
 import arrowRight from '../../assets/icons/arrow_right.svg';
 import { useEffect, useState } from 'react';
-<<<<<<< HEAD:src/components/list/ListRecent.jsx
-=======
 import useDeviceSize from '../../hooks/useDeviceSize';
 
->>>>>>> develop:src/components/list/ListSort.jsx
 import styled from 'styled-components';
 import ListCard from './ListCard';
 
-<<<<<<< HEAD:src/components/list/ListRecent.jsx
-const ListRecent = ({ listData, theme }) => {
-  const [sortData, setSortData] = useState([]);
-  const { deviceSize } = useDeviceSize();
-=======
-const ListSort = ({ sort }) => {
+const ListSort = ({ sort, theme }) => {
   const [listData, setListData] = useState([]);
   const [path, setPath] = useState(null);
->>>>>>> develop:src/components/list/ListSort.jsx
 
   const isDarkMode = theme !== 'light';
 

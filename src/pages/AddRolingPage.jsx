@@ -7,6 +7,7 @@ import ReactQuillContext from '../utils/ReactQuill';
 import DropdownFont from '../components/postMessage/DropFont';
 import { PostMessages } from '../api/postMessage';
 import InputComponent from '../components/InputComponents';
+import DOMPurify from 'dompurify';
 
 const AddRollingPaper = () => {
   const [inputValue, setInputValue] = useState('');
@@ -46,11 +47,12 @@ const AddRollingPaper = () => {
   }, [inputValue, quillValue]);
 
   const handleSubmit = async () => {
+    const cleanContent = DOMPurify.sanitize(quillValue);
     const data = {
       sender: inputValue,
       profileImageURL: selectedImage,
       relationship: selectedRelationship,
-      content: quillValue,
+      content: cleanContent,
       font: selectedFont,
     };
 
