@@ -1,7 +1,5 @@
 import styled from 'styled-components';
-import { Theme } from '../styles/Theme';
 import React from 'react';
-import TestImage from '../assets/images/ProfileForTest.png';
 import { useLocation } from 'react-router-dom';
 
 const WriterCountIcon = ({ count, recent }) => {
