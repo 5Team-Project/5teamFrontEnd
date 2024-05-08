@@ -1,4 +1,4 @@
-export const Theme = {
+export const lightTheme = {
   colors: {
     PURPLE: '#DCB9FF',
     PURPLE_D: '#AB57FF',
@@ -12,6 +12,42 @@ export const Theme = {
     RED: '#DC3A3A',
     BLACK: '#000000',
     SURFACE: '#F6F8FF',
+  },
+  fontsize: {
+    TITLE: '28px',
+    M_TITLE: '24px',
+    S_TITLE: '20px',
+    LARGE_TXT: '18px',
+    MEDIUM_TXT: '16px',
+    SMALL_TXT: '14px',
+    MINI_TXT: '12px',
+  },
+  fontweight: {
+    BOLD: '700',
+    REGULAR: '400',
+  },
+  device: {
+    PC: `screen and (max-width: 1920px)`,
+    Tablet: `screen and (max-width: 1200px)`,
+    Mobile: `screen and (max-width: 768px)`,
+  },
+};
+
+export const darkTheme = {
+  darkModeBrightness: '70%',
+  colors: {
+    PURPLE: '#4D2D6A',
+    PURPLE_D: '#3A1D51',
+    PURPLE_DD: '#2B1A3E',
+    ORANGE: '#B36B2E',
+    BLUE: '#2D6A7A',
+    GREEN: '#3D612D',
+    GRAY: '#bfbfbf',
+    DARKGRAY: '#cccaca',
+    WHITE: '#2b2b2b',
+    RED: '#A32929',
+    BLACK: '#fcfcfc',
+    SURFACE: '#dad1e3',
   },
   fontsize: {
     TITLE: '28px',

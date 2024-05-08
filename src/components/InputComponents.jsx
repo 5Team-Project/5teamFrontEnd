@@ -41,6 +41,7 @@ const StyledInput = styled.input`
   border-radius: 8px;
   margin-top: 10px;
   border: 1px solid #cccccc;
+  color: ${({ theme }) => theme.colors.BLACK};
   ${(props) =>
     props.isError &&
     css`

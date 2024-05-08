@@ -4,9 +4,10 @@ import React, { useEffect, useState } from 'react';
 import ArrowDown from '../assets/icons/Ic_Arrow_down.svg';
 import { getData } from '../api/getData';
 
-const DropReactions = () => {
+const DropReactions = ({ theme }) => {
   const [reactions, setReactions] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
+  const isDarkMode = theme !== 'light';
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -30,7 +31,12 @@ const DropReactions = () => {
   return (
     <ReactionsWrapper>
       <ShowAllButton onClick={toggleDropdown}>
-        <ArrowIcon src={ArrowDown} alt="리액션 전체 보기" isOpen={isOpen} />
+        <ArrowIcon
+          src={ArrowDown}
+          alt="리액션 전체 보기"
+          isOpen={isOpen}
+          isDarkMode={isDarkMode}
+        />
       </ShowAllButton>
       {isOpen && (
         <AllReactionsBox>
@@ -66,6 +72,11 @@ const ArrowIcon = styled.img`
   transform: ${(props) =>
     props.isOpen ? 'rotate(3780deg)' : 'rotate(-3960deg)'};
   transition: transform 1s;
+
+  filter: ${({ isDarkMode, theme }) =>
+    isDarkMode
+      ? `invert(1) sepia(1) saturate(0) hue-rotate(0deg) brightness(${theme.darkModeBrightness})`
+      : 'none'};
 `;
 
 const AllReactionsBox = styled.div`
@@ -91,9 +102,9 @@ const Reactions = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background: rgba(0, 0, 0, 0.54);
   color: ${({ theme }) => theme.colors.WHITE};
   font-size: ${({ theme }) => theme.fontsize.MEDIUM};
   font-weight: ${({ theme }) => theme.fontweight.REGULAR};
+  background-color: ${({ theme }) => theme.colors.DARKGRAY};
 `;
 export default DropReactions;

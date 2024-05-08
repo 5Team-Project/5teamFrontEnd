@@ -3,6 +3,7 @@ import { Theme } from '../../styles/Theme';
 import React, { useContext } from 'react';
 import TestImage from '../../assets/images/ProfileForTest.png';
 import { formatDate } from '../../utils/formatDate';
+import { mapFontName } from '../../utils/mapFont';
 
 const MakeModalContent = ({ message }) => {
   const theme = useContext(ThemeContext);
@@ -25,7 +26,10 @@ const MakeModalContent = ({ message }) => {
         </ProfileBox>
         <CreatedAt>{formatDate(message.createdAt)}</CreatedAt>
       </ModalHeader>
-      <MessageBox>{message.content}</MessageBox>
+      <MessageBox
+        message={message}
+        dangerouslySetInnerHTML={{ __html: message.content }}
+      />
     </>
   );
 };
@@ -84,7 +88,7 @@ const SenderName = styled.span`
   font-weight: ${({ theme }) => theme.fontweight.BOLD};
 `;
 const SenderBadge = styled.div`
-  width: 41px;
+  width: 45px;
   height: 20px;
   text-align: center;
   border-radius: 4px;
@@ -113,6 +117,7 @@ const MessageBox = styled.div`
   padding: 16px 20px 0 0;
   border-top: 1px solid ${({ theme }) => theme.colors.GRAY};
   overflow: scroll;
+  font-family: ${({ message }) => mapFontName(message.font)};
 `;
 
 const MyModalBG = styled.div`

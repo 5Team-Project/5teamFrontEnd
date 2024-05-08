@@ -1,8 +1,9 @@
+import React from 'react';
 import styled, { ThemeContext } from 'styled-components';
 import { useContext, useState } from 'react';
 import { formatDate } from '../../utils/formatDate';
 import MessageModal from './MessageModal';
-
+import { mapFontName } from '../../utils/mapFont';
 const RELATIONSHIPS = {
   가족: 'GREEN',
   동료: 'PURPLE',
@@ -28,7 +29,10 @@ const MessageListItem = ({ message }) => {
       </ProfileContainer>
       <MessageHr />
       <MessageTextContainer>
-        <MessageText>{message.content}</MessageText>
+        <MessageText
+          dangerouslySetInnerHTML={{ __html: message.content }}
+          style={{ fontFamily: mapFontName(message.font) }}
+        />
         <p>{formatDate(message.createdAt)}</p>
       </MessageTextContainer>
     </MessageContainer>
@@ -81,7 +85,7 @@ const MessageListContainer = styled.ul`
 `;
 
 const MessageContainer = styled.div`
-  background-color: WHITE;
+  background-color: ${({ theme }) => theme.colors.WHITE};
   width: 384px;
   height: 280px;
   border-radius: 16px;
@@ -114,7 +118,7 @@ const SenderName = styled.span`
   font-weight: ${({ theme }) => theme.fontweight.BOLD};
 `;
 const ProfileRelation = styled.div`
-  width: 41px;
+  width: 45px;
   height: 20px;
   text-align: center;
   border-radius: 4px;

@@ -77,7 +77,7 @@ const DropdownItem = styled.li`
   padding: 8px 16px;
   cursor: pointer;
   &:hover {
-    background-color: ${({ theme }) => theme.colors.SURFACE};
+    background-color: ${({ theme }) => theme.colors.PURPLE};
     border-radius: 8px;
   }
 `;
