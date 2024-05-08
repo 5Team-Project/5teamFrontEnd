@@ -50,6 +50,7 @@ color: ${({ theme }) => theme.colors.SURFACE};
 font-size: ${({ theme }) => theme.fontsize.TITLE};
 font-size: ${({ theme }) => theme.fontsize.M_TITLE};
 font-size: ${({ theme }) => theme.fontsize.S_TITLE};
+font-size: ${({ theme }) => theme.fontsize.LARGE_TXT};
 font-size: ${({ theme }) => theme.fontsize.MEDIUM_TXT};
 font-size: ${({ theme }) => theme.fontsize.SMALL_TXT};
 font-size: ${({ theme }) => theme.fontsize.MINI_TXT};
