@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import defaultImage from '../../assets/images/defaultimg.png';
 import { getProfileImg } from '../../api/getProfileImg';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { storage } from '../../utils/firebase';
 
 const ProfileImageComponent = ({ onImageSelect }) => {
   const [selectedImage, setSelectedImage] = useState('');
@@ -24,19 +26,51 @@ const ProfileImageComponent = ({ onImageSelect }) => {
     onImageSelect(imageUrl);
   };
 
+  const handleImageUpload = async (event) => {
+    const imageFile = event.target.files[0];
+    if (imageFile) {
+      const storageRef = ref(storage, `profile_images/${imageFile.name}`);
+      uploadBytes(storageRef, imageFile)
+        .then((snapshot) => {
+          getDownloadURL(snapshot.ref)
+            .then((url) => {
+              setSelectedImage(url);
+              onImageSelect(url);
+            })
+            .catch((error) => {
+              console.error('Download URL을 가져오는 중 에러 발생:', error);
+            });
+        })
+        .catch((error) => {
+          console.error('파일 업로드 중 에러 발생:', error);
+        });
+    }
+  };
+
   return (
     <ProfileContainer>
       <ProfileImageContainer>
-        <ProfileImage src={selectedImage || defaultImage} alt="Profile Image" />
+        <ProfileImage
+          src={selectedImage || defaultImage}
+          alt="Profile Image"
+          onClick={() => document.getElementById('fileInput').click()}
+        />
+        <input
+          id="fileInput"
+          type="file"
+          accept="image/*"
+          onChange={handleImageUpload}
+          style={{ display: 'none' }}
+        />
       </ProfileImageContainer>
       <OptionsContainer>
         <Description>프로필 이미지를 선택해주세요!</Description>
         <OptionImageContainer>
-          {imageOptions.map((imageUrl) => (
+          {imageOptions.map((imageUrl, index) => (
             <OptionImage
-              key={imageUrl.id}
+              key={index} // imageUrl.id 대신 index를 key로 사용
               src={imageUrl}
-              alt={`Option ${imageUrl.id + 1}`}
+              alt={`Option ${index + 1}`} // imageUrl.id 대신 index를 사용
               onClick={() => handleImageClick(imageUrl)}
             />
           ))}
@@ -45,6 +79,7 @@ const ProfileImageComponent = ({ onImageSelect }) => {
     </ProfileContainer>
   );
 };
+
 const ProfileContainer = styled.div`
   display: flex;
   flex-direction: row;
