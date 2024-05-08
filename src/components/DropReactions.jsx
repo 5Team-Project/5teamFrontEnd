@@ -51,7 +51,7 @@ const ShowAllButton = styled.button`
 const ArrowIcon = styled.img`
   width: 36px;
   height: 36px;
-  transform: ${(props) => (props.isOpen ? 'rotate(0deg)' : 'rotate(180deg)')};
+  transform: ${(props) => (props.isOpen ? '' : 'rotate(180deg)')};
   transition: transform 250ms;
 
   filter: ${({ isDarkMode, theme }) =>

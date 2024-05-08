@@ -1,13 +1,14 @@
 import { createGlobalStyle } from 'styled-components';
 import reset from 'styled-reset';
 import NanumPenTtf from '../assets/font/NanumPen.ttf';
+import NanumMyeongjoTtf from '../assets/font/NanumMyeongjo.ttf';
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
 
   @font-face {
     font-family: 'NanumMyeongjo';
-    src: url(../assets/font/NanumMyeongjo.ttf) format('truetype');
+    src: url(${NanumMyeongjoTtf}) format('truetype');
     font-weight: normal;
     font-style: normal;
   }
