@@ -1,12 +1,12 @@
 import styled from 'styled-components';
 import React from 'react';
 
-const ReactionCount = ({ reactions }) => {
+const ReactionCount = ({ topReactions }) => {
   return (
     <ReactionCountWrapper>
       <ReactionButtonBox>
-        {reactions &&
-          reactions.map((reaction) => {
+        {topReactions &&
+          topReactions.map((reaction) => {
             return (
               <ReactionButtons key={reaction.id}>
                 {reaction.emoji} {reaction.count}

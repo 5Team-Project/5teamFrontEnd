@@ -12,6 +12,7 @@ const NavigationBar = ({ recipientId }) => {
   const [messageCount, setMessageCount] = useState(0);
   const [recentSenders, setRecentSenders] = useState([]);
   const [reactions, setReactions] = useState([]);
+  const [topReactions, setTopReactions] = useState([]);
 
   useEffect(() => {
     const handleLoadRecipientData = async () => {
@@ -21,7 +22,6 @@ const NavigationBar = ({ recipientId }) => {
           setTitle(res.name);
           setMessageCount(res.messageCount);
           setRecentSenders(res.recentMessages);
-          setReactions(res.topReactions);
         }
       } catch (e) {
         console.error(e);
@@ -30,11 +30,28 @@ const NavigationBar = ({ recipientId }) => {
     handleLoadRecipientData();
   }, []);
 
+  useEffect(() => {
+    const handleLoadReactions = async () => {
+      try {
+        const res = await getDataByRecipientId(`${recipientId}/reactions/`);
+        if (res && res.results) {
+          setReactions(res.results);
+          setTopReactions(res.results.slice(0, 3));
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    };
+    handleLoadReactions();
+  }, []);
+
   const updateReactionCount = (updatedReaction) => {
     const updatedReactions = reactions.map((reaction) =>
       reaction.emoji === updatedReaction.emoji ? updatedReaction : reaction,
     );
+    updatedReactions.sort((a, b) => b.count - a.count);
     setReactions(updatedReactions);
+    setTopReactions(updatedReactions.slice(0, 3));
   };
 
   return (
@@ -49,8 +66,8 @@ const NavigationBar = ({ recipientId }) => {
             <WriterCountIcon count={messageCount} recent={recentSenders} />
             <WriterCountText count={messageCount} />
             <Divider />
-            <ReactionCount reactions={reactions} />
-            <DropReactions recipientId={recipientId} />
+            <ReactionCount topReactions={topReactions} />
+            <DropReactions reactions={reactions} />
           </PostStatsBox>
           <Divider />
           <Actions

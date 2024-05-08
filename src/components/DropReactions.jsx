@@ -1,30 +1,14 @@
 import styled from 'styled-components';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import ArrowDown from '../assets/icons/Ic_Arrow_down.svg';
-import { getDataByRecipientId } from '../api/getDataByRecipientId';
 
-const DropReactions = ({ theme, recipientId }) => {
-  const [reactions, setReactions] = useState([]);
+const DropReactions = ({ reactions, theme }) => {
   const [isOpen, setIsOpen] = useState(false);
   const isDarkMode = theme !== 'light';
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
   };
-
-  useEffect(() => {
-    const handleLoadReactions = async () => {
-      try {
-        const res = await getDataByRecipientId(`${recipientId}/reactions/`);
-        if (res && res.results) {
-          setReactions(res.results);
-        }
-      } catch (e) {
-        console.error(e);
-      }
-    };
-    handleLoadReactions();
-  }, [isOpen]);
 
   return (
     <ReactionsWrapper>
@@ -38,10 +22,10 @@ const DropReactions = ({ theme, recipientId }) => {
       </ShowAllButton>
       {isOpen && (
         <AllReactionsBox>
-          {reactions.map((emoji) => {
+          {reactions.map((reaction) => {
             return (
-              <Reactions key={emoji.id}>
-                {emoji.emoji} {emoji.count}
+              <Reactions key={reaction.id}>
+                {reaction.emoji} {reaction.count}
               </Reactions>
             );
           })}

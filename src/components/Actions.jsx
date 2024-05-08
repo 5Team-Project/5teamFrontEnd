@@ -23,12 +23,12 @@ const Actions = ({ recipientId, updateReactionCount }) => {
       emoji: emojiData.emoji,
     };
     try {
-      const updatedReactionCount = await postEmojiReactions(
+      const updatedReaction = await postEmojiReactions(
         newReactionData,
         recipientId,
       );
       setShowPicker(false);
-      updateReactionCount(updatedReactionCount);
+      updateReactionCount(updatedReaction);
     } catch (e) {
       console.error('리액션 추가 실패', e);
     }
