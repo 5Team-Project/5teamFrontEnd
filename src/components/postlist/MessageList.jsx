@@ -118,7 +118,7 @@ const SenderName = styled.span`
   font-weight: ${({ theme }) => theme.fontweight.BOLD};
 `;
 const ProfileRelation = styled.div`
-  width: 41px;
+  width: 45px;
   height: 20px;
   text-align: center;
   border-radius: 4px;

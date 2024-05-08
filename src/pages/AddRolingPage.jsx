@@ -46,7 +46,10 @@ const AddRollingPaper = () => {
     setIsButtonDisabled(isInputEmpty || isQuillEmpty);
   }, [inputValue, quillValue]);
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
+    // 수정: 함수 인자 추가
+    e.preventDefault(); // 수정: 폼 기본 동작 막기
+
     const cleanContent = DOMPurify.sanitize(quillValue);
     const data = {
       sender: inputValue,
@@ -59,6 +62,8 @@ const AddRollingPaper = () => {
     try {
       const response = await PostMessages(data);
       console.log('작성 성공:', response);
+      // 수정: 작성 성공 후 원하는 동작 수행 (예: 페이지 이동)
+      navigate('/');
     } catch (error) {
       console.error('작성 실패:', error);
     }
@@ -96,7 +101,9 @@ const AddRollingPaper = () => {
           <DropdownFont value={selectedFont} onChange={handleFontChange} />
         </FontContainer>
         <ButtonContainer>
-          <SubmitButton disabled={isButtonDisabled}>생성하기</SubmitButton>
+          <SubmitButton type="submit" disabled={isButtonDisabled}>
+            생성하기
+          </SubmitButton>
         </ButtonContainer>
       </AddPaperWrapper>
     </>
@@ -179,9 +186,11 @@ const FontContainer = styled.div`
   gap: 12px;
   margin-top: 70px;
 `;
+
 const ButtonContainer = styled.div`
   width: 100%;
 `;
+
 const SubmitButton = styled.button`
   width: 100%;
   height: 56px;
@@ -209,4 +218,5 @@ const ErrorMessage = styled.div`
   font-size: 14px;
   margin-top: 5px;
 `;
+
 export default AddRollingPaper;

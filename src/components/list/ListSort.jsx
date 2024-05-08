@@ -1,28 +1,42 @@
-import { getData } from '../../api/getData';
 import arrowLeft from '../../assets/icons/arrow_left.svg';
 import arrowRight from '../../assets/icons/arrow_right.svg';
-import { useEffect, useState } from 'react';
-import useDeviceSize from '../../hooks/useDeviceSize';
 
 import styled from 'styled-components';
+import { useEffect, useState } from 'react';
+
+import useDeviceSize from '../../hooks/useDeviceSize';
+
+import { getData } from '../../api/getData';
 import ListCard from './ListCard';
 
 const ListSort = ({ sort, theme }) => {
   const [listData, setListData] = useState([]);
   const [path, setPath] = useState(null);
+  const [nextPath, setNextPath] = useState(null);
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  const { deviceSize } = useDeviceSize();
+
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentLength, setCurrentLength] = useState(3);
+  const [itemWidth, setItemWidth] = useState(295);
+
+  const [touchStart, setTouchStart] = useState();
 
   const isDarkMode = theme !== 'light';
 
   useEffect(() => {
     const handleLoad = async () => {
-      if (sort === 'like') setPath(`/6-5/recipients/?sort=like`);
-      else setPath('/6-5/recipients/');
+      const commonPath = '/6-5/recipients/?limit=6';
+      setPath(sort === 'like' ? `${commonPath}&sort=like` : `${commonPath}`);
 
       try {
         if (path === null) return;
+        const res = await getData(path);
 
-        const { results } = await getData(path);
-        setListData(results);
+        setNextPath(res.next);
+        setListData(res.results);
       } catch (e) {
         console.error(e);
       }
@@ -30,28 +44,45 @@ const ListSort = ({ sort, theme }) => {
     handleLoad();
   }, [path]);
 
-  const [page, setPage] = useState(0);
-  const [isLoding, setIsLoding] = useState(false);
+  // 다음 리스트 불러오기
+  useEffect(() => {
+    const addListData = async () => {
+      if (!isLoading) return;
 
-  const { deviceSize } = useDeviceSize();
+      try {
+        if (nextPath === null) return;
 
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [currentLength, setCurrentLength] = useState(3);
-  const [touchStart, setTouchStart] = useState();
+        const res = await getData(nextPath);
 
+        const newData = res.results;
+        setNextPath(res.next);
+        setListData([...listData, ...newData]);
+      } catch (e) {
+        console.error(e);
+      }
+      setIsLoading(false);
+    };
+    addListData();
+  }, [isLoading]);
+
+  // 사이즈에 따라서 리스트 이동 반경 제한
   useEffect(() => {
     switch (deviceSize) {
       case 'desktop':
         setCurrentLength(3);
+        setItemWidth(295);
         break;
       case 'tablet':
         setCurrentLength(2);
+        setItemWidth(255);
         break;
       case 'mobile':
         setCurrentLength(0);
+        setItemWidth(325);
         break;
       default:
         setCurrentLength(3);
+        setItemWidth(295);
     }
   }, [deviceSize]);
 
@@ -60,12 +91,20 @@ const ListSort = ({ sort, theme }) => {
     const newIndex =
       (currentIndex - 1 + length - currentLength) % (length - currentLength);
     setCurrentIndex(newIndex);
+
+    if (newIndex <= Math.floor(length / 2 - 1)) {
+      setIsLoading(true);
+    }
   };
 
   const handleNext = () => {
     const length = listData.length;
     const newIndex = (currentIndex + 1) % (length - currentLength);
     setCurrentIndex(newIndex);
+
+    if (newIndex >= Math.floor(length / 2 - 1)) {
+      setIsLoading(true);
+    }
   };
 
   // 터치 슬라이드
@@ -89,6 +128,7 @@ const ListSort = ({ sort, theme }) => {
       setTouchStart(null);
     }
   };
+
   const handleTouchEnd = () => {
     setTouchStart(null);
   };
@@ -108,8 +148,8 @@ const ListSort = ({ sort, theme }) => {
       >
         <ListCarouselSize
           currentIndex={currentIndex}
-          sortData={listData}
-          deviceSize={deviceSize}
+          listData={listData}
+          itemWidth={itemWidth}
         />
       </ListCarousel>
 
@@ -127,31 +167,14 @@ const ListSort = ({ sort, theme }) => {
   );
 };
 
-const ListCarouselSize = ({ currentIndex, sortData, deviceSize }) => {
-  const [itemWidth, setItemWidth] = useState(295);
-  useEffect(() => {
-    switch (deviceSize) {
-      case 'desktop':
-        setItemWidth(295);
-        break;
-      case 'tablet':
-        setItemWidth(255);
-        break;
-      case 'mobile':
-        setItemWidth(325);
-        break;
-      default:
-        setItemWidth(295);
-    }
-  }, [deviceSize]);
-
+const ListCarouselSize = ({ currentIndex, listData, itemWidth }) => {
   return (
     <ListSortMain
       style={{
         transform: `translateX(-${currentIndex * itemWidth}px)`,
       }}
     >
-      {sortData.map((data) => (
+      {listData.map((data) => (
         <ListCard key={data.id} data={data} />
       ))}
     </ListSortMain>
