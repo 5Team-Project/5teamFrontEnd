@@ -1,18 +1,18 @@
 import styled from 'styled-components';
-import { Theme } from '../styles/Theme';
 import React from 'react';
 
 const ReactionCount = ({ reactions }) => {
   return (
     <ReactionCountWrapper>
       <ReactionButtonBox>
-        {reactions.map((emoji) => {
-          return (
-            <ReactionButtons key={emoji.id}>
-              {emoji.emoji} {emoji.count}
-            </ReactionButtons>
-          );
-        })}
+        {reactions &&
+          reactions.map((reaction) => {
+            return (
+              <ReactionButtons key={reaction.id}>
+                {reaction.emoji} {reaction.count}
+              </ReactionButtons>
+            );
+          })}
       </ReactionButtonBox>
     </ReactionCountWrapper>
   );

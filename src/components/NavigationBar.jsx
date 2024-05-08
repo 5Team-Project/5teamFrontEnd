@@ -28,7 +28,7 @@ const NavigationBar = ({ recipientId }) => {
       }
     };
     handleLoadRecipientData();
-  }, [messageCount, recentSenders, reactions]);
+  }, []);
 
   return (
     <NavWrapper>

@@ -4,11 +4,9 @@ import ShareIcon from '../assets/icons/IconShare.svg';
 import DeleteIcon from '../assets/icons/IconDelete.svg';
 import { useState } from 'react';
 import EmojiPicker from 'emoji-picker-react';
-import { theme } from 'emoji-picker-react';
-import { useParams } from 'react-router-dom';
 import { postEmojiReactions } from '../api/postEmojiReaction';
 
-const Actions = ({ recipientId, updateReactions }) => {
+const Actions = ({ recipientId }) => {
   const [showPicker, setShowPicker] = useState(false);
   const [reactionData, setReactionData] = useState({
     emoji: '',
@@ -20,16 +18,12 @@ const Actions = ({ recipientId, updateReactions }) => {
   };
 
   const handleEmojiClick = (emojiData) => {
-    console.log(recipientId);
     const newReactionData = {
       ...reactionData,
       emoji: emojiData.emoji,
     };
-    console.log(emojiData);
-    console.log(newReactionData);
-
     postEmojiReactions(newReactionData, recipientId);
-    updateReactions();
+    setShowPicker(false);
   };
 
   return (
@@ -120,7 +114,7 @@ const Icons = styled.img`
 
 const PickerWrapper = styled.div`
   position: absolute;
-  top: 61px;
-  left: 1147px;
+  top: 90%;
+  left: 65%;
 `;
 export default Actions;

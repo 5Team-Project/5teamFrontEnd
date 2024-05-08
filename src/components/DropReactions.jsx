@@ -24,7 +24,7 @@ const DropReactions = ({ theme, recipientId }) => {
       }
     };
     handleLoadReactions();
-  }, []);
+  }, [isOpen]);
 
   return (
     <ReactionsWrapper>
