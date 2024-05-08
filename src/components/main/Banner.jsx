@@ -54,7 +54,7 @@ const Banner = () => {
 const ContentContainer = styled.main`
   max-width: 1248px;
   width: 100%;
-  margin: 124px auto;
+  margin: 60px auto;
   display: flex;
   flex-direction: column;
   gap: 24px;

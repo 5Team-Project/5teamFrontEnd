@@ -1,36 +1,58 @@
 import styled from 'styled-components';
-import { Theme } from '../styles/Theme';
 import WriterCountIcon from './WriterCountIcon';
 import WriterCountText from './WriterCountText';
 import ReactionCount from './ReactionCount';
 import Actions from './Actions';
-import { getData } from '../api/getData';
 import React, { useEffect, useState } from 'react';
 import DropReactions from './DropReactions';
+import { getDataByRecipientId } from '../api/getDataByRecipientId';
 
-const NavigationBar = () => {
+const NavigationBar = ({ recipientId }) => {
   const [title, setTitle] = useState('Dear');
-  const [count, setCount] = useState(0);
-  const [recent, setRecent] = useState([]);
-  const [reaction, setReaction] = useState([]);
+  const [messageCount, setMessageCount] = useState(0);
+  const [recentSenders, setRecentSenders] = useState([]);
+  const [reactions, setReactions] = useState([]);
+  const [topReactions, setTopReactions] = useState([]);
 
   useEffect(() => {
-    const handleLoad = async () => {
-      const queryData = '/6-5/recipients/6723/';
+    const handleLoadRecipientData = async () => {
       try {
-        const res = await getData(queryData);
+        const res = await getDataByRecipientId(`${recipientId}/`);
         if (res) {
           setTitle(res.name);
-          setCount(res.messageCount);
-          setRecent(res.recentMessages);
-          setReaction(res.topReactions);
+          setMessageCount(res.messageCount);
+          setRecentSenders(res.recentMessages);
         }
       } catch (e) {
         console.error(e);
       }
     };
-    handleLoad();
+    handleLoadRecipientData();
   }, []);
+
+  useEffect(() => {
+    const handleLoadReactions = async () => {
+      try {
+        const res = await getDataByRecipientId(`${recipientId}/reactions/`);
+        if (res && res.results) {
+          setReactions(res.results);
+          setTopReactions(res.results.slice(0, 3));
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    };
+    handleLoadReactions();
+  }, []);
+
+  const updateReactionCount = (updatedReaction) => {
+    const updatedReactions = reactions.map((reaction) =>
+      reaction.emoji === updatedReaction.emoji ? updatedReaction : reaction,
+    );
+    updatedReactions.sort((a, b) => b.count - a.count);
+    setReactions(updatedReactions);
+    setTopReactions(updatedReactions.slice(0, 3));
+  };
 
   return (
     <NavWrapper>
@@ -41,14 +63,17 @@ const NavigationBar = () => {
         </Title>
         <PostStats>
           <PostStatsBox>
-            <WriterCountIcon count={count} recent={recent} />
-            <WriterCountText count={count} />
+            <WriterCountIcon count={messageCount} recent={recentSenders} />
+            <WriterCountText count={messageCount} />
             <Divider />
-            <ReactionCount reaction={reaction} />
-            <DropReactions />
+            <ReactionCount topReactions={topReactions} />
+            <DropReactions reactions={reactions} />
           </PostStatsBox>
           <Divider />
-          <Actions />
+          <Actions
+            recipientId={recipientId}
+            updateReactionCount={updateReactionCount}
+          />
         </PostStats>
       </NavBox>
     </NavWrapper>
@@ -59,6 +84,7 @@ const NavWrapper = styled.nav`
   width: 100%;
   height: 64px;
   border-bottom: 1px solid ${({ theme }) => theme.colors.GRAY};
+  background-color: ${({ theme }) => theme.colors.WHITE};
   position: relative;
 `;
 

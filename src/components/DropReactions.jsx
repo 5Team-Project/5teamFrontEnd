@@ -1,32 +1,14 @@
 import styled from 'styled-components';
-import { Theme } from '../styles/Theme';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import ArrowDown from '../assets/icons/Ic_Arrow_down.svg';
-import { getData } from '../api/getData';
 
-const DropReactions = ({ theme }) => {
-  const [reactions, setReactions] = useState([]);
+const DropReactions = ({ reactions, theme }) => {
   const [isOpen, setIsOpen] = useState(false);
   const isDarkMode = theme !== 'light';
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
   };
-
-  useEffect(() => {
-    const handleLoadReactions = async () => {
-      const queryData = '3-1/recipients/2629/reactions/';
-      try {
-        const res = await getData(queryData);
-        if (res && res.results) {
-          setReactions(res.results);
-        }
-      } catch (e) {
-        console.error(e);
-      }
-    };
-    handleLoadReactions();
-  }, []);
 
   return (
     <ReactionsWrapper>
@@ -40,10 +22,10 @@ const DropReactions = ({ theme }) => {
       </ShowAllButton>
       {isOpen && (
         <AllReactionsBox>
-          {reactions.map((emoji) => {
+          {reactions.map((reaction) => {
             return (
-              <Reactions key={emoji.id}>
-                {emoji.emoji} {emoji.count}
+              <Reactions key={reaction.id}>
+                {reaction.emoji} {reaction.count}
               </Reactions>
             );
           })}
@@ -69,9 +51,8 @@ const ShowAllButton = styled.button`
 const ArrowIcon = styled.img`
   width: 36px;
   height: 36px;
-  transform: ${(props) =>
-    props.isOpen ? 'rotate(3780deg)' : 'rotate(-3960deg)'};
-  transition: transform 1s;
+  transform: ${(props) => (props.isOpen ? '' : 'rotate(180deg)')};
+  transition: transform 250ms;
 
   filter: ${({ isDarkMode, theme }) =>
     isDarkMode

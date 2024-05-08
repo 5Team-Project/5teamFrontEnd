@@ -3,7 +3,7 @@ import { ThemeProvider } from 'styled-components';
 import { useState } from 'react';
 import { darkTheme, lightTheme } from './styles/Theme';
 import GlobalStyle from './styles/GlobalStyle';
-import LandingPage from './pages/LandingPage/LandingPage';
+import LandingPage from './pages/landingPage/LandingPage';
 import ListPage from './pages/ListPage';
 import AddRollingPaper from './pages/AddRolingPage';
 import Header from './components/Header';

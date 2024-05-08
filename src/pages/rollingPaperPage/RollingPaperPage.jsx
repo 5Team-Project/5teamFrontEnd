@@ -3,25 +3,28 @@ import styled, { ThemeContext } from 'styled-components';
 import { useContext, useEffect, useState } from 'react';
 import { getMessage } from '../../api/getMessage';
 import { useParams } from 'react-router-dom';
+import NavigationBar from '../../components/NavigationBar';
 
 const RollingPaperPage = () => {
   const themeContext = useContext(ThemeContext);
   const { messageId } = useParams();
   const [messages, setMessages] = useState([]);
 
-  const handleLoadMessage = async () => {
-    const { results } = await getMessage(messageId);
-    setMessages(results);
-  };
-
   useEffect(() => {
+    const handleLoadMessage = async () => {
+      const { results } = await getMessage(messageId);
+      setMessages(results);
+    };
     handleLoadMessage();
   }, []);
 
   return (
-    <MessageMainContainer>
-      <MessageList messages={messages} />
-    </MessageMainContainer>
+    <>
+      <NavigationBar recipientId={messageId} />
+      <MessageMainContainer>
+        <MessageList messages={messages} />
+      </MessageMainContainer>
+    </>
   );
 };
 export default RollingPaperPage;

@@ -6,7 +6,6 @@ import MessageModal from '../../components/postlist/MessageModal';
 const LandingPage = () => {
   return (
     <>
-      <NavigationBar />
       <Banner />
       <MessageModal />
     </>
