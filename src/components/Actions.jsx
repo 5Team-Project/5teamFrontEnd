@@ -6,7 +6,7 @@ import { useState } from 'react';
 import EmojiPicker from 'emoji-picker-react';
 import { postEmojiReactions } from '../api/postEmojiReaction';
 
-const Actions = ({ recipientId }) => {
+const Actions = ({ recipientId, updateReactionCount }) => {
   const [showPicker, setShowPicker] = useState(false);
   const [reactionData, setReactionData] = useState({
     emoji: '',
@@ -17,13 +17,21 @@ const Actions = ({ recipientId }) => {
     setShowPicker(!showPicker);
   };
 
-  const handleEmojiClick = (emojiData) => {
+  const handleEmojiClick = async (emojiData) => {
     const newReactionData = {
       ...reactionData,
       emoji: emojiData.emoji,
     };
-    postEmojiReactions(newReactionData, recipientId);
-    setShowPicker(false);
+    try {
+      const updatedReactionCount = await postEmojiReactions(
+        newReactionData,
+        recipientId,
+      );
+      setShowPicker(false);
+      updateReactionCount(updatedReactionCount);
+    } catch (e) {
+      console.error('리액션 추가 실패', e);
+    }
   };
 
   return (

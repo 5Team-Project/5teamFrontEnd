@@ -30,6 +30,13 @@ const NavigationBar = ({ recipientId }) => {
     handleLoadRecipientData();
   }, []);
 
+  const updateReactionCount = (updatedReaction) => {
+    const updatedReactions = reactions.map((reaction) =>
+      reaction.emoji === updatedReaction.emoji ? updatedReaction : reaction,
+    );
+    setReactions(updatedReactions);
+  };
+
   return (
     <NavWrapper>
       <NavBox>
@@ -46,7 +53,10 @@ const NavigationBar = ({ recipientId }) => {
             <DropReactions recipientId={recipientId} />
           </PostStatsBox>
           <Divider />
-          <Actions recipientId={recipientId} />
+          <Actions
+            recipientId={recipientId}
+            updateReactionCount={updateReactionCount}
+          />
         </PostStats>
       </NavBox>
     </NavWrapper>
