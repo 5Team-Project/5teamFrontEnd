@@ -1,9 +1,10 @@
 import styled from 'styled-components';
 import AddReactionIcon from '../assets/icons/IconAddReaction.svg';
 import DeleteIcon from '../assets/icons/IconDelete.svg';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import EmojiPicker from 'emoji-picker-react';
 import { postEmojiReactions } from '../api/postEmojiReaction';
+import useClickOutside from '../hooks/useClickOutside';
 
 const AddReactions = ({ recipientId, updateReactionCount, theme }) => {
   const [showPicker, setShowPicker] = useState(false);
@@ -12,6 +13,7 @@ const AddReactions = ({ recipientId, updateReactionCount, theme }) => {
     type: 'increase',
   });
   const isDarkMode = theme !== 'light';
+  const pickerRef = useRef();
 
   const handleShowEmojiPicker = () => {
     setShowPicker(!showPicker);
@@ -34,13 +36,16 @@ const AddReactions = ({ recipientId, updateReactionCount, theme }) => {
     }
   };
 
+  useClickOutside(pickerRef, () => {
+    setShowPicker(false);
+  });
+
   return (
     <>
-      <ButtonWrapper onClick={handleShowEmojiPicker}>
+      <ButtonWrapper ref={pickerRef} onClick={handleShowEmojiPicker}>
         <Icons src={AddReactionIcon} alt="리액션추가" isDarkMode={isDarkMode} />
         <p>추가</p>
       </ButtonWrapper>
-
       <PickerWrapper>
         <EmojiPicker
           open={showPicker}
