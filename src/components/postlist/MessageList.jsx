@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import PlusIcon from '../../assets/icons/ic_plus.svg';
 import styled, { ThemeContext } from 'styled-components';
-import { useContext, useState } from 'react';
 import { formatDate } from '../../utils/formatDate';
 import MessageModal from './MessageModal';
 import { mapFontName } from '../../utils/mapFont';
@@ -67,7 +66,7 @@ const MessageList = ({ messages }) => {
             <Icon src={PlusIcon} alt="메세지 추가" />
           </MessageAddButton>
         </AddMessageContainer>
-        {messages.map((message) => {
+        {messages && messages.map((message) => {
           return (
             <li key={message.id} onClick={() => handleMessageClick(message)}>
               <MessageListItem message={message} />
@@ -181,7 +180,6 @@ const MessageText = styled.div`
   -webkit-box-orient:vertical;
   -webkit-line-clamp:5;
   line-height: 20px;
-  font: ${({ font }) => font};
   font-size: ${({ theme }) => theme.fontsize.MEDIUM_TXT};
   font-weight: ${({ theme }) => theme.fontweight.REGULAR};
 `;
