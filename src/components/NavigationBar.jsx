@@ -63,8 +63,10 @@ const NavigationBar = ({ recipientId }) => {
         </Title>
         <PostStats>
           <PostStatsBox>
-            <WriterCountIcon count={messageCount} recent={recentSenders} />
-            <WriterCountText count={messageCount} />
+            <WriterCountWrapper>
+              <WriterCountIcon count={messageCount} recent={recentSenders} />
+              <WriterCountText count={messageCount} />
+            </WriterCountWrapper>
             <Divider />
             <ReactionCount topReactions={topReactions} />
             <DropReactions reactions={reactions} />
@@ -128,6 +130,14 @@ const PostStats = styled.div`
 const PostStatsBox = styled.div`
   display: flex;
   align-items: center;
+`;
+
+const WriterCountWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  @media ${({ theme }) => theme.device.Tablet} {
+    display: none;
+  }
 `;
 
 const Divider = styled.div`

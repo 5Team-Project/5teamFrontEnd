@@ -39,22 +39,13 @@ const Actions = ({ recipientId, updateReactionCount, theme }) => {
   return (
     <>
       <ActionWrapper>
-        <ActionButtons onClick={handleShowEmojiPicker}>
+        <ActionButtonWrapper onClick={handleShowEmojiPicker}>
           <Icons
             src={AddReactionIcon}
             alt="리액션추가"
             isDarkMode={isDarkMode}
           />
-        <ActionButtonWrapper onClick={handleShowEmojiPicker}>
-          <Icons src={AddReactionIcon} alt="리액션추가" />
           <p>추가</p>
-        </ActionButtons>
-        <ActionButtons>
-          <Icons src={ShareIcon} alt="공유" isDarkMode={isDarkMode} />
-        </ActionButtons>
-        <ActionButtons>
-          <Icons src={DeleteIcon} alt="삭제" isDarkMode={isDarkMode} />
-        </ActionButtons>
         </ActionButtonWrapper>
         <ActionButtonWrapper>
           <DropShare icon={ShareIcon} />
