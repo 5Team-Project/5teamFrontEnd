@@ -81,8 +81,10 @@ const ListCard = ({ data }) => {
         <ListCardName
           style={
             isBgImg
-              ? { color: `${theme.colors.WHITE}` }
-              : { color: `${theme.colors.BLACK}` }
+              ? {
+                  color: 'white',
+                }
+              : { color: `black` }
           }
         >
           To. {data.name}

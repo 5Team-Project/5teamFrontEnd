@@ -5,17 +5,22 @@ import { useEffect, useState } from 'react';
 import useDeviceSize from '../../hooks/useDeviceSize';
 import { getData } from '../../api/getData';
 import ListCard from './ListCard';
+import { filter } from 'lodash';
 
 const ListSort = ({ sort, theme }) => {
   const [listData, setListData] = useState([]);
+  const [lastData, setLastData] = useState([]);
+  const [slideData, setSlideData] = useState([]);
+
   const [path, setPath] = useState(null);
   const [nextPath, setNextPath] = useState(null);
+  const [prevPath, setPrevPath] = useState(null);
 
   const [isLoading, setIsLoading] = useState(false);
 
   const { deviceSize } = useDeviceSize();
 
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(6);
   const [currentLength, setCurrentLength] = useState(3);
   const [itemWidth, setItemWidth] = useState(295);
 
@@ -23,44 +28,194 @@ const ListSort = ({ sort, theme }) => {
 
   const isDarkMode = theme !== 'light';
 
+  const [dataLength, setDataLength] = useState(0);
+  const [offset, setOffset] = useState(0);
+
+  const [isUpdate, setIsUpdate] = useState(true);
+
+  const [isAnimate, setIsAnimate] = useState(false);
+  const [isNext, setIsNext] = useState(false);
+
+  const limit = 6;
+
   useEffect(() => {
-    const handleLoad = async () => {
-      const commonPath = '/6-5/recipients/?limit=6';
+    if (listData.length > 0) return;
+
+    // 처음 데이터 6개 받아오기
+    const handleLoadFirst = async () => {
+      const commonPath = `/6-5/recipients/?limit=${limit}`;
       setPath(sort === 'like' ? `${commonPath}&sort=like` : `${commonPath}`);
 
       try {
         if (path === null) return;
+        // console.log('처음데이터');
         const res = await getData(path);
 
+        setDataLength(res.count);
+        setOffset(res.count - limit);
         setNextPath(res.next);
         setListData(res.results);
       } catch (e) {
         console.error(e);
       }
     };
-    handleLoad();
+
+    handleLoadFirst();
   }, [path]);
 
-  // 다음 리스트 불러오기
+  // 마지막 데이터 6개 받아오기
   useEffect(() => {
-    const addListData = async () => {
-      if (!isLoading) return;
+    if (offset <= 0 || lastData.length > 0) return;
+
+    if (dataLength < 12) return;
+
+    const handleLoadLast = async () => {
+      const commonPath = `/6-5/recipients/?limit=${limit}`;
+      const lastPath =
+        sort === 'like'
+          ? `${commonPath}&offset=${offset}&sort=like`
+          : `${commonPath}&offset=${offset}`;
 
       try {
-        if (nextPath === null) return;
+        if (path === null) return;
+        const res = await getData(lastPath);
 
-        const res = await getData(nextPath);
+        // console.log('마지막데이터', res);
 
-        const newData = res.results;
-        setNextPath(res.next);
-        setListData([...listData, ...newData]);
+        setPrevPath(res.previous);
+        setLastData(res.results);
       } catch (e) {
         console.error(e);
       }
+    };
+    handleLoadLast();
+  }, [offset]);
+
+  // 처음 데이터 마지막 데이터 합치기
+  useEffect(() => {
+    if (lastData.length <= 0 || listData.length <= 0) return;
+    setSlideData([...lastData, ...listData]);
+  }, [lastData, listData]);
+
+  // 마지막 데이터를 한번 더 안불러오게 nextPath의 limit을 설정
+  useEffect(() => {
+    if (offset <= 0) return;
+
+    const handleOffsetCheck = () => {
+      if (offset - limit < limit) {
+        if (nextPath !== null) {
+          setNextPath(
+            nextPath.replace(`limit=${limit}`, `limit=${offset - limit}`),
+          );
+        }
+
+        if (prevPath !== null) {
+          setPrevPath(
+            prevPath.replace(
+              `limit=${limit}&offset=${offset - limit}`,
+              `limit=${offset - limit}&offset=${offset - (offset - limit)}`,
+            ),
+          );
+        }
+
+        if (offset - limit <= 0) {
+          setNextPath(null);
+          setPrevPath(null);
+        }
+
+        return;
+      }
+    };
+
+    handleOffsetCheck();
+  }, [offset]);
+
+  // 다음 리스트 불러오기
+  useEffect(() => {
+    const HandleAddListData = async () => {
+      if (!isLoading) return;
+
+      if (isNext) {
+        try {
+          if (nextPath === null) return;
+
+          const res = await getData(nextPath);
+
+          // console.log('다음데이터', res);
+
+          const newData = res.results;
+
+          setNextPath(res.next);
+
+          if (offset - limit > 0) setOffset(offset - limit);
+
+          setListData([...listData, ...newData]);
+        } catch (e) {
+          console.error(e);
+        }
+      } else {
+        try {
+          if (prevPath === null) return;
+
+          const res = await getData(prevPath);
+
+          // console.log('이전데이터', res);
+
+          const newData = res.results;
+
+          setPrevPath(res.previous);
+
+          if (offset - limit > 0) setOffset(offset - limit);
+
+          const setLists = [
+            ...listData.slice(0, 6),
+            ...newData,
+            ...listData.slice(6),
+          ];
+
+          setListData(setLists);
+        } catch (e) {
+          console.error(e);
+        }
+      }
+
       setIsLoading(false);
     };
-    addListData();
+
+    HandleAddListData();
   }, [isLoading]);
+
+  // SlideData 업데이트
+  useEffect(() => {
+    if (nextPath === null) return;
+    if (isUpdate) {
+      // console.log('업데이트');
+      setSlideData([...lastData, ...listData]);
+      setIsUpdate(false);
+    }
+  }, [isUpdate, listData]);
+
+  // 캐러셀 이동 시 SlideData 순서 변경
+  const SlideChange = (num) => {
+    console.log('num ', num, ' isNext ', isNext);
+    if (slideData[0] === listData[0]) {
+      if (isNext) {
+        setSlideData([...lastData, ...listData]);
+        setCurrentIndex(2);
+      } else {
+        setSlideData([...lastData, ...listData]);
+        setCurrentIndex(6);
+      }
+    } else {
+      if (isNext) {
+        setSlideData([...listData, ...lastData]);
+        setCurrentIndex(num - 6);
+      } else {
+        setSlideData([...listData, ...lastData]);
+        setCurrentIndex(slideData.length - 6);
+      }
+    }
+  };
 
   // 사이즈에 따라서 리스트 이동 반경 제한
   useEffect(() => {
@@ -84,23 +239,38 @@ const ListSort = ({ sort, theme }) => {
   }, [deviceSize]);
 
   const handlePrev = () => {
-    const length = listData.length;
+    if (isAnimate) return;
+
+    setIsAnimate(true);
+    setIsNext(false);
+
+    const length = slideData.length;
     const newIndex =
       (currentIndex - 1 + length - currentLength) % (length - currentLength);
-    setCurrentIndex(newIndex);
 
-    if (newIndex <= Math.floor(length / 2 - 1)) {
+    setCurrentIndex(newIndex);
+    if (newIndex === Math.floor(length / 2 - 1)) {
       setIsLoading(true);
+
+      setIsUpdate(true);
     }
   };
 
   const handleNext = () => {
-    const length = listData.length;
+    if (isAnimate) return;
+
+    setIsAnimate(true);
+    setIsNext(true);
+
+    const length = slideData.length;
     const newIndex = (currentIndex + 1) % (length - currentLength);
+
     setCurrentIndex(newIndex);
 
-    if (newIndex >= Math.floor(length / 2 - 1)) {
+    if (newIndex === Math.floor(length / 2 + 1)) {
       setIsLoading(true);
+
+      setIsUpdate(true);
     }
   };
 
@@ -137,17 +307,32 @@ const ListSort = ({ sort, theme }) => {
           ? '최근에 만든 롤링 페이퍼 ⭐️️'
           : '인기 롤링 페이퍼 🔥'}
       </ListSortSpan>
-
       <ListCarousel
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
       >
-        <ListCarouselSize
-          currentIndex={currentIndex}
-          listData={listData}
-          itemWidth={itemWidth}
-        />
+        <ListSortSlide
+          style={{
+            transform: `translateX(-${currentIndex * itemWidth}px)`,
+            transition: `transform ${isAnimate ? 0.5 : 0}s ease`,
+          }}
+          onTransitionEnd={() => {
+            setIsAnimate(false);
+
+            console.log('currentIndex ', currentIndex);
+            if (
+              (currentIndex === slideData.length - 4 && isNext) ||
+              (currentIndex === 0 && !isNext)
+            ) {
+              SlideChange(currentIndex);
+            }
+          }}
+        >
+          {slideData.map((data) => (
+            <ListCard key={data.id} data={data} />
+          ))}
+        </ListSortSlide>
       </ListCarousel>
 
       {deviceSize === 'desktop' && (
@@ -161,20 +346,6 @@ const ListSort = ({ sort, theme }) => {
         </>
       )}
     </ListSortWrap>
-  );
-};
-
-const ListCarouselSize = ({ currentIndex, listData, itemWidth }) => {
-  return (
-    <ListSortMain
-      style={{
-        transform: `translateX(-${currentIndex * itemWidth}px)`,
-      }}
-    >
-      {listData.map((data) => (
-        <ListCard key={data.id} data={data} />
-      ))}
-    </ListSortMain>
   );
 };
 
@@ -212,11 +383,10 @@ const ListCarousel = styled.div`
   }
 `;
 
-const ListSortMain = styled.div`
+const ListSortSlide = styled.div`
   display: flex;
   padding: 0 10px;
   gap: 20px;
-  transition: transform 0.5s ease;
 
   @media ${({ theme }) => theme.device.Tablet} {
     gap: 10px;
