@@ -1,18 +1,24 @@
 import styled from 'styled-components';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import ArrowDown from '../assets/icons/Ic_Arrow_down.svg';
+import useClickOutside from '../hooks/useClickOutside';
 
 const DropReactions = ({ reactions, theme }) => {
   const [isOpen, setIsOpen] = useState(false);
   const isDarkMode = theme !== 'light';
+  const dropdownRef = useRef();
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
   };
 
+  useClickOutside(dropdownRef, () => {
+    setIsOpen(false);
+  });
+
   return (
     <ReactionsWrapper>
-      <ShowAllButton onClick={toggleDropdown}>
+      <ShowAllButton ref={dropdownRef} onClick={toggleDropdown}>
         <ArrowIcon
           src={ArrowDown}
           alt="리액션 전체 보기"

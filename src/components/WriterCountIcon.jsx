@@ -6,54 +6,22 @@ const WriterCountIcon = ({ count, recent }) => {
   const location = useLocation().pathname;
   const isListPage = location === '/list';
   return (
-    <>
-      {!isListPage ? (
-        <WriterCountIconWrapper>
-          {recent.map((profile) => {
-            return (
-              <ProfileImageBox key={profile.id}>
-                <ProfileImage src={profile.profileImageURL} alt="profile" />
-              </ProfileImageBox>
-            );
-          })}
-          <CountButton
-            style={count <= 3 ? { display: 'none' } : { left: '42px' }}
-          >
-            <CountWriter>{count <= 3 ? `` : `+${count - 3}`}</CountWriter>
-          </CountButton>
-        </WriterCountIconWrapper>
-      ) : (
-        <WriterCountIconWrapperList>
-          {recent.map((profile) => {
-            return (
-              <ProfileImageBox key={profile.id}>
-                <ProfileImage src={profile.profileImageURL} alt="profile" />
-              </ProfileImageBox>
-            );
-          })}
-          <CountButton
-            style={count <= 3 ? { display: 'none' } : { left: '42px' }}
-          >
-            <CountWriter>{count <= 3 ? `` : `+${count - 3}`}</CountWriter>
-          </CountButton>
-        </WriterCountIconWrapperList>
-      )}
-    </>
+    <WriterCountIconWrapper>
+      {recent.map((profile) => {
+        return (
+          <ProfileImageBox key={profile.id}>
+            <ProfileImage src={profile.profileImageURL} alt="profile" />
+          </ProfileImageBox>
+        );
+      })}
+      <CountButton style={count <= 3 ? { display: 'none' } : { left: '42px' }}>
+        <CountWriter>{count <= 3 ? `` : `+${count - 3}`}</CountWriter>
+      </CountButton>
+    </WriterCountIconWrapper>
   );
 };
 
 const WriterCountIconWrapper = styled.div`
-  width: 70px;
-  height: 28px;
-  display: flex;
-  position: relative;
-  margin-right: 14px;
-
-  @media ${({ theme }) => theme.device.Tablet} {
-    display: none;
-  }
-`;
-const WriterCountIconWrapperList = styled.div`
   width: 70px;
   height: 28px;
   display: flex;

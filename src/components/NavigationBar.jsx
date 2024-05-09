@@ -2,17 +2,21 @@ import styled from 'styled-components';
 import WriterCountIcon from './WriterCountIcon';
 import WriterCountText from './WriterCountText';
 import ReactionCount from './ReactionCount';
-import Actions from './Actions';
+import AddReactions from './AddReactions';
 import React, { useEffect, useState } from 'react';
 import DropReactions from './DropReactions';
 import { getDataByRecipientId } from '../api/getDataByRecipientId';
+import ShareButton from './ShareButton';
+import ToastMessage from './ToastMessage';
 
 const NavigationBar = ({ recipientId }) => {
   const [title, setTitle] = useState('Dear');
   const [messageCount, setMessageCount] = useState(0);
   const [recentSenders, setRecentSenders] = useState([]);
-  const [reactions, setReactions] = useState([]);
+  const [allReactions, setAllReactions] = useState([]);
   const [topReactions, setTopReactions] = useState([]);
+  const [isToastOpen, setIsToastOpen] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
 
   useEffect(() => {
     const handleLoadRecipientData = async () => {
@@ -35,7 +39,7 @@ const NavigationBar = ({ recipientId }) => {
       try {
         const res = await getDataByRecipientId(`${recipientId}/reactions/`);
         if (res && res.results) {
-          setReactions(res.results);
+          setAllReactions(res.results);
           setTopReactions(res.results.slice(0, 3));
         }
       } catch (e) {
@@ -46,37 +50,55 @@ const NavigationBar = ({ recipientId }) => {
   }, []);
 
   const updateReactionCount = (updatedReaction) => {
-    const updatedReactions = reactions.map((reaction) =>
+    const updatedReactions = allReactions.map((reaction) =>
       reaction.emoji === updatedReaction.emoji ? updatedReaction : reaction,
     );
     updatedReactions.sort((a, b) => b.count - a.count);
-    setReactions(updatedReactions);
+    setAllReactions(updatedReactions);
     setTopReactions(updatedReactions.slice(0, 3));
   };
 
+  const handleToast = (text) => {
+    setToastMessage(text);
+    setIsToastOpen(true);
+    const toastTimer = setTimeout(() => {
+      setIsToastOpen(false);
+      setToastMessage('');
+    }, 2000);
+    return () => clearTimeout(toastTimer);
+  };
+
   return (
-    <NavWrapper>
-      <NavBox>
-        <Title>
-          <span>To. </span>
-          <span>{title}</span>
-        </Title>
-        <PostStats>
-          <PostStatsBox>
-            <WriterCountIcon count={messageCount} recent={recentSenders} />
-            <WriterCountText count={messageCount} />
+    <>
+      <NavWrapper>
+        <NavBox>
+          <Title>
+            <span>To. </span>
+            <span>{title}</span>
+          </Title>
+          <PostStats>
+            <PostStatsBox>
+              <WriterCountWrapper>
+                <WriterCountIcon count={messageCount} recent={recentSenders} />
+                <WriterCountText count={messageCount} />
+              </WriterCountWrapper>
+              <Divider />
+              <ReactionCount topReactions={topReactions} />
+              <DropReactions reactions={allReactions} />
+            </PostStatsBox>
             <Divider />
-            <ReactionCount topReactions={topReactions} />
-            <DropReactions reactions={reactions} />
-          </PostStatsBox>
-          <Divider />
-          <Actions
-            recipientId={recipientId}
-            updateReactionCount={updateReactionCount}
-          />
-        </PostStats>
-      </NavBox>
-    </NavWrapper>
+            <ActionButtons>
+              <AddReactions
+                recipientId={recipientId}
+                updateReactionCount={updateReactionCount}
+              />
+              <ShareButton handleToast={handleToast} />
+            </ActionButtons>
+          </PostStats>
+        </NavBox>
+      </NavWrapper>
+      <ToastMessage isOpen={isToastOpen} text={toastMessage} />
+    </>
   );
 };
 
@@ -109,8 +131,8 @@ const Title = styled.a`
   @media ${({ theme }) => theme.device.Mobile} {
     position: absolute;
     bottom: 75px;
-    right: 24px;
-    font-size: ${({ theme }) => theme.fontsize.TITLE};
+    left: 135px;
+    font-size: ${({ theme }) => theme.fontsize.MEDIUM_TXT};
     font-weight: ${({ theme }) => theme.fontweight.REGULAR};
   }
 `;
@@ -128,6 +150,22 @@ const PostStats = styled.div`
 const PostStatsBox = styled.div`
   display: flex;
   align-items: center;
+`;
+
+const WriterCountWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  @media ${({ theme }) => theme.device.Tablet} {
+    display: none;
+  }
+`;
+
+const ActionButtons = styled.div`
+  height: 36px;
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  position: relative;
 `;
 
 const Divider = styled.div`

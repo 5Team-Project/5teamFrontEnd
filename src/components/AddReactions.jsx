@@ -1,18 +1,19 @@
 import styled from 'styled-components';
 import AddReactionIcon from '../assets/icons/IconAddReaction.svg';
-import ShareIcon from '../assets/icons/IconShare.svg';
 import DeleteIcon from '../assets/icons/IconDelete.svg';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import EmojiPicker from 'emoji-picker-react';
 import { postEmojiReactions } from '../api/postEmojiReaction';
+import useClickOutside from '../hooks/useClickOutside';
 
-const Actions = ({ recipientId, updateReactionCount, theme }) => {
+const AddReactions = ({ recipientId, updateReactionCount, theme }) => {
   const [showPicker, setShowPicker] = useState(false);
   const [reactionData, setReactionData] = useState({
     emoji: '',
     type: 'increase',
   });
   const isDarkMode = theme !== 'light';
+  const pickerRef = useRef();
 
   const handleShowEmojiPicker = () => {
     setShowPicker(!showPicker);
@@ -35,24 +36,16 @@ const Actions = ({ recipientId, updateReactionCount, theme }) => {
     }
   };
 
+  useClickOutside(pickerRef, () => {
+    setShowPicker(false);
+  });
+
   return (
     <>
-      <ActionWrapper>
-        <ActionButtons onClick={handleShowEmojiPicker}>
-          <Icons
-            src={AddReactionIcon}
-            alt="리액션추가"
-            isDarkMode={isDarkMode}
-          />
-          <p>추가</p>
-        </ActionButtons>
-        <ActionButtons>
-          <Icons src={ShareIcon} alt="공유" isDarkMode={isDarkMode} />
-        </ActionButtons>
-        <ActionButtons>
-          <Icons src={DeleteIcon} alt="삭제" isDarkMode={isDarkMode} />
-        </ActionButtons>
-      </ActionWrapper>
+      <ButtonWrapper ref={pickerRef} onClick={handleShowEmojiPicker}>
+        <Icons src={AddReactionIcon} alt="리액션추가" isDarkMode={isDarkMode} />
+        <p>추가</p>
+      </ButtonWrapper>
       <PickerWrapper>
         <EmojiPicker
           open={showPicker}
@@ -66,26 +59,7 @@ const Actions = ({ recipientId, updateReactionCount, theme }) => {
   );
 };
 
-const ActionWrapper = styled.div`
-  height: 36px;
-  display: flex;
-  justify-content: space-between;
-  gap: 14px;
-
-  :hover {
-    background-color: ${({ theme }) => theme.colors.PURPLE};
-  }
-
-  :active {
-    background-color: ${({ theme }) => theme.colors.PURPLE_D};
-  }
-
-  @media ${({ theme }) => theme.device.Mobile} {
-    gap: 7px;
-  }
-`;
-
-const ActionButtons = styled.button`
+const ButtonWrapper = styled.button`
   height: 36px;
   padding: 6px 16px;
   border-radius: 6px;
@@ -99,6 +73,14 @@ const ActionButtons = styled.button`
   display: flex;
   align-items: center;
   gap: 4px;
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.PURPLE};
+  }
+
+  &:active {
+    background-color: ${({ theme }) => theme.colors.PURPLE_D};
+  }
+
   p {
     color: ${({ theme }) => theme.colors.BLACK};
   }
@@ -127,7 +109,7 @@ const Icons = styled.img`
 
 const PickerWrapper = styled.div`
   position: absolute;
-  top: 90%;
-  left: 65%;
+  top: 40px;
+  left: -200px;
 `;
-export default Actions;
+export default AddReactions;

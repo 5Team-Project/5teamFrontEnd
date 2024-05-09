@@ -15,34 +15,14 @@ const WriterCountText = ({ count, isBgImg = false }) => {
   }, []);
 
   return (
-    <>
-      {!isListPage ? (
-        <WriterCountTextWrapper style={{ color: fontColor }}>
-          <span>{count}</span>
-          <CountText style={{ color: fontColor }}>명이 작성했어요!</CountText>
-        </WriterCountTextWrapper>
-      ) : (
-        <WriterCountTextWrapperList style={{ color: fontColor }}>
-          <span>{count}</span>
-          <CountText style={{ color: fontColor }}>명이 작성했어요!</CountText>
-        </WriterCountTextWrapperList>
-      )}
-    </>
+    <WriterCountTextWrapper style={{ color: fontColor }}>
+      <span>{count}</span>
+      <CountText style={{ color: fontColor }}>명이 작성했어요!</CountText>
+    </WriterCountTextWrapper>
   );
 };
 
 const WriterCountTextWrapper = styled.div`
-  font-size: ${({ theme }) => theme.fontsize.LARGE_TXT};
-  font-weight: ${({ theme }) => theme.fontweight.BOLD};
-  height: 27px;
-  line-height: 30px;
-
-  @media ${({ theme }) => theme.device.Tablet} {
-    display: none;
-  }
-`;
-
-const WriterCountTextWrapperList = styled.div`
   font-size: ${({ theme }) => theme.fontsize.LARGE_TXT};
   font-weight: ${({ theme }) => theme.fontweight.BOLD};
   height: 27px;
