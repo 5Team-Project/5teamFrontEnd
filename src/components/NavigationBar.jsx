@@ -2,10 +2,11 @@ import styled from 'styled-components';
 import WriterCountIcon from './WriterCountIcon';
 import WriterCountText from './WriterCountText';
 import ReactionCount from './ReactionCount';
-import Actions from './Actions';
+import AddReactions from './AddReactions';
 import React, { useEffect, useState } from 'react';
 import DropReactions from './DropReactions';
 import { getDataByRecipientId } from '../api/getDataByRecipientId';
+import ShareButton from './ShareButton';
 
 const NavigationBar = ({ recipientId }) => {
   const [title, setTitle] = useState('Dear');
@@ -72,10 +73,13 @@ const NavigationBar = ({ recipientId }) => {
             <DropReactions reactions={reactions} />
           </PostStatsBox>
           <Divider />
-          <Actions
-            recipientId={recipientId}
-            updateReactionCount={updateReactionCount}
-          />
+          <ActionButtons>
+            <AddReactions
+              recipientId={recipientId}
+              updateReactionCount={updateReactionCount}
+            />
+            <ShareButton />
+          </ActionButtons>
         </PostStats>
       </NavBox>
     </NavWrapper>
@@ -111,8 +115,8 @@ const Title = styled.a`
   @media ${({ theme }) => theme.device.Mobile} {
     position: absolute;
     bottom: 75px;
-    right: 24px;
-    font-size: ${({ theme }) => theme.fontsize.TITLE};
+    left: 135px;
+    font-size: ${({ theme }) => theme.fontsize.MEDIUM_TXT};
     font-weight: ${({ theme }) => theme.fontweight.REGULAR};
   }
 `;
@@ -138,6 +142,14 @@ const WriterCountWrapper = styled.div`
   @media ${({ theme }) => theme.device.Tablet} {
     display: none;
   }
+`;
+
+const ActionButtons = styled.div`
+  height: 36px;
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  position: relative;
 `;
 
 const Divider = styled.div`
