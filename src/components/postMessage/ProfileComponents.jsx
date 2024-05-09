@@ -4,18 +4,23 @@ import defaultImage from '../../assets/images/defaultimg.png';
 import { getProfileImg, getProfileImgs } from '../../api/getProfileImg';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { storage } from '../../utils/firebase';
+import { ProfileImageSkeleton, OptionImageSkeleton } from './Skeleton';
 
 const ProfileImageComponent = ({ onImageSelect }) => {
   const [selectedImage, setSelectedImage] = useState('');
   const [imageOptions, setImageOptions] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchProfileImages = async () => {
       try {
+        setIsLoading(true);
         const response = await getProfileImgs();
         setImageOptions(response.imageUrls);
+        setIsLoading(false);
       } catch (error) {
         console.error(error);
+        setIsLoading(false);
       }
     };
     fetchProfileImages();
@@ -50,11 +55,15 @@ const ProfileImageComponent = ({ onImageSelect }) => {
   return (
     <ProfileContainer>
       <ProfileImageContainer>
-        <ProfileImage
-          src={selectedImage || defaultImage}
-          alt="Profile Image"
-          onClick={() => document.getElementById('fileInput').click()}
-        />
+        {isLoading ? (
+          <ProfileImageSkeleton />
+        ) : (
+          <ProfileImage
+            src={selectedImage || defaultImage}
+            alt="Profile Image"
+            onClick={() => document.getElementById('fileInput').click()}
+          />
+        )}
         <input
           id="fileInput"
           type="file"
@@ -66,14 +75,18 @@ const ProfileImageComponent = ({ onImageSelect }) => {
       <OptionsContainer>
         <Description>프로필 이미지를 선택해주세요!</Description>
         <OptionImageContainer>
-          {imageOptions.map((imageUrl, index) => (
-            <OptionImage
-              key={index}
-              src={imageUrl}
-              alt={`Option ${index + 1}`}
-              onClick={() => handleImageClick(imageUrl)}
-            />
-          ))}
+          {isLoading
+            ? Array.from({ length: 9 }).map((_, index) => (
+                <OptionImageSkeleton key={index} />
+              ))
+            : imageOptions.map((imageUrl, index) => (
+                <OptionImage
+                  key={index}
+                  src={imageUrl}
+                  alt={`Option ${index + 1}`}
+                  onClick={() => handleImageClick(imageUrl)}
+                />
+              ))}
         </OptionImageContainer>
       </OptionsContainer>
     </ProfileContainer>
@@ -88,7 +101,6 @@ const ProfileContainer = styled.div`
 `;
 
 const Description = styled.div`
-  font-family: Pretendard;
   font-size: ${({ theme }) => theme.fontsize.MEDIUM_TXT};
   font-weight: ${({ theme }) => theme.fontweight.REGULAR};
   line-height: 26px;
@@ -109,6 +121,7 @@ const ProfileImage = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
+  cursor: pointer;
 `;
 
 const OptionsContainer = styled.div`

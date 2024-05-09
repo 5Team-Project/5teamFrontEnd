@@ -96,9 +96,8 @@ const ButtonMakeNewPaper = styled.button`
   padding: 8px 8px;
   border-radius: 6px;
   border: 1px solid ${({ theme }) => theme.colors.GRAY};
-  font-family: 'Pretendard', sans-serif;
   font-size: ${({ theme }) => theme.fontsize.MEDIUM_TXT};
-  font-weight: ${({ theme }) => theme.fontweight.BOLD};
+  font-weight: ${({ theme }) => theme.fontweight.REGULAR};
   color: ${({ theme }) => theme.colors.BLACK};
   line-height: 26px;
   letter-spacing: -0.01em;

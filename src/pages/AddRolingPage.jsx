@@ -61,8 +61,8 @@ const AddRollingPaper = () => {
     try {
       const response = await PostMessages(data);
       console.log('작성 성공:', response);
-      // 수정: 작성 성공 후 원하는 동작 수행 (예: 페이지 이동)
-      // navigate('/');
+
+      navigate('/');
     } catch (error) {
       console.error('작성 실패:', error);
     }
@@ -134,7 +134,6 @@ const FromContainer = styled.div`
 `;
 
 const LabelStyle = styled.label`
-  font-family: Pretendard;
   font-size: ${({ theme }) => theme.fontsize.M_TITLE};
   font-weight: ${({ theme }) => theme.fontweight.BOLD};
   line-height: 36px;

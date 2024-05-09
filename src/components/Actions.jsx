@@ -6,12 +6,13 @@ import { useState } from 'react';
 import EmojiPicker from 'emoji-picker-react';
 import { postEmojiReactions } from '../api/postEmojiReaction';
 
-const Actions = ({ recipientId, updateReactionCount }) => {
+const Actions = ({ recipientId, updateReactionCount, theme }) => {
   const [showPicker, setShowPicker] = useState(false);
   const [reactionData, setReactionData] = useState({
     emoji: '',
     type: 'increase',
   });
+  const isDarkMode = theme !== 'light';
 
   const handleShowEmojiPicker = () => {
     setShowPicker(!showPicker);
@@ -38,14 +39,18 @@ const Actions = ({ recipientId, updateReactionCount }) => {
     <>
       <ActionWrapper>
         <ActionButtons onClick={handleShowEmojiPicker}>
-          <Icons src={AddReactionIcon} alt="리액션추가" />
+          <Icons
+            src={AddReactionIcon}
+            alt="리액션추가"
+            isDarkMode={isDarkMode}
+          />
           <p>추가</p>
         </ActionButtons>
         <ActionButtons>
-          <Icons src={ShareIcon} alt="공유" />
+          <Icons src={ShareIcon} alt="공유" isDarkMode={isDarkMode} />
         </ActionButtons>
         <ActionButtons>
-          <Icons src={DeleteIcon} alt="삭제" />
+          <Icons src={DeleteIcon} alt="삭제" isDarkMode={isDarkMode} />
         </ActionButtons>
       </ActionWrapper>
       <PickerWrapper>
