@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import testImg from '../assets/images/ProfileForTest.png';
-import { useEffect, useState } from 'react';
 
 const ToastMessage = ({ isOpen, text }) => {
   return (

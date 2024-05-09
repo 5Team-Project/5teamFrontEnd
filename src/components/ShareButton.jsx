@@ -1,10 +1,12 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import ShareIcon from '../assets/icons/IconShare.svg';
+import useClickOutside from '../hooks/useClickOutside';
 
 const ShareButton = ({ handleToast }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef();
 
   const baseUrl = process.env.REACT_APP_BASE_URL;
   const location = useLocation();
@@ -24,20 +26,22 @@ const ShareButton = ({ handleToast }) => {
     }
   };
 
+  useClickOutside(dropdownRef, () => {
+    setIsOpen(false);
+  });
+
   return (
     <>
-      <ShareButtonWrapper onClick={toggleDropdown}>
+      <ShareButtonWrapper ref={dropdownRef} onClick={toggleDropdown}>
         <Icons src={ShareIcon} alt="공유" />
-        {isOpen && (
-          <DropDownList>
-            <DropDownItem>
-              <DropDownLabel>카카오톡 공유</DropDownLabel>
-            </DropDownItem>
-            <DropDownItem onClick={handleCopyUrl}>
-              <DropDownLabel>URL 공유</DropDownLabel>
-            </DropDownItem>
-          </DropDownList>
-        )}
+        <DropDownList style={isOpen ? {} : { display: 'none' }}>
+          <DropDownItem>
+            <DropDownLabel>카카오톡 공유</DropDownLabel>
+          </DropDownItem>
+          <DropDownItem onClick={handleCopyUrl}>
+            <DropDownLabel>URL 공유</DropDownLabel>
+          </DropDownItem>
+        </DropDownList>
       </ShareButtonWrapper>
     </>
   );
