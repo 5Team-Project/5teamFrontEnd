@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import useDeviceSize from '../../hooks/useDeviceSize';
 import { getData } from '../../api/getData';
 import ListCard from './ListCard';
+import { filter } from 'lodash';
 
 const ListSort = ({ sort, theme }) => {
   const [listData, setListData] = useState([]);
@@ -15,7 +16,7 @@ const ListSort = ({ sort, theme }) => {
 
   const { deviceSize } = useDeviceSize();
 
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(6);
   const [currentLength, setCurrentLength] = useState(3);
   const [itemWidth, setItemWidth] = useState(295);
 
@@ -23,44 +24,155 @@ const ListSort = ({ sort, theme }) => {
 
   const isDarkMode = theme !== 'light';
 
+  const [dataLength, setDataLength] = useState(0);
+  const [offset, setOffset] = useState(0);
+  const [prevData, setPrevData] = useState([]);
+  const [slideData, setSlideData] = useState([]);
+
+  const [isUpdate, setIsUpdate] = useState(true);
+
+  const [isAnimate, setIsAnimate] = useState(false);
+  const [isNext, setIsNext] = useState(false);
+
+  const limit = 6;
+
   useEffect(() => {
-    const handleLoad = async () => {
-      const commonPath = '/6-5/recipients/?limit=6';
+    if (listData.length > 0) return;
+
+    // 처음 데이터 6개 받아오기
+    const handleLoadFirst = async () => {
+      const commonPath = `/6-5/recipients/?limit=${limit}`;
       setPath(sort === 'like' ? `${commonPath}&sort=like` : `${commonPath}`);
 
       try {
         if (path === null) return;
+        console.log('처음데이터');
         const res = await getData(path);
 
+        setDataLength(res.count);
+        setOffset(res.count - limit);
         setNextPath(res.next);
         setListData(res.results);
       } catch (e) {
         console.error(e);
       }
     };
-    handleLoad();
+
+    handleLoadFirst();
   }, [path]);
+
+  // 마지막 데이터 6개 받아오기
+  useEffect(() => {
+    if (offset <= 0 || prevData.length > 0) return;
+
+    const handleLoadLast = async () => {
+      const commonPath = `/6-5/recipients/?limit=${limit}`;
+      const prevPath =
+        sort === 'like'
+          ? `${commonPath}&offset=${offset}&sort=like`
+          : `${commonPath}&offset=${offset}`;
+
+      try {
+        if (path === null) return;
+        console.log('마지막데이터');
+        const res = await getData(prevPath);
+
+        setPrevData(res.results);
+      } catch (e) {
+        console.error(e);
+      }
+    };
+    handleLoadLast();
+  }, [offset]);
+
+  // 처음 데이터 마지막 데이터 합치기
+  useEffect(() => {
+    if (prevData.length <= 0 || listData.length <= 0) return;
+
+    setSlideData([...prevData, ...listData]);
+  }, [prevData, listData]);
+
+  // 마지막 데이터를 한번 더 안불러오게 nextPath의 limit을 설정
+  useEffect(() => {
+    if (offset <= 0) return;
+    if (nextPath.length <= 0) return;
+
+    const handleOffsetCheck = () => {
+      if (offset - limit < limit) {
+        setNextPath(
+          nextPath.replace(`limit=${limit}`, `limit=${offset - limit}`),
+        );
+
+        if (offset - limit <= 0) setNextPath(null);
+
+        return;
+      }
+    };
+
+    handleOffsetCheck();
+  }, [offset]);
 
   // 다음 리스트 불러오기
   useEffect(() => {
-    const addListData = async () => {
+    const HandleAddListData = async () => {
       if (!isLoading) return;
+
+      console.log('오프셋셋세셋 : ', offset);
+      console.log('다음 다음 다음 : ', nextPath);
 
       try {
         if (nextPath === null) return;
 
         const res = await getData(nextPath);
 
+        console.log('다음데이터', res);
+
         const newData = res.results;
         setNextPath(res.next);
+
+        if (offset - limit > 0) setOffset(offset - limit);
+
         setListData([...listData, ...newData]);
       } catch (e) {
         console.error(e);
       }
       setIsLoading(false);
     };
-    addListData();
+
+    HandleAddListData();
   }, [isLoading]);
+
+  // SlideData 업데이트
+  useEffect(() => {
+    if (nextPath === null) return;
+    if (isUpdate) {
+      console.log('업데이트');
+      setSlideData([...prevData, ...listData]);
+      setIsUpdate(false);
+    }
+  }, [isUpdate, listData]);
+
+  // 캐러셀 이동 시 SlideData 순서 변경
+  const SlideChange = (num) => {
+    console.log('num ', num, ' isNext ', isNext);
+    if (slideData[0] === listData[0]) {
+      if (isNext) {
+        setSlideData([...prevData, ...listData]);
+        setCurrentIndex(2);
+      } else {
+        setSlideData([...prevData, ...listData]);
+        setCurrentIndex(6);
+      }
+    } else {
+      if (isNext) {
+        setSlideData([...listData, ...prevData]);
+        setCurrentIndex(num - 6);
+      } else {
+        setSlideData([...listData, ...prevData]);
+        setCurrentIndex(slideData.length - 6);
+      }
+    }
+  };
 
   // 사이즈에 따라서 리스트 이동 반경 제한
   useEffect(() => {
@@ -84,23 +196,34 @@ const ListSort = ({ sort, theme }) => {
   }, [deviceSize]);
 
   const handlePrev = () => {
-    const length = listData.length;
+    if (isAnimate) return;
+
+    setIsAnimate(true);
+    setIsNext(false);
+
+    const length = slideData.length;
     const newIndex =
       (currentIndex - 1 + length - currentLength) % (length - currentLength);
     setCurrentIndex(newIndex);
 
-    if (newIndex <= Math.floor(length / 2 - 1)) {
+    if (newIndex === Math.floor(length / 2 + 2)) {
+      setIsUpdate(true);
       setIsLoading(true);
     }
   };
 
   const handleNext = () => {
-    const length = listData.length;
+    if (isAnimate) return;
+
+    setIsAnimate(true);
+    setIsNext(true);
+
+    const length = slideData.length;
     const newIndex = (currentIndex + 1) % (length - currentLength);
     setCurrentIndex(newIndex);
-
-    if (newIndex >= Math.floor(length / 2 - 1)) {
+    if (newIndex === Math.floor(length / 2 + 1)) {
       setIsLoading(true);
+      setIsUpdate(true);
     }
   };
 
@@ -137,16 +260,20 @@ const ListSort = ({ sort, theme }) => {
           ? '최근에 만든 롤링 페이퍼 ⭐️️'
           : '인기 롤링 페이퍼 🔥'}
       </ListSortSpan>
-
       <ListCarousel
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
       >
-        <ListCarouselSize
+        <ListCarouselSlider
           currentIndex={currentIndex}
-          listData={listData}
+          setCurrentIndex={setCurrentIndex}
+          slideData={slideData}
           itemWidth={itemWidth}
+          isAnimate={isAnimate}
+          setIsAnimate={setIsAnimate}
+          SlideChange={SlideChange}
+          isNext={isNext}
         />
       </ListCarousel>
 
@@ -164,14 +291,35 @@ const ListSort = ({ sort, theme }) => {
   );
 };
 
-const ListCarouselSize = ({ currentIndex, listData, itemWidth }) => {
+const ListCarouselSlider = ({
+  currentIndex,
+  slideData,
+  itemWidth,
+  isAnimate,
+  setIsAnimate,
+  SlideChange,
+  isNext,
+}) => {
   return (
     <ListSortMain
       style={{
         transform: `translateX(-${currentIndex * itemWidth}px)`,
+        transition: `transform ${isAnimate ? 0.5 : 0}s ease`,
+      }}
+      onTransitionEnd={() => {
+        setIsAnimate(false);
+
+        console.log('currentIndex ', currentIndex);
+        if (currentIndex === slideData.length - 4 && isNext) {
+          console.log('넥스트 ', slideData.length - 4);
+          SlideChange(currentIndex);
+        } else if (currentIndex === 0 && !isNext) {
+          console.log('프리브');
+          SlideChange(currentIndex);
+        }
       }}
     >
-      {listData.map((data) => (
+      {slideData.map((data) => (
         <ListCard key={data.id} data={data} />
       ))}
     </ListSortMain>
@@ -216,7 +364,6 @@ const ListSortMain = styled.div`
   display: flex;
   padding: 0 10px;
   gap: 20px;
-  transition: transform 0.5s ease;
 
   @media ${({ theme }) => theme.device.Tablet} {
     gap: 10px;
