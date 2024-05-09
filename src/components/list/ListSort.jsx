@@ -9,8 +9,12 @@ import { filter } from 'lodash';
 
 const ListSort = ({ sort, theme }) => {
   const [listData, setListData] = useState([]);
+  const [lastData, setLastData] = useState([]);
+  const [slideData, setSlideData] = useState([]);
+
   const [path, setPath] = useState(null);
   const [nextPath, setNextPath] = useState(null);
+  const [prevPath, setPrevPath] = useState(null);
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -26,8 +30,6 @@ const ListSort = ({ sort, theme }) => {
 
   const [dataLength, setDataLength] = useState(0);
   const [offset, setOffset] = useState(0);
-  const [prevData, setPrevData] = useState([]);
-  const [slideData, setSlideData] = useState([]);
 
   const [isUpdate, setIsUpdate] = useState(true);
 
@@ -46,7 +48,7 @@ const ListSort = ({ sort, theme }) => {
 
       try {
         if (path === null) return;
-        console.log('처음데이터');
+        // console.log('처음데이터');
         const res = await getData(path);
 
         setDataLength(res.count);
@@ -63,21 +65,25 @@ const ListSort = ({ sort, theme }) => {
 
   // 마지막 데이터 6개 받아오기
   useEffect(() => {
-    if (offset <= 0 || prevData.length > 0) return;
+    if (offset <= 0 || lastData.length > 0) return;
+
+    if (dataLength < 12) return;
 
     const handleLoadLast = async () => {
       const commonPath = `/6-5/recipients/?limit=${limit}`;
-      const prevPath =
+      const lastPath =
         sort === 'like'
           ? `${commonPath}&offset=${offset}&sort=like`
           : `${commonPath}&offset=${offset}`;
 
       try {
         if (path === null) return;
-        console.log('마지막데이터');
-        const res = await getData(prevPath);
+        const res = await getData(lastPath);
 
-        setPrevData(res.results);
+        // console.log('마지막데이터', res);
+
+        setPrevPath(res.previous);
+        setLastData(res.results);
       } catch (e) {
         console.error(e);
       }
@@ -87,23 +93,35 @@ const ListSort = ({ sort, theme }) => {
 
   // 처음 데이터 마지막 데이터 합치기
   useEffect(() => {
-    if (prevData.length <= 0 || listData.length <= 0) return;
-
-    setSlideData([...prevData, ...listData]);
-  }, [prevData, listData]);
+    if (lastData.length <= 0 || listData.length <= 0) return;
+    setSlideData([...lastData, ...listData]);
+  }, [lastData, listData]);
 
   // 마지막 데이터를 한번 더 안불러오게 nextPath의 limit을 설정
   useEffect(() => {
     if (offset <= 0) return;
-    if (nextPath.length <= 0) return;
 
     const handleOffsetCheck = () => {
       if (offset - limit < limit) {
-        setNextPath(
-          nextPath.replace(`limit=${limit}`, `limit=${offset - limit}`),
-        );
+        if (nextPath !== null) {
+          setNextPath(
+            nextPath.replace(`limit=${limit}`, `limit=${offset - limit}`),
+          );
+        }
 
-        if (offset - limit <= 0) setNextPath(null);
+        if (prevPath !== null) {
+          setPrevPath(
+            prevPath.replace(
+              `limit=${limit}&offset=${offset - limit}`,
+              `limit=${offset - limit}&offset=${offset - (offset - limit)}`,
+            ),
+          );
+        }
+
+        if (offset - limit <= 0) {
+          setNextPath(null);
+          setPrevPath(null);
+        }
 
         return;
       }
@@ -117,25 +135,50 @@ const ListSort = ({ sort, theme }) => {
     const HandleAddListData = async () => {
       if (!isLoading) return;
 
-      console.log('오프셋셋세셋 : ', offset);
-      console.log('다음 다음 다음 : ', nextPath);
+      if (isNext) {
+        try {
+          if (nextPath === null) return;
 
-      try {
-        if (nextPath === null) return;
+          const res = await getData(nextPath);
 
-        const res = await getData(nextPath);
+          // console.log('다음데이터', res);
 
-        console.log('다음데이터', res);
+          const newData = res.results;
 
-        const newData = res.results;
-        setNextPath(res.next);
+          setNextPath(res.next);
 
-        if (offset - limit > 0) setOffset(offset - limit);
+          if (offset - limit > 0) setOffset(offset - limit);
 
-        setListData([...listData, ...newData]);
-      } catch (e) {
-        console.error(e);
+          setListData([...listData, ...newData]);
+        } catch (e) {
+          console.error(e);
+        }
+      } else {
+        try {
+          if (prevPath === null) return;
+
+          const res = await getData(prevPath);
+
+          // console.log('이전데이터', res);
+
+          const newData = res.results;
+
+          setPrevPath(res.previous);
+
+          if (offset - limit > 0) setOffset(offset - limit);
+
+          const setLists = [
+            ...listData.slice(0, 6),
+            ...newData,
+            ...listData.slice(6),
+          ];
+
+          setListData(setLists);
+        } catch (e) {
+          console.error(e);
+        }
       }
+
       setIsLoading(false);
     };
 
@@ -146,8 +189,8 @@ const ListSort = ({ sort, theme }) => {
   useEffect(() => {
     if (nextPath === null) return;
     if (isUpdate) {
-      console.log('업데이트');
-      setSlideData([...prevData, ...listData]);
+      // console.log('업데이트');
+      setSlideData([...lastData, ...listData]);
       setIsUpdate(false);
     }
   }, [isUpdate, listData]);
@@ -157,18 +200,18 @@ const ListSort = ({ sort, theme }) => {
     console.log('num ', num, ' isNext ', isNext);
     if (slideData[0] === listData[0]) {
       if (isNext) {
-        setSlideData([...prevData, ...listData]);
+        setSlideData([...lastData, ...listData]);
         setCurrentIndex(2);
       } else {
-        setSlideData([...prevData, ...listData]);
+        setSlideData([...lastData, ...listData]);
         setCurrentIndex(6);
       }
     } else {
       if (isNext) {
-        setSlideData([...listData, ...prevData]);
+        setSlideData([...listData, ...lastData]);
         setCurrentIndex(num - 6);
       } else {
-        setSlideData([...listData, ...prevData]);
+        setSlideData([...listData, ...lastData]);
         setCurrentIndex(slideData.length - 6);
       }
     }
@@ -204,11 +247,12 @@ const ListSort = ({ sort, theme }) => {
     const length = slideData.length;
     const newIndex =
       (currentIndex - 1 + length - currentLength) % (length - currentLength);
-    setCurrentIndex(newIndex);
 
-    if (newIndex === Math.floor(length / 2 + 2)) {
-      setIsUpdate(true);
+    setCurrentIndex(newIndex);
+    if (newIndex === Math.floor(length / 2 - 1)) {
       setIsLoading(true);
+
+      setIsUpdate(true);
     }
   };
 
@@ -220,9 +264,12 @@ const ListSort = ({ sort, theme }) => {
 
     const length = slideData.length;
     const newIndex = (currentIndex + 1) % (length - currentLength);
+
     setCurrentIndex(newIndex);
+
     if (newIndex === Math.floor(length / 2 + 1)) {
       setIsLoading(true);
+
       setIsUpdate(true);
     }
   };
@@ -265,16 +312,27 @@ const ListSort = ({ sort, theme }) => {
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
       >
-        <ListCarouselSlider
-          currentIndex={currentIndex}
-          setCurrentIndex={setCurrentIndex}
-          slideData={slideData}
-          itemWidth={itemWidth}
-          isAnimate={isAnimate}
-          setIsAnimate={setIsAnimate}
-          SlideChange={SlideChange}
-          isNext={isNext}
-        />
+        <ListSortSlide
+          style={{
+            transform: `translateX(-${currentIndex * itemWidth}px)`,
+            transition: `transform ${isAnimate ? 0.5 : 0}s ease`,
+          }}
+          onTransitionEnd={() => {
+            setIsAnimate(false);
+
+            console.log('currentIndex ', currentIndex);
+            if (
+              (currentIndex === slideData.length - 4 && isNext) ||
+              (currentIndex === 0 && !isNext)
+            ) {
+              SlideChange(currentIndex);
+            }
+          }}
+        >
+          {slideData.map((data) => (
+            <ListCard key={data.id} data={data} />
+          ))}
+        </ListSortSlide>
       </ListCarousel>
 
       {deviceSize === 'desktop' && (
@@ -288,41 +346,6 @@ const ListSort = ({ sort, theme }) => {
         </>
       )}
     </ListSortWrap>
-  );
-};
-
-const ListCarouselSlider = ({
-  currentIndex,
-  slideData,
-  itemWidth,
-  isAnimate,
-  setIsAnimate,
-  SlideChange,
-  isNext,
-}) => {
-  return (
-    <ListSortMain
-      style={{
-        transform: `translateX(-${currentIndex * itemWidth}px)`,
-        transition: `transform ${isAnimate ? 0.5 : 0}s ease`,
-      }}
-      onTransitionEnd={() => {
-        setIsAnimate(false);
-
-        console.log('currentIndex ', currentIndex);
-        if (currentIndex === slideData.length - 4 && isNext) {
-          console.log('넥스트 ', slideData.length - 4);
-          SlideChange(currentIndex);
-        } else if (currentIndex === 0 && !isNext) {
-          console.log('프리브');
-          SlideChange(currentIndex);
-        }
-      }}
-    >
-      {slideData.map((data) => (
-        <ListCard key={data.id} data={data} />
-      ))}
-    </ListSortMain>
   );
 };
 
@@ -360,7 +383,7 @@ const ListCarousel = styled.div`
   }
 `;
 
-const ListSortMain = styled.div`
+const ListSortSlide = styled.div`
   display: flex;
   padding: 0 10px;
   gap: 20px;
