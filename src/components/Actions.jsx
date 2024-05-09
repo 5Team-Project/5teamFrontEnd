@@ -5,6 +5,7 @@ import DeleteIcon from '../assets/icons/IconDelete.svg';
 import { useState } from 'react';
 import EmojiPicker from 'emoji-picker-react';
 import { postEmojiReactions } from '../api/postEmojiReaction';
+import DropShare from './DropShare';
 
 const Actions = ({ recipientId, updateReactionCount, theme }) => {
   const [showPicker, setShowPicker] = useState(false);
@@ -44,6 +45,8 @@ const Actions = ({ recipientId, updateReactionCount, theme }) => {
             alt="리액션추가"
             isDarkMode={isDarkMode}
           />
+        <ActionButtonWrapper onClick={handleShowEmojiPicker}>
+          <Icons src={AddReactionIcon} alt="리액션추가" />
           <p>추가</p>
         </ActionButtons>
         <ActionButtons>
@@ -52,6 +55,13 @@ const Actions = ({ recipientId, updateReactionCount, theme }) => {
         <ActionButtons>
           <Icons src={DeleteIcon} alt="삭제" isDarkMode={isDarkMode} />
         </ActionButtons>
+        </ActionButtonWrapper>
+        <ActionButtonWrapper>
+          <DropShare icon={ShareIcon} />
+        </ActionButtonWrapper>
+        <ActionButtonWrapper>
+          <Icons src={DeleteIcon} alt="삭제" />
+        </ActionButtonWrapper>
       </ActionWrapper>
       <PickerWrapper>
         <EmojiPicker
@@ -85,7 +95,7 @@ const ActionWrapper = styled.div`
   }
 `;
 
-const ActionButtons = styled.button`
+const ActionButtonWrapper = styled.button`
   height: 36px;
   padding: 6px 16px;
   border-radius: 6px;
