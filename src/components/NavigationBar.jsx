@@ -7,13 +7,16 @@ import React, { useEffect, useState } from 'react';
 import DropReactions from './DropReactions';
 import { getDataByRecipientId } from '../api/getDataByRecipientId';
 import ShareButton from './ShareButton';
+import ToastMessage from './ToastMessage';
 
 const NavigationBar = ({ recipientId }) => {
   const [title, setTitle] = useState('Dear');
   const [messageCount, setMessageCount] = useState(0);
   const [recentSenders, setRecentSenders] = useState([]);
-  const [reactions, setReactions] = useState([]);
+  const [allReactions, setAllReactions] = useState([]);
   const [topReactions, setTopReactions] = useState([]);
+  const [isToastOpen, setIsToastOpen] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
 
   useEffect(() => {
     const handleLoadRecipientData = async () => {
@@ -36,7 +39,7 @@ const NavigationBar = ({ recipientId }) => {
       try {
         const res = await getDataByRecipientId(`${recipientId}/reactions/`);
         if (res && res.results) {
-          setReactions(res.results);
+          setAllReactions(res.results);
           setTopReactions(res.results.slice(0, 3));
         }
       } catch (e) {
@@ -47,42 +50,55 @@ const NavigationBar = ({ recipientId }) => {
   }, []);
 
   const updateReactionCount = (updatedReaction) => {
-    const updatedReactions = reactions.map((reaction) =>
+    const updatedReactions = allReactions.map((reaction) =>
       reaction.emoji === updatedReaction.emoji ? updatedReaction : reaction,
     );
     updatedReactions.sort((a, b) => b.count - a.count);
-    setReactions(updatedReactions);
+    setAllReactions(updatedReactions);
     setTopReactions(updatedReactions.slice(0, 3));
   };
 
+  const handleToast = (text) => {
+    setToastMessage(text);
+    setIsToastOpen(true);
+    const toastTimer = setTimeout(() => {
+      setIsToastOpen(false);
+      setToastMessage('');
+    }, 2000);
+    return () => clearTimeout(toastTimer);
+  };
+
   return (
-    <NavWrapper>
-      <NavBox>
-        <Title>
-          <span>To. </span>
-          <span>{title}</span>
-        </Title>
-        <PostStats>
-          <PostStatsBox>
-            <WriterCountWrapper>
-              <WriterCountIcon count={messageCount} recent={recentSenders} />
-              <WriterCountText count={messageCount} />
-            </WriterCountWrapper>
+    <>
+      <NavWrapper>
+        <NavBox>
+          <Title>
+            <span>To. </span>
+            <span>{title}</span>
+          </Title>
+          <PostStats>
+            <PostStatsBox>
+              <WriterCountWrapper>
+                <WriterCountIcon count={messageCount} recent={recentSenders} />
+                <WriterCountText count={messageCount} />
+              </WriterCountWrapper>
+              <Divider />
+              <ReactionCount topReactions={topReactions} />
+              <DropReactions reactions={allReactions} />
+            </PostStatsBox>
             <Divider />
-            <ReactionCount topReactions={topReactions} />
-            <DropReactions reactions={reactions} />
-          </PostStatsBox>
-          <Divider />
-          <ActionButtons>
-            <AddReactions
-              recipientId={recipientId}
-              updateReactionCount={updateReactionCount}
-            />
-            <ShareButton />
-          </ActionButtons>
-        </PostStats>
-      </NavBox>
-    </NavWrapper>
+            <ActionButtons>
+              <AddReactions
+                recipientId={recipientId}
+                updateReactionCount={updateReactionCount}
+              />
+              <ShareButton handleToast={handleToast} />
+            </ActionButtons>
+          </PostStats>
+        </NavBox>
+      </NavWrapper>
+      <ToastMessage isOpen={isToastOpen} text={toastMessage} />
+    </>
   );
 };
 

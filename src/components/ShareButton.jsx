@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import ShareIcon from '../assets/icons/IconShare.svg';
 
-const ShareButton = () => {
+const ShareButton = ({ handleToast }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const baseUrl = process.env.REACT_APP_BASE_URL;
@@ -18,7 +18,7 @@ const ShareButton = () => {
       const currentUrl = new URL(baseUrl);
       currentUrl.pathname = location.pathname;
       await navigator.clipboard.writeText(currentUrl);
-      console.log('복사완료!');
+      handleToast('URL이 복사 되었다능.');
     } catch (err) {
       console.log(err);
     }
