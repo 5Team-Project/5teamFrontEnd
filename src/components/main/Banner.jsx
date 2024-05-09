@@ -125,15 +125,16 @@ const BannerNumberTag = styled.div`
 
 const BannerTextBox = styled.div`
   display: flex;
+
   flex-direction: column;
   gap: 8px;
 `;
 
 const BannerLabel = styled.h2`
+  width: 300px;
   font-size: 24px;
   font-weight: 700;
   line-height: 36px;
-  letter-spacing: -0.01em;
   text-align: left;
   color: #181818;
 

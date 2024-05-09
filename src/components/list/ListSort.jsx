@@ -1,11 +1,8 @@
 import arrowLeft from '../../assets/icons/arrow_left.svg';
 import arrowRight from '../../assets/icons/arrow_right.svg';
-
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
-
 import useDeviceSize from '../../hooks/useDeviceSize';
-
 import { getData } from '../../api/getData';
 import ListCard from './ListCard';
 

@@ -1,19 +1,27 @@
 import React, { useState, useEffect } from 'react';
+
 import styled from 'styled-components';
 import defaultImage from '../../assets/images/defaultimg.png';
-import { getProfileImg } from '../../api/getProfileImg';
+import { getProfileImg, getProfileImgs } from '../../api/getProfileImg';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { storage } from '../../utils/firebase';
+import { ProfileImageSkeleton, OptionImageSkeleton } from './Skeleton';
 
 const ProfileImageComponent = ({ onImageSelect }) => {
   const [selectedImage, setSelectedImage] = useState('');
   const [imageOptions, setImageOptions] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchProfileImages = async () => {
       try {
-        const response = await getProfileImg();
+        setIsLoading(true);
+        const response = await getProfileImgs();
         setImageOptions(response.imageUrls);
+        setIsLoading(false);
       } catch (error) {
         console.error(error);
+        setIsLoading(false);
       }
     };
     fetchProfileImages();
@@ -24,27 +32,68 @@ const ProfileImageComponent = ({ onImageSelect }) => {
     onImageSelect(imageUrl);
   };
 
+  const handleImageUpload = async (event) => {
+    const imageFile = event.target.files[0];
+    if (imageFile) {
+      const storageRef = ref(storage, `profile_images/${imageFile.name}`);
+      uploadBytes(storageRef, imageFile)
+        .then((snapshot) => {
+          getDownloadURL(snapshot.ref)
+            .then((url) => {
+              setSelectedImage(url);
+              onImageSelect(url);
+            })
+            .catch((error) => {
+              console.error('Download URL을 가져오는 중 에러 발생:', error);
+            });
+        })
+        .catch((error) => {
+          console.error('파일 업로드 중 에러 발생:', error);
+        });
+    }
+  };
+
   return (
     <ProfileContainer>
       <ProfileImageContainer>
-        <ProfileImage src={selectedImage || defaultImage} alt="Profile Image" />
+        {isLoading ? (
+          <ProfileImageSkeleton />
+        ) : (
+          <ProfileImage
+            src={selectedImage || defaultImage}
+            alt="Profile Image"
+            onClick={() => document.getElementById('fileInput').click()}
+          />
+        )}
+        <input
+          id="fileInput"
+          type="file"
+          accept="image/*"
+          onChange={handleImageUpload}
+          style={{ display: 'none' }}
+        />
       </ProfileImageContainer>
       <OptionsContainer>
         <Description>프로필 이미지를 선택해주세요!</Description>
         <OptionImageContainer>
-          {imageOptions.map((imageUrl) => (
-            <OptionImage
-              key={imageUrl.id}
-              src={imageUrl}
-              alt={`Option ${imageUrl.id + 1}`}
-              onClick={() => handleImageClick(imageUrl)}
-            />
-          ))}
+          {isLoading
+            ? Array.from({ length: 9 }).map((_, index) => (
+                <OptionImageSkeleton key={index} />
+              ))
+            : imageOptions.map((imageUrl, index) => (
+                <OptionImage
+                  key={index}
+                  src={imageUrl}
+                  alt={`Option ${index + 1}`}
+                  onClick={() => handleImageClick(imageUrl)}
+                />
+              ))}
         </OptionImageContainer>
       </OptionsContainer>
     </ProfileContainer>
   );
 };
+
 const ProfileContainer = styled.div`
   display: flex;
   flex-direction: row;
@@ -53,7 +102,6 @@ const ProfileContainer = styled.div`
 `;
 
 const Description = styled.div`
-  font-family: Pretendard;
   font-size: ${({ theme }) => theme.fontsize.MEDIUM_TXT};
   font-weight: ${({ theme }) => theme.fontweight.REGULAR};
   line-height: 26px;
@@ -74,6 +122,7 @@ const ProfileImage = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
+  cursor: pointer;
 `;
 
 const OptionsContainer = styled.div`

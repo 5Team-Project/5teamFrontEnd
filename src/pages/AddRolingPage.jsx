@@ -47,8 +47,7 @@ const AddRollingPaper = () => {
   }, [inputValue, quillValue]);
 
   const handleSubmit = async (e) => {
-    // 수정: 함수 인자 추가
-    e.preventDefault(); // 수정: 폼 기본 동작 막기
+    e.preventDefault();
 
     const cleanContent = DOMPurify.sanitize(quillValue);
     const data = {
@@ -62,7 +61,7 @@ const AddRollingPaper = () => {
     try {
       const response = await PostMessages(data);
       console.log('작성 성공:', response);
-      // 수정: 작성 성공 후 원하는 동작 수행 (예: 페이지 이동)
+
       navigate('/');
     } catch (error) {
       console.error('작성 실패:', error);
@@ -135,7 +134,6 @@ const FromContainer = styled.div`
 `;
 
 const LabelStyle = styled.label`
-  font-family: Pretendard;
   font-size: ${({ theme }) => theme.fontsize.M_TITLE};
   font-weight: ${({ theme }) => theme.fontweight.BOLD};
   line-height: 36px;
