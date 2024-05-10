@@ -5,6 +5,7 @@ import { PostPaper } from '../../api/postPaper';
 import { getBackGroundImg } from '../../api/getProfileImg';
 import BackgroundColorSelector from './BackGroundColorSelector';
 import BackgroundImageSelector from './BackGroundImageSelector';
+import { useNavigate } from 'react-router-dom';
 
 const CreatePaper = () => {
   const [inputValue, setInputValue] = useState('');
@@ -14,6 +15,7 @@ const CreatePaper = () => {
   const [isColorSelected, setIsColorSelected] = useState(true);
   const [isImageSelected, setIsImageSelected] = useState(false);
   const [backGroundImages, setBackGroundImages] = useState([]);
+  const navigate = useNavigate();
 
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
@@ -31,7 +33,8 @@ const CreatePaper = () => {
 
       try {
         const response = await PostPaper(data);
-        console.log('작성 성공:', response);
+        const paperId = response.id;
+        navigate(`/post/${paperId}`);
       } catch (error) {
         console.error('작성 실패:', error);
       }
@@ -46,7 +49,8 @@ const CreatePaper = () => {
 
       try {
         const response = await PostPaper(data);
-        console.log('작성 성공:', response);
+        const paperId = response.id;
+        navigate(`/post/${paperId}`);
       } catch (error) {
         console.error('작성 실패:', error);
       }

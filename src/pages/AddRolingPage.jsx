@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 import { useState, useEffect } from 'react';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import ProfileImageComponent from '../components/postMessage/ProfileComponents';
 import DropdownRelative from '../components/postMessage/DropRelative';
 import ReactQuillContext from '../utils/ReactQuill';
@@ -17,6 +17,7 @@ const AddRollingPaper = () => {
   const [selectedFont, setSelectedFont] = useState('Noto Sans');
   const [selectedImage, setSelectedImage] = useState('');
   const navigate = useNavigate();
+  const { messageId } = useParams();
 
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
@@ -58,13 +59,16 @@ const AddRollingPaper = () => {
       font: selectedFont,
     };
 
-    try {
-      const response = await PostMessages(data);
-      console.log('작성 성공:', response);
-
-      navigate('/');
-    } catch (error) {
-      console.error('작성 실패:', error);
+    if (messageId) {
+      try {
+        const response = await PostMessages(data, messageId);
+        console.log('작성 성공:', response);
+        navigate(`/post/${messageId}`);
+      } catch (error) {
+        console.error('작성 실패:', error);
+      }
+    } else {
+      console.error('paperId가 없습니다.');
     }
   };
 

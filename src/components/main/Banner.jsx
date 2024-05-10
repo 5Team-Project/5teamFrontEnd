@@ -118,7 +118,7 @@ const BannerNumberTag = styled.div`
   font-weight: 700;
   line-height: 20px;
   letter-spacing: -0.005em;
-  text-align: left;
+  text-align: center;
   color: #ffffff;
 `;
 

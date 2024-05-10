@@ -1,6 +1,6 @@
 import { instance } from './Axios';
 
-export const getMessage = async ({messageId, offset = 0, limit = 8}) => {
+export const getMessage = async ({ messageId, offset = 0, limit = 8 }) => {
   try {
     const query = `offset=${offset}&limit=${limit}`;
     const response = await instance.get(

@@ -12,7 +12,6 @@ import CreatePaperPage from './pages/CreatePaperPage';
 
 function App() {
   const [isDarkMode, setIsDarkMode] = useState(false);
-
   const toggleTheme = () => {
     setIsDarkMode(!isDarkMode);
   };
@@ -26,7 +25,10 @@ function App() {
           <Route path="/" element={<LandingPage />} />
           <Route path="/list" element={<ListPage />} />
           <Route path="/post" element={<CreatePaperPage />} />
-          <Route path="/test" element={<AddRollingPaper />} />
+          <Route
+            path="/post/:messageId/message"
+            element={<AddRollingPaper />}
+          />
           <Route path="/post/:messageId" element={<RollingPaperPage />} />
         </Routes>
       </BrowserRouter>

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-
 import styled from 'styled-components';
 import defaultImage from '../../assets/images/defaultimg.png';
 import { getProfileImg, getProfileImgs } from '../../api/getProfileImg';
