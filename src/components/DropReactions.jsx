@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import React, { useRef, useState } from 'react';
-import ArrowDown from '../assets/icons/Ic_Arrow_down.svg';
+import ArrowDown from '../assets/icons/IconArrowdown.svg';
 import useClickOutside from '../hooks/useClickOutside';
 
 const DropReactions = ({ reactions, theme }) => {

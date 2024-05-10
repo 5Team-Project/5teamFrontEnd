@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { Theme } from '../../styles/Theme';
 import BannerImageExampleCards from '../../assets/icons/BannerImageExampleCards.svg';
 import BannerImageExampleEmojis from '../../assets/images/BannerImageExampleEmojis.png';
 import { Link } from 'react-router-dom';
@@ -43,9 +42,9 @@ const Banner = () => {
         </BannerWrapper>
       </ContentWrapper>
       <ButtonWrapper>
-        <ButtonToLink>
-          <Link to={'/list'}>구경해보기</Link>
-        </ButtonToLink>
+        <Link to={'/list'}>
+          <ButtonToLink>구경해보기</ButtonToLink>
+        </Link>
       </ButtonWrapper>
     </ContentContainer>
   );
@@ -196,10 +195,10 @@ const ButtonToLink = styled.button`
   padding: 14px 24px;
   border-radius: 12px;
   font-size: ${({ theme }) => theme.fontsize.LARGE_TXT};
+  color: ${({ theme }) => theme.colors.DARKGRAY};
 
   & a {
     text-decoration: none;
-    color: #000;
   }
 
   @media ${({ theme }) => theme.device.Tablet} {

@@ -1,11 +1,11 @@
 import styled from 'styled-components';
-import testImg from '../assets/images/ProfileForTest.png';
+import IconCompleted from '../assets/icons/IconCompleted.svg';
 
 const ToastMessage = ({ isOpen, text }) => {
   return (
     isOpen && (
       <ToastMessageBox>
-        <ToastMessageIcon src={testImg} alt="성공!" />
+        <ToastMessageIcon src={IconCompleted} alt="성공!" />
         <ToastMessageText>{text}</ToastMessageText>
       </ToastMessageBox>
     )
