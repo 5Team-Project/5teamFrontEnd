@@ -1,11 +1,11 @@
 import styled from 'styled-components';
-import testImg from '../assets/images/ProfileForTest.png';
+import IconCompleted from '../assets/icons/IconCompleted.svg';
 
 const ToastMessage = ({ isOpen, text }) => {
   return (
     isOpen && (
       <ToastMessageBox>
-        <ToastMessageIcon src={testImg} alt="성공!" />
+        <ToastMessageIcon src={IconCompleted} alt="성공!" />
         <ToastMessageText>{text}</ToastMessageText>
       </ToastMessageBox>
     )
@@ -30,7 +30,7 @@ const ToastMessageBox = styled.div`
   left: 50%;
   transform: translateX(-50%);
 
-  animation: fadeout 2s ease-in-out;
+  animation: fadeout 3s ease-in-out;
   opacity: 0;
   @keyframes fadeout {
     0% {

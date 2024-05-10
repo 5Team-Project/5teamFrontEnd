@@ -22,7 +22,7 @@ const ShareButton = ({ handleToast, theme }) => {
       const currentUrl = new URL(baseUrl);
       currentUrl.pathname = location.pathname;
       await navigator.clipboard.writeText(currentUrl);
-      handleToast('URL이 복사 되었다능.');
+      handleToast('URL이 복사 되었습니다.');
     } catch (err) {
       console.log(err);
     }

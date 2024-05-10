@@ -1,12 +1,16 @@
 import styled from 'styled-components';
 import AddReactionIcon from '../assets/icons/IconAddReaction.svg';
-import DeleteIcon from '../assets/icons/IconDelete.svg';
 import { useRef, useState } from 'react';
 import EmojiPicker from 'emoji-picker-react';
 import { postEmojiReactions } from '../api/postEmojiReaction';
 import useClickOutside from '../hooks/useClickOutside';
 
-const AddReactions = ({ recipientId, updateReactionCount, theme }) => {
+const AddReactions = ({
+  recipientId,
+  updateReactionCount,
+  theme,
+  handleToast,
+}) => {
   const [showPicker, setShowPicker] = useState(false);
   const [reactionData, setReactionData] = useState({
     emoji: '',
@@ -31,6 +35,7 @@ const AddReactions = ({ recipientId, updateReactionCount, theme }) => {
       );
       setShowPicker(false);
       updateReactionCount(updatedReaction);
+      handleToast('You sent your emotions!!');
     } catch (e) {
       console.error('리액션 추가 실패', e);
     }
@@ -41,8 +46,8 @@ const AddReactions = ({ recipientId, updateReactionCount, theme }) => {
   });
 
   return (
-    <>
-      <ButtonWrapper ref={pickerRef} onClick={handleShowEmojiPicker}>
+    <AddReactionsWrapper ref={pickerRef}>
+      <ButtonWrapper onClick={handleShowEmojiPicker} type="button">
         <Icons src={AddReactionIcon} alt="리액션추가" isDarkMode={isDarkMode} />
         <p>추가</p>
       </ButtonWrapper>
@@ -55,9 +60,11 @@ const AddReactions = ({ recipientId, updateReactionCount, theme }) => {
           searchDisabled={true}
         />
       </PickerWrapper>
-    </>
+    </AddReactionsWrapper>
   );
 };
+
+const AddReactionsWrapper = styled.div``;
 
 const ButtonWrapper = styled.button`
   height: 36px;
