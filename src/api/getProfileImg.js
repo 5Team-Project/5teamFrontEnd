@@ -19,9 +19,9 @@ export const getProfileImgs = async () => {
   }
 };
 
-export const getProfileImg = async () => {
+export const getBackGroundImg = async () => {
   try {
-    const response = await instance.get('/profile-images/');
+    const response = await instance.get('/background-images/');
     return response.data;
   } catch (error) {
     console.error(error);

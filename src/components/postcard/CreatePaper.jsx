@@ -124,6 +124,7 @@ const CreatePaper = () => {
           이미지
         </ToggleButton>
       </ToggleWrapper>
+
       {isColorSelected ? (
         <SelectBackGroundWrapper>
           {COLOR_LIST.map((color) => (
@@ -150,6 +151,7 @@ const CreatePaper = () => {
           ))}
         </SelectImageWrapper>
       )}
+
       <SubmitButton
         type="submit"
         disabled={isButtonDisabled}
@@ -227,20 +229,8 @@ const ToggleButton = styled.button`
 
 const SelectBackGroundWrapper = styled.div`
   display: flex;
-  justify-content: center;
-  gap: 10px;
-`;
-
-const ColorButton = styled.button`
-  width: 168px;
-  height: 168px;
-  border-radius: 8px;
-  background-color: ${({ color }) => color};
-  border: ${({ selected }) => (selected ? '2px solid black' : 'none')};
-  cursor: pointer;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
+  width: 100%;
+  gap: 15px;
 `;
 
 const SubmitButton = styled.button`
@@ -266,17 +256,62 @@ const SubmitButton = styled.button`
 `;
 
 const SelectImageWrapper = styled.div`
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  display: flex;
+  width: 720px;
+  gap: 15px;
 `;
 
-const BackgroundImages = styled.img`
+const ColorButton = styled.button`
   width: 168px;
   height: 168px;
-  object-fit: cover;
   border-radius: 8px;
-  cursor: pointer;
+  background-color: ${({ color }) => color};
   border: ${({ selected }) => (selected ? '2px solid black' : 'none')};
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+
+  ${({ selected }) =>
+    selected &&
+    css`
+      &::after {
+        content: '✓';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 40px;
+        font-weight: 700;
+        color: white;
+      }
+    `}
 `;
 
+const BackgroundImages = styled.div`
+  width: 168px;
+  height: 168px;
+  border-radius: 8px;
+  background-image: url(${({ src }) => src});
+  background-size: cover;
+  cursor: pointer;
+  border: ${({ selected }) => (selected ? '2px solid black' : 'none')};
+  position: relative;
+
+  ${({ selected }) =>
+    selected &&
+    css`
+      &::after {
+        content: '✓';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 40px;
+        font-weight: 700;
+        color: white;
+      }
+    `}
+`;
 export default CreatePaper;
