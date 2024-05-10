@@ -18,7 +18,7 @@ const DropReactions = ({ reactions, theme }) => {
 
   return (
     <ReactionsWrapper>
-      <ShowAllButton ref={dropdownRef} onClick={toggleDropdown}>
+      <ShowAllButton ref={dropdownRef} onClick={toggleDropdown} type="button">
         <ArrowIcon
           src={ArrowDown}
           alt="리액션 전체 보기"

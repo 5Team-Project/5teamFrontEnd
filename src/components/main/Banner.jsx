@@ -42,7 +42,7 @@ const Banner = () => {
         </BannerWrapper>
       </ContentWrapper>
       <ButtonWrapper>
-        <Link to={'/list'}>
+        <Link to={'/list'} type="button">
           <ButtonToLink>구경해보기</ButtonToLink>
         </Link>
       </ButtonWrapper>
