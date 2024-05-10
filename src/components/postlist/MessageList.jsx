@@ -66,13 +66,14 @@ const MessageList = ({ messages }) => {
             <Icon src={PlusIcon} alt="메세지 추가" />
           </MessageAddButton>
         </AddMessageContainer>
-        {messages && messages.map((message) => {
-          return (
-            <li key={message.id} onClick={() => handleMessageClick(message)}>
-              <MessageListItem message={message} />
-            </li>
-          );
-        })}
+        {messages &&
+          messages.map((message) => {
+            return (
+              <li key={message.id} onClick={() => handleMessageClick(message)}>
+                <MessageListItem message={message} />
+              </li>
+            );
+          })}
       </MessageListContainer>
     </>
   );
@@ -81,12 +82,16 @@ const MessageList = ({ messages }) => {
 export default MessageList;
 
 const MessageListContainer = styled.ul`
+  height: 100vh;
   width: 1200px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-auto-rows: 280px;
   grid-column-gap: 24px;
   grid-row-gap: 28px;
+
+  margin: 0 auto;
+  padding-top: 50px;
 `;
 const MessageContainer = styled.div`
   background-color: ${({ theme }) => theme.colors.WHITE};
@@ -177,8 +182,8 @@ const MessageText = styled.div`
   word-break: break-all;
   text-overflow: ellipsis;
   display: -webkit-box;
-  -webkit-box-orient:vertical;
-  -webkit-line-clamp:5;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 5;
   line-height: 20px;
   font-size: ${({ theme }) => theme.fontsize.MEDIUM_TXT};
   font-weight: ${({ theme }) => theme.fontweight.REGULAR};
