@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import IconTextLogo from '../assets/icons/IconTextLogo.svg';
+import IconLogo from '../assets/icons/IconLogoColored.svg';
 import { useLocation } from 'react-router-dom';
 import Switch from 'react-switch';
 import { FaSun, FaMoon } from 'react-icons/fa';
@@ -22,7 +22,12 @@ const Header = ({ toggleTheme, isDarkMode }) => {
     <HeaderWrapper>
       <HeaderBox>
         <Logo href="/">
-          <img src={IconTextLogo} alt="롤링로고" />
+          <IconLogoImg src={IconLogo} alt="롤링로고" />
+          <TextLogo
+            style={showButton ? { display: 'block' } : { display: 'none' }}
+          >
+            Rolling
+          </TextLogo>
         </Logo>
         <ButtonWrapper>
           {showButton && (
@@ -81,8 +86,27 @@ const HeaderBox = styled.div`
 `;
 
 const Logo = styled.a`
-  width: 106px;
   height: 30px;
+  padding: 20px 0;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: ${({ theme }) => theme.colors.DARKGRAY};
+`;
+
+const IconLogoImg = styled.img`
+  width: 28px;
+  height: 28px;
+`;
+
+const TextLogo = styled.p`
+  font-size: ${({ theme }) => theme.fontsize.S_TITLE};
+  font-weight: ${({ theme }) => theme.fontweight.BOLD};
+
+  @media ${({ theme }) => theme.device.Mobile} {
+    display: none;
+  }
 `;
 
 const ButtonWrapper = styled.div`

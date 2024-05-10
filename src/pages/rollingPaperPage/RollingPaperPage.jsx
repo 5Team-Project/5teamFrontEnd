@@ -53,14 +53,18 @@ const RollingPaperPage = () => {
   }, [handleScroll]);
 
   return (
-    <MessageMainContainer>
-      <MessageList messages={messages} />
-    </MessageMainContainer>
+    <>
+      <NavigationBar recipientId={messageId} />
+      <MessageMainContainer>
+        <MessageList messages={messages} />
+      </MessageMainContainer>
+    </>
   );
 };
 export default RollingPaperPage;
 
 const MessageMainContainer = styled.div`
-  margin: 0 auto;
+  width: 100%;
+  height: auto;
   background-color: ${({ theme }) => theme.colors.ORANGE};
 `;
