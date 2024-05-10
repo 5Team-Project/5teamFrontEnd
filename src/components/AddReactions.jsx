@@ -41,8 +41,8 @@ const AddReactions = ({ recipientId, updateReactionCount, theme }) => {
   });
 
   return (
-    <>
-      <ButtonWrapper ref={pickerRef} onClick={handleShowEmojiPicker}>
+    <AddReactionsWrapper ref={pickerRef}>
+      <ButtonWrapper onClick={handleShowEmojiPicker}>
         <Icons src={AddReactionIcon} alt="리액션추가" isDarkMode={isDarkMode} />
         <p>추가</p>
       </ButtonWrapper>
@@ -55,9 +55,11 @@ const AddReactions = ({ recipientId, updateReactionCount, theme }) => {
           searchDisabled={true}
         />
       </PickerWrapper>
-    </>
+    </AddReactionsWrapper>
   );
 };
+
+const AddReactionsWrapper = styled.div``;
 
 const ButtonWrapper = styled.button`
   height: 36px;
