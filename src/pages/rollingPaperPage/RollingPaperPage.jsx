@@ -16,34 +16,28 @@ const RollingPaperPage = () => {
   const [loading, setLoading] = useState(false);
 
   const handleLoadMessage = async (options) => {
+    setLoading(true);
     const response = await getMessage(options);
     const res = response.results;
-    setLoading(true);
-    console.log('handle');
-    console.log(offset);
-    console.log(messageLimit);
+
     if (options.offset === 0) {
-      console.log('처음');
-      console.log(offset);
-      console.log(messageLimit);
       setMessages(res);
       setMessageLimit(9);
     } else {
-      console.log('다음');
-      console.log(offset);
-      console.log(messageLimit);
       setMessages((prevMessages) => [...prevMessages, ...res]);
     }
     setOffset((prevOffset) => prevOffset + messageLimit);
-    // if (response.next===null){
-    //   setHasNext(false);
-    // }
+    if (response.next === null) {
+      setHasNext(false);
+    } else {
+      setHasNext(true);
+    }
     setLoading(false);
   };
 
   const handleScroll = () => {
     const { scrollTop, clientHeight, scrollHeight } = document.documentElement;
-    if (scrollTop + clientHeight >= scrollHeight -3 && !loading) {
+    if (scrollTop + clientHeight >= scrollHeight - 3 && !loading && hasNext) {
       handleLoadMessage({ messageId, offset, messageLimit });
       setPage((prevPage) => prevPage + 1);
     }
