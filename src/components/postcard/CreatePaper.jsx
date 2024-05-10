@@ -1,15 +1,10 @@
-import { PostPaper } from '../../api/postPaper';
 import { useState, useEffect } from 'react';
 import styled, { css } from 'styled-components';
 import InputComponent from '../InputComponents';
+import { PostPaper } from '../../api/postPaper';
 import { getBackGroundImg } from '../../api/getProfileImg';
-
-const COLOR_LIST = [
-  { value: '#FFE5B4', name: 'beige' },
-  { value: '#DCB9FF', name: 'purple' },
-  { value: '#B9E0FF', name: 'blue' },
-  { value: '#B3F0C8', name: 'green' },
-];
+import BackgroundColorSelector from './BackGroundColorSelector';
+import BackgroundImageSelector from './BackGroundImageSelector';
 
 const CreatePaper = () => {
   const [inputValue, setInputValue] = useState('');
@@ -126,30 +121,17 @@ const CreatePaper = () => {
       </ToggleWrapper>
 
       {isColorSelected ? (
-        <SelectBackGroundWrapper>
-          {COLOR_LIST.map((color) => (
-            <ColorButton
-              key={color.value}
-              color={color.value}
-              selected={selectedColor === color.value}
-              onClick={() => handleColorClick(color.value)}
-            >
-              {selectedColor === color.value}
-            </ColorButton>
-          ))}
-        </SelectBackGroundWrapper>
+        <BackgroundColorSelector
+          colors={COLOR_LIST}
+          selectedColor={selectedColor}
+          onColorClick={handleColorClick}
+        />
       ) : (
-        <SelectImageWrapper>
-          {backGroundImages.map((imageUrl) => (
-            <BackgroundImages
-              key={imageUrl}
-              src={imageUrl}
-              alt="BackGround"
-              selected={selectedBackgroundImage === imageUrl}
-              onClick={() => handleImageClick(imageUrl)}
-            />
-          ))}
-        </SelectImageWrapper>
+        <BackgroundImageSelector
+          images={backGroundImages}
+          selectedImage={selectedBackgroundImage}
+          onImageClick={handleImageClick}
+        />
       )}
 
       <SubmitButton
@@ -162,6 +144,13 @@ const CreatePaper = () => {
     </AddPageWrapper>
   );
 };
+
+const COLOR_LIST = [
+  { value: '#FFE5B4', name: 'beige' },
+  { value: '#DCB9FF', name: 'purple' },
+  { value: '#B9E0FF', name: 'blue' },
+  { value: '#B3F0C8', name: 'green' },
+];
 
 const AddPageWrapper = styled.div`
   display: flex;
@@ -227,12 +216,6 @@ const ToggleButton = styled.button`
   }
 `;
 
-const SelectBackGroundWrapper = styled.div`
-  display: flex;
-  width: 100%;
-  gap: 15px;
-`;
-
 const SubmitButton = styled.button`
   width: 100%;
   height: 56px;
@@ -244,7 +227,7 @@ const SubmitButton = styled.button`
 
   cursor: pointer;
   background-color: ${({ theme }) => theme.colors.PURPLE};
-  color: ${({ theme }) => theme.colors.WHITE};
+  color: ${({ theme }) => theme.colors.BLACK};
 
   ${(props) =>
     props.disabled &&
@@ -255,63 +238,4 @@ const SubmitButton = styled.button`
     `}
 `;
 
-const SelectImageWrapper = styled.div`
-  display: flex;
-  width: 720px;
-  gap: 15px;
-`;
-
-const ColorButton = styled.button`
-  width: 168px;
-  height: 168px;
-  border-radius: 8px;
-  background-color: ${({ color }) => color};
-  border: ${({ selected }) => (selected ? '2px solid black' : 'none')};
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-
-  ${({ selected }) =>
-    selected &&
-    css`
-      &::after {
-        content: '✓';
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        font-size: 40px;
-        font-weight: 700;
-        color: white;
-      }
-    `}
-`;
-
-const BackgroundImages = styled.div`
-  width: 168px;
-  height: 168px;
-  border-radius: 8px;
-  background-image: url(${({ src }) => src});
-  background-size: cover;
-  cursor: pointer;
-  border: ${({ selected }) => (selected ? '2px solid black' : 'none')};
-  position: relative;
-
-  ${({ selected }) =>
-    selected &&
-    css`
-      &::after {
-        content: '✓';
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        font-size: 40px;
-        font-weight: 700;
-        color: white;
-      }
-    `}
-`;
 export default CreatePaper;
