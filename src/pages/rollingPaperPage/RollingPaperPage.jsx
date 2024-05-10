@@ -5,13 +5,13 @@ import { getMessage } from '../../api/getMessage';
 import { useParams } from 'react-router-dom';
 import NavigationBar from '../../components/NavigationBar';
 
+const MESSAGELIMIT = 8;
+
 const RollingPaperPage = () => {
   const themeContext = useContext(ThemeContext);
   const { messageId } = useParams();
   const [messages, setMessages] = useState([]);
   const [offset, setOffset] = useState(0);
-  const [messageLimit, setMessageLimit] = useState(8);
-  const [page, setPage] = useState(1);
   const [hasNext, setHasNext] = useState(true);
   const [loading, setLoading] = useState(false);
 
@@ -19,14 +19,13 @@ const RollingPaperPage = () => {
     setLoading(true);
     const response = await getMessage(options);
     const res = response.results;
-
     if (options.offset === 0) {
       setMessages(res);
-      setMessageLimit(9);
+      setOffset((prevOffset) => prevOffset + MESSAGELIMIT);
     } else {
       setMessages((prevMessages) => [...prevMessages, ...res]);
+      setOffset((prevOffset) => prevOffset + MESSAGELIMIT);
     }
-    setOffset((prevOffset) => prevOffset + messageLimit);
     if (response.next === null) {
       setHasNext(false);
     } else {
@@ -38,13 +37,12 @@ const RollingPaperPage = () => {
   const handleScroll = () => {
     const { scrollTop, clientHeight, scrollHeight } = document.documentElement;
     if (scrollTop + clientHeight >= scrollHeight - 3 && !loading && hasNext) {
-      handleLoadMessage({ messageId, offset, messageLimit });
-      setPage((prevPage) => prevPage + 1);
+      handleLoadMessage({ messageId, offset, MESSAGELIMIT });
     }
   };
 
   useEffect(() => {
-    handleLoadMessage({ messageId, offset, messageLimit });
+    handleLoadMessage({ messageId, offset, MESSAGELIMIT });
   }, []);
 
   useEffect(() => {
