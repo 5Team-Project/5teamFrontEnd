@@ -4,6 +4,8 @@ import styled, { ThemeContext } from 'styled-components';
 import { formatDate } from '../../utils/formatDate';
 import MessageModal from './MessageModal';
 import { mapFontName } from '../../utils/mapFont';
+import { Link } from 'react-router-dom';
+
 const RELATIONSHIPS = {
   가족: 'GREEN',
   동료: 'PURPLE',
@@ -38,7 +40,7 @@ const MessageListItem = ({ message }) => {
     </MessageContainer>
   );
 };
-const MessageList = ({ messages }) => {
+const MessageList = ({ messages, recipientId }) => {
   const themeContext = useContext(ThemeContext);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalData, setModalData] = useState({});
@@ -63,7 +65,9 @@ const MessageList = ({ messages }) => {
       <MessageListContainer>
         <AddMessageContainer>
           <MessageAddButton>
-            <Icon src={PlusIcon} alt="메세지 추가" />
+            <Link to={`/post/${recipientId}/message`}>
+              <Icon src={PlusIcon} alt="메세지 추가" />
+            </Link>
           </MessageAddButton>
         </AddMessageContainer>
         {messages &&
@@ -82,7 +86,6 @@ const MessageList = ({ messages }) => {
 export default MessageList;
 
 const MessageListContainer = styled.ul`
-  height: 100vh;
   margin: 0 auto;
   padding-top: 64px;
   padding-bottom: 64px;
@@ -92,9 +95,6 @@ const MessageListContainer = styled.ul`
   grid-auto-rows: 280px;
   grid-column-gap: 24px;
   grid-row-gap: 28px;
-
-  margin: 0 auto;
-  padding-top: 50px;
 `;
 const MessageContainer = styled.div`
   background-color: ${({ theme }) => theme.colors.WHITE};
