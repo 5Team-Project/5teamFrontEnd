@@ -61,7 +61,7 @@ const ToPostPageDiv = styled.div`
     text-align: center;
 
     text-decoration: none;
-    color: #fff;
+    color: ${({ theme }) => theme.colors.DARKGRAY};
   }
 
   @media ${({ theme }) => theme.device.Tablet} {

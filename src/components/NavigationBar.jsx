@@ -64,7 +64,7 @@ const NavigationBar = ({ recipientId }) => {
     const toastTimer = setTimeout(() => {
       setIsToastOpen(false);
       setToastMessage('');
-    }, 2000);
+    }, 3000);
     return () => clearTimeout(toastTimer);
   };
 
@@ -76,6 +76,7 @@ const NavigationBar = ({ recipientId }) => {
             <span>To. </span>
             <span>{title}</span>
           </Title>
+
           <PostStats>
             <PostStatsBox>
               <WriterCountWrapper>
@@ -91,6 +92,7 @@ const NavigationBar = ({ recipientId }) => {
               <AddReactions
                 recipientId={recipientId}
                 updateReactionCount={updateReactionCount}
+                handleToast={handleToast}
               />
               <ShareButton handleToast={handleToast} />
             </ActionButtons>

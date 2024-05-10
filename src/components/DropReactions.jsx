@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import React, { useRef, useState } from 'react';
-import ArrowDown from '../assets/icons/Ic_Arrow_down.svg';
+import ArrowDown from '../assets/icons/IconArrowdown.svg';
 import useClickOutside from '../hooks/useClickOutside';
 
 const DropReactions = ({ reactions, theme }) => {
@@ -18,7 +18,7 @@ const DropReactions = ({ reactions, theme }) => {
 
   return (
     <ReactionsWrapper>
-      <ShowAllButton ref={dropdownRef} onClick={toggleDropdown}>
+      <ShowAllButton ref={dropdownRef} onClick={toggleDropdown} type="button">
         <ArrowIcon
           src={ArrowDown}
           alt="리액션 전체 보기"
