@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
+import PlusIcon from '../../assets/icons/ic_plus.svg';
 import styled, { ThemeContext } from 'styled-components';
-import { useContext, useState } from 'react';
 import { formatDate } from '../../utils/formatDate';
 import MessageModal from './MessageModal';
 import { mapFontName } from '../../utils/mapFont';
@@ -32,7 +32,7 @@ const MessageListItem = ({ message }) => {
         <MessageText
           dangerouslySetInnerHTML={{ __html: message.content }}
           style={{ fontFamily: mapFontName(message.font) }}
-        />
+        />{' '}
         <p>{formatDate(message.createdAt)}</p>
       </MessageTextContainer>
     </MessageContainer>
@@ -61,7 +61,12 @@ const MessageList = ({ messages }) => {
         closeModal={closeModal}
       />
       <MessageListContainer>
-        {messages.map((message) => {
+        <AddMessageContainer>
+          <MessageAddButton>
+            <Icon src={PlusIcon} alt="메세지 추가" />
+          </MessageAddButton>
+        </AddMessageContainer>
+        {messages && messages.map((message) => {
           return (
             <li key={message.id} onClick={() => handleMessageClick(message)}>
               <MessageListItem message={message} />
@@ -83,14 +88,38 @@ const MessageListContainer = styled.ul`
   grid-column-gap: 24px;
   grid-row-gap: 28px;
 `;
-
 const MessageContainer = styled.div`
   background-color: ${({ theme }) => theme.colors.WHITE};
   width: 384px;
   height: 280px;
   border-radius: 16px;
   padding: 28px 24px 24px 24px;
+  font:;
 `;
+const AddMessageContainer = styled(MessageContainer)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const Icon = styled.img`
+  height: 24px;
+  width: 24px;
+`;
+const MessageAddButton = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background-color: ${({ theme }) => theme.colors.DARKGRAY};
+  ${Icon} {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+`;
+
 const ProfileContainer = styled.div`
   display: flex;
   flex-direction: row;
@@ -141,10 +170,16 @@ const MessageTextContainer = styled.div`
   justify-content: space-between;
   gap: 16px;
 `;
-const MessageText = styled.p`
-  height: 106px;
+const MessageText = styled.div`
+  height: 104px;
   overflow: hidden;
+  word-wrap: break-word;
+  word-break: break-all;
   text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient:vertical;
+  -webkit-line-clamp:5;
+  line-height: 20px;
   font-size: ${({ theme }) => theme.fontsize.MEDIUM_TXT};
   font-weight: ${({ theme }) => theme.fontweight.REGULAR};
 `;
