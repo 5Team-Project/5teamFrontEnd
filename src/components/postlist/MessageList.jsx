@@ -172,7 +172,7 @@ const MessageList = ({
       <MessageListContainer>
         <AddMessageContainer>
           <MessageAddButton>
-            <Link to={`/post/${recipientId}/message`}>
+            <Link to={`/post/${recipientId}/messages/`}>
               <Icon src={PlusIcon} alt="메세지 추가" />
             </Link>
           </MessageAddButton>
