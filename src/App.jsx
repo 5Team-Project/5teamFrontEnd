@@ -25,12 +25,9 @@ function App() {
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/list" element={<ListPage />} />
+          <Route path="/post" element={<CreatePaperPage />} />
           <Route path="/test" element={<AddRollingPaper />} />
-          <Route path="/paper" element={<CreatePaperPage />} />
-          <Route path="post/">
-            <Route index element={<RollingPaperPage />} />
-            <Route path=":messageId" element={<RollingPaperPage />} />
-          </Route>
+          <Route path="/post/:messageId" element={<RollingPaperPage />} />
         </Routes>
       </BrowserRouter>
     </ThemeProvider>

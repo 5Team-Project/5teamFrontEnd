@@ -14,6 +14,7 @@ const RollingPaperPage = () => {
   const [offset, setOffset] = useState(0);
   const [hasNext, setHasNext] = useState(true);
   const [loading, setLoading] = useState(false);
+  const [page, setPage] = useState(1);
 
   const handleLoadMessage = async (options) => {
     setLoading(true);
@@ -38,12 +39,13 @@ const RollingPaperPage = () => {
     const { scrollTop, clientHeight, scrollHeight } = document.documentElement;
     if (scrollTop + clientHeight >= scrollHeight - 3 && !loading && hasNext) {
       handleLoadMessage({ messageId, offset, MESSAGELIMIT });
+      setPage((prevPage) => prevPage + 1);
     }
   };
 
   useEffect(() => {
     handleLoadMessage({ messageId, offset, MESSAGELIMIT });
-  }, []);
+  }, [page]);
 
   useEffect(() => {
     window.addEventListener('scroll', handleScroll);
@@ -56,7 +58,7 @@ const RollingPaperPage = () => {
     <>
       <NavigationBar recipientId={messageId} />
       <MessageMainContainer>
-        <MessageList messages={messages} />
+        <MessageList messages={messages} recipientId={messageId} />
       </MessageMainContainer>
     </>
   );

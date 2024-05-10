@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import IconLogo from '../assets/icons/IconLogoColored.svg';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Switch from 'react-switch';
 import { FaSun, FaMoon } from 'react-icons/fa';
 
 const Header = ({ toggleTheme, isDarkMode }) => {
   const [showButton, setShowButton] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const currentPath = location.pathname;
@@ -17,6 +18,10 @@ const Header = ({ toggleTheme, isDarkMode }) => {
       setShowButton(false);
     }
   }, [location]);
+
+  const handleClick = () => {
+    navigate('/post');
+  };
 
   return (
     <HeaderWrapper>
@@ -31,7 +36,9 @@ const Header = ({ toggleTheme, isDarkMode }) => {
         </Logo>
         <ButtonWrapper>
           {showButton && (
-            <ButtonMakeNewPaper>롤링 페이퍼 만들기</ButtonMakeNewPaper>
+            <ButtonMakeNewPaper onClick={handleClick}>
+              롤링 페이퍼 만들기
+            </ButtonMakeNewPaper>
           )}
           <Switch
             onChange={toggleTheme}
