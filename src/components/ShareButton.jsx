@@ -4,9 +4,11 @@ import styled from 'styled-components';
 import ShareIcon from '../assets/icons/IconShare.svg';
 import useClickOutside from '../hooks/useClickOutside';
 
-const ShareButton = ({ handleToast }) => {
+const ShareButton = ({ handleToast, theme }) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef();
+
+  const isDarkMode = theme !== 'light';
 
   const baseUrl = process.env.REACT_APP_BASE_URL;
   const location = useLocation();
@@ -33,7 +35,7 @@ const ShareButton = ({ handleToast }) => {
   return (
     <>
       <ShareButtonWrapper ref={dropdownRef} onClick={toggleDropdown}>
-        <Icons src={ShareIcon} alt="공유" />
+        <Icons src={ShareIcon} alt="공유" isDarkMode={isDarkMode} />
         <DropDownList style={isOpen ? {} : { display: 'none' }}>
           <DropDownItem>
             <DropDownLabel>카카오톡 공유</DropDownLabel>
