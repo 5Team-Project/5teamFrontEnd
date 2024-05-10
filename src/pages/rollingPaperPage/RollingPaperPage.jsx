@@ -5,26 +5,57 @@ import { getMessage } from '../../api/getMessage';
 import { useParams } from 'react-router-dom';
 import NavigationBar from '../../components/NavigationBar';
 
+const MESSAGELIMIT = 8;
+
 const RollingPaperPage = () => {
   const themeContext = useContext(ThemeContext);
   const { messageId } = useParams();
   const [messages, setMessages] = useState([]);
+  const [offset, setOffset] = useState(0);
+  const [hasNext, setHasNext] = useState(true);
+  const [loading, setLoading] = useState(false);
+
+  const handleLoadMessage = async (options) => {
+    setLoading(true);
+    const response = await getMessage(options);
+    const res = response.results;
+    if (options.offset === 0) {
+      setMessages(res);
+      setOffset((prevOffset) => prevOffset + MESSAGELIMIT);
+    } else {
+      setMessages((prevMessages) => [...prevMessages, ...res]);
+      setOffset((prevOffset) => prevOffset + MESSAGELIMIT);
+    }
+    if (response.next === null) {
+      setHasNext(false);
+    } else {
+      setHasNext(true);
+    }
+    setLoading(false);
+  };
+
+  const handleScroll = () => {
+    const { scrollTop, clientHeight, scrollHeight } = document.documentElement;
+    if (scrollTop + clientHeight >= scrollHeight - 3 && !loading && hasNext) {
+      handleLoadMessage({ messageId, offset, MESSAGELIMIT });
+    }
+  };
 
   useEffect(() => {
-    const handleLoadMessage = async () => {
-      const { results } = await getMessage(messageId);
-      setMessages(results);
-    };
-    handleLoadMessage();
+    handleLoadMessage({ messageId, offset, MESSAGELIMIT });
   }, []);
 
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [handleScroll]);
+
   return (
-    <>
-      <NavigationBar recipientId={messageId} />
-      <MessageMainContainer>
-        <MessageList messages={messages} />
-      </MessageMainContainer>
-    </>
+    <MessageMainContainer>
+      <MessageList messages={messages} />
+    </MessageMainContainer>
   );
 };
 export default RollingPaperPage;
