@@ -83,6 +83,9 @@ export default MessageList;
 
 const MessageListContainer = styled.ul`
   height: 100vh;
+  margin: 0 auto;
+  padding-top: 64px;
+  padding-bottom: 64px;
   width: 1200px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
