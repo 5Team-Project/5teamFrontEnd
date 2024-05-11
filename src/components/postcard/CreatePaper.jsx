@@ -134,7 +134,7 @@ const CreatePaper = () => {
         <BackgroundImageSelector
           images={backGroundImages}
           selectedImage={selectedBackgroundImage}
-          onImageClick={handleImageClick}
+          onImageSelect={handleImageClick}
         />
       )}
 
