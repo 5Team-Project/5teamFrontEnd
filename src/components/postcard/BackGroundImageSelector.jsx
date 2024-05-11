@@ -62,7 +62,7 @@ const BackgroundImageSelector = ({ onImageSelect }) => {
   };
 
   const handlePreviewImage = (e) => {
-    e.prr;
+    e.preventDefault();
 
     const file = e.target.files[0];
     if (file) {
@@ -77,40 +77,43 @@ const BackgroundImageSelector = ({ onImageSelect }) => {
 
   return (
     <SelectImageWrapper>
-      <FileInputWrapper>
-        <FileInput
-          id="fileInput"
-          type="file"
-          accept="image/*"
-          onChange={handlePreviewImage}
-          onClick={(e) => (e.target.value = null)}
-        />
-        <FileInputLabel htmlFor="fileInput">
-          {previewImage ? (
-            <PreviewImageContainer>
-              <PreviewImage
-                src={previewImage}
-                alt="Preview"
-                onClick={handleImageUpload}
-              />
-            </PreviewImageContainer>
-          ) : (
-            <>
-              <PlusIcon />
-              <span>이미지 등록</span>
-            </>
-          )}
-        </FileInputLabel>
-      </FileInputWrapper>
+      <ImageItem>
+        <FileInputWrapper>
+          <FileInput
+            id="fileInput"
+            type="file"
+            accept="image/*"
+            onChange={handlePreviewImage}
+            onClick={(e) => (e.target.value = null)}
+          />
+          <FileInputLabel htmlFor="fileInput">
+            {previewImage ? (
+              <PreviewImageContainer>
+                <PreviewImage
+                  src={previewImage}
+                  alt="Preview"
+                  onClick={handleImageUpload}
+                />
+              </PreviewImageContainer>
+            ) : (
+              <>
+                <PlusIcon />
+                <span>이미지 등록</span>
+              </>
+            )}
+          </FileInputLabel>
+        </FileInputWrapper>
+      </ImageItem>
       {imageOptions.map((imageUrl) => (
-        <BackgroundImages
-          key={imageUrl}
-          src={imageUrl}
-          alt="BackGround"
-          selected={selectedImage === imageUrl}
-          onClick={() => handleImageClick(imageUrl)}
-          isUploaded={uploadedImage === imageUrl}
-        />
+        <ImageItem key={imageUrl}>
+          <BackgroundImage
+            src={imageUrl}
+            alt="BackGround"
+            selected={selectedImage === imageUrl}
+            onClick={() => handleImageClick(imageUrl)}
+            isUploaded={uploadedImage === imageUrl}
+          />
+        </ImageItem>
       ))}
     </SelectImageWrapper>
   );
@@ -118,19 +121,32 @@ const BackgroundImageSelector = ({ onImageSelect }) => {
 
 const SelectImageWrapper = styled.div`
   display: flex;
-  width: 100%;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 15px;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 15px;
 
-  //모바일
   @media (max-width: 767px) {
-    flex-wrap: wrap;
-    padding-left: 15px;
+    gap: 10px;
+  }
+`;
+
+const ImageItem = styled.div`
+  width: calc(25% - 15px);
+
+  @media (max-width: 767px) {
+    width: calc(50% - 10px);
   }
 `;
 
 const FileInputWrapper = styled.div`
   position: relative;
   display: inline-block;
+  width: 100%;
+  padding-bottom: 100%;
 `;
 
 const FileInput = styled.input`
@@ -138,11 +154,14 @@ const FileInput = styled.input`
 `;
 
 const FileInputLabel = styled.label`
+  position: absolute;
+  top: 0;
+  left: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 168px;
-  height: 168px;
+  width: 100%;
+  height: 100%;
   cursor: pointer;
   background-color: #f0f0f0;
   border-radius: 8px;
@@ -156,15 +175,16 @@ const PlusIcon = styled(FaPlus)`
   margin-right: 8px;
 `;
 
-const BackgroundImages = styled.div`
-  width: 168px;
-  height: 168px;
+const BackgroundImage = styled.div`
+  width: 100%;
+  padding-bottom: 100%;
   border-radius: 8px;
   background-image: url(${({ src }) => src});
   background-size: cover;
   cursor: pointer;
   border: ${({ selected }) => (selected ? '2px solid #DCB9FF' : 'none')};
   position: relative;
+
   ${({ selected, isUploaded }) =>
     selected &&
     !isUploaded &&

@@ -19,19 +19,22 @@ const BackgroundColorSelector = ({ colors, selectedColor, onColorClick }) => {
 
 const SelectBackGroundWrapper = styled.div`
   display: flex;
-  width: 100%;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 15px;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 15px;
 
-  //모바일
   @media (max-width: 767px) {
-    flex-wrap: wrap;
-    padding-left: 15px;
+    gap: 10px;
   }
 `;
 
 const ColorButton = styled.button`
-  width: 168px;
-  height: 168px;
+  width: calc(25% - 15px);
+  padding-bottom: calc(25% - 15px);
   border-radius: 8px;
   background-color: ${({ color }) => color};
   border: ${({ selected }) => (selected ? '2px solid #AB57FF' : 'none')};
@@ -40,6 +43,11 @@ const ColorButton = styled.button`
   justify-content: center;
   align-items: center;
   position: relative;
+
+  @media (max-width: 767px) {
+    width: calc(50% - 10px);
+    padding-bottom: calc(50% - 10px);
+  }
 
   ${({ selected }) =>
     selected &&
