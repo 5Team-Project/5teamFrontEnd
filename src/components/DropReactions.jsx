@@ -75,6 +75,7 @@ const AllReactionsBox = styled.div`
   position: absolute;
   left: -267px;
   top: 45px;
+
   @media ${({ theme }) => theme.device.Mobile} {
     left: -15%;
   }

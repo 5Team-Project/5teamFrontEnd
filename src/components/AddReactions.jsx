@@ -10,6 +10,7 @@ const AddReactions = ({
   updateReactionCount,
   theme,
   handleToast,
+  isEditMode,
 }) => {
   const [showPicker, setShowPicker] = useState(false);
   const [reactionData, setReactionData] = useState({
@@ -21,6 +22,9 @@ const AddReactions = ({
 
   const handleShowEmojiPicker = () => {
     setShowPicker(!showPicker);
+    if (isEditMode) {
+      handleToast('편집 모드에서는 사용이 불가합니다.');
+    }
   };
 
   const handleEmojiClick = async (emojiData) => {
@@ -51,15 +55,17 @@ const AddReactions = ({
         <Icons src={AddReactionIcon} alt="리액션추가" isDarkMode={isDarkMode} />
         <p>추가</p>
       </ButtonWrapper>
-      <PickerWrapper>
-        <EmojiPicker
-          open={showPicker}
-          onEmojiClick={handleEmojiClick}
-          theme="auto"
-          searchPlaceHolder=" Search your Emoji"
-          searchDisabled={true}
-        />
-      </PickerWrapper>
+      {!isEditMode && (
+        <PickerWrapper>
+          <EmojiPicker
+            open={showPicker}
+            onEmojiClick={handleEmojiClick}
+            theme="auto"
+            searchPlaceHolder=" Search your Emoji"
+            searchDisabled={true}
+          />
+        </PickerWrapper>
+      )}
     </AddReactionsWrapper>
   );
 };

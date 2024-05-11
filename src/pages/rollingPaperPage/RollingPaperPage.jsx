@@ -58,7 +58,11 @@ const RollingPaperPage = () => {
     <>
       <NavigationBar recipientId={messageId} />
       <MessageMainContainer>
-        <MessageList messages={messages} recipientId={messageId} />
+        <MessageList
+          messages={messages}
+          recipientId={messageId}
+          showDeleteButton={false}
+        />
       </MessageMainContainer>
     </>
   );

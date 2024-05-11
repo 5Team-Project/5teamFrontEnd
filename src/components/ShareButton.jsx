@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import ShareIcon from '../assets/icons/IconShare.svg';
 import useClickOutside from '../hooks/useClickOutside';
 
-const ShareButton = ({ handleToast, theme }) => {
+const ShareButton = ({ handleToast, theme, isEditMode }) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef();
 
@@ -15,6 +15,9 @@ const ShareButton = ({ handleToast, theme }) => {
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
+    if (isEditMode) {
+      handleToast('편집 모드에서는 사용이 불가합니다.');
+    }
   };
 
   const handleCopyUrl = async (text) => {

@@ -20,6 +20,7 @@ const ToastMessageBox = styled.div`
   background-color: ${({ theme }) => theme.colors.BLACK}CC;
   border-radius: 8px;
   padding: 19px 30px;
+  z-index: 999;
 
   display: flex;
   align-items: center;

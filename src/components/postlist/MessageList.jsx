@@ -5,6 +5,7 @@ import { formatDate } from '../../utils/formatDate';
 import MessageModal from './MessageModal';
 import { mapFontName } from '../../utils/mapFont';
 import { Link } from 'react-router-dom';
+import DeleteButton from '../../assets/icons/IconDelete.svg';
 
 const RELATIONSHIPS = {
   가족: 'GREEN',
@@ -13,7 +14,7 @@ const RELATIONSHIPS = {
   지인: 'ORANGE',
 };
 
-const MessageListItem = ({ message }) => {
+const MessageListItem = ({ message, showDeleteButton }) => {
   return (
     <MessageContainer>
       <ProfileContainer>
@@ -28,6 +29,11 @@ const MessageListItem = ({ message }) => {
             {message.relationship}
           </ProfileRelation>
         </ProfileTextWrap>
+        {showDeleteButton && (
+          <DeleteMessageButton>
+            <Icons src={DeleteButton} alt="삭제" />
+          </DeleteMessageButton>
+        )}
       </ProfileContainer>
       <MessageHr />
       <MessageTextContainer>
@@ -40,7 +46,7 @@ const MessageListItem = ({ message }) => {
     </MessageContainer>
   );
 };
-const MessageList = ({ messages, recipientId }) => {
+const MessageList = ({ messages, recipientId, showDeleteButton }) => {
   const themeContext = useContext(ThemeContext);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalData, setModalData] = useState({});
@@ -57,11 +63,6 @@ const MessageList = ({ messages, recipientId }) => {
 
   return (
     <>
-      <MessageModal
-        message={modalData}
-        isModalOpen={isModalOpen}
-        closeModal={closeModal}
-      />
       <MessageListContainer>
         <AddMessageContainer>
           <MessageAddButton>
@@ -74,7 +75,10 @@ const MessageList = ({ messages, recipientId }) => {
           messages.map((message) => {
             return (
               <li key={message.id} onClick={() => handleMessageClick(message)}>
-                <MessageListItem message={message} />
+                <MessageListItem
+                  message={message}
+                  showDeleteButton={showDeleteButton}
+                />
               </li>
             );
           })}
@@ -103,6 +107,7 @@ const MessageContainer = styled.div`
   border-radius: 16px;
   padding: 28px 24px 24px 24px;
   font:;
+  position: relative;
 `;
 const AddMessageContainer = styled(MessageContainer)`
   display: flex;
@@ -190,4 +195,41 @@ const MessageText = styled.div`
   line-height: 20px;
   font-size: ${({ theme }) => theme.fontsize.MEDIUM_TXT};
   font-weight: ${({ theme }) => theme.fontweight.REGULAR};
+`;
+
+const DeleteMessageButton = styled.button`
+  width: 36px;
+  height: 36px;
+  border-radius: 6px;
+  border: 1px solid ${({ theme }) => theme.colors.GRAY};
+
+  font-size: 16px;
+  line-height: 20px;
+  letter-spacing: -0.01em;
+  text-align: center;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  position: absolute;
+  top: 28px;
+  right: 32px;
+
+  @media ${({ theme }) => theme.device.Mobile} {
+    width: 36px;
+  }
+`;
+
+const Icons = styled.img`
+  width: 24px;
+  height: 24px;
+  filter: ${({ isDarkMode, theme }) =>
+    isDarkMode
+      ? `invert(1) sepia(1) saturate(0) hue-rotate(0deg) brightness(${theme.darkModeBrightness})`
+      : 'none'};
+  @media ${({ theme }) => theme.device.Mobile} {
+    width: 24px;
+    height: 24px;
+  }
 `;

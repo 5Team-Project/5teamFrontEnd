@@ -10,7 +10,7 @@ import ShareButton from './ShareButton';
 import ToastMessage from './ToastMessage';
 import EditModeButton from './EditModeButton';
 
-const NavigationBar = ({ recipientId }) => {
+const NavigationBar = ({ recipientId, isEditMode }) => {
   const [title, setTitle] = useState('Dear');
   const [messageCount, setMessageCount] = useState(0);
   const [recentSenders, setRecentSenders] = useState([]);
@@ -94,9 +94,14 @@ const NavigationBar = ({ recipientId }) => {
                 recipientId={recipientId}
                 updateReactionCount={updateReactionCount}
                 handleToast={handleToast}
+                isEditMode={isEditMode}
               />
-              <ShareButton handleToast={handleToast} />
-              <EditModeButton handleToast={handleToast} />
+              <ShareButton handleToast={handleToast} isEditMode={isEditMode} />
+              <EditModeButton
+                handleToast={handleToast}
+                recipientId={recipientId}
+                isEditMode={isEditMode}
+              />
             </ActionButtons>
           </PostStats>
         </NavBox>
@@ -112,6 +117,7 @@ const NavWrapper = styled.nav`
   border-bottom: 1px solid ${({ theme }) => theme.colors.GRAY};
   background-color: ${({ theme }) => theme.colors.WHITE};
   position: relative;
+  z-index: 999;
 `;
 
 const NavBox = styled.div`

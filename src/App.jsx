@@ -8,6 +8,7 @@ import ListPage from './pages/ListPage';
 import AddRollingPaper from './pages/AddRolingPage';
 import Header from './components/Header';
 import RollingPaperPage from './pages/rollingPaperPage/RollingPaperPage';
+import RollingPaperPageEdit from './pages/rollingPaperPage/RollingPaperPageEdit';
 import CreatePaperPage from './pages/CreatePaperPage';
 
 function App() {
@@ -30,6 +31,10 @@ function App() {
             element={<AddRollingPaper />}
           />
           <Route path="/post/:messageId" element={<RollingPaperPage />} />
+          <Route
+            path="/post/:messageId/edit"
+            element={<RollingPaperPageEdit />}
+          />
         </Routes>
       </BrowserRouter>
     </ThemeProvider>
