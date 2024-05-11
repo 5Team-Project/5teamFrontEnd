@@ -17,6 +17,8 @@ const ListPage = () => {
   );
 };
 
+export default ListPage;
+
 const ListMainContainer = styled.main`
   max-width: 1200px;
   margin: 0 auto;
@@ -78,5 +80,3 @@ const ToPostPageDiv = styled.div`
     }
   }
 `;
-
-export default ListPage;

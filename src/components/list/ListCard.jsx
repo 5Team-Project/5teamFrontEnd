@@ -1,10 +1,13 @@
-import { getData } from '../../api/getData';
 import { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled, { ThemeContext } from 'styled-components';
+
+import { getListCard } from '../../api/getListCard';
+
 import WriterCountIcon from '../WriterCountIcon';
 import WriterCountText from '../WriterCountText';
 import ReactionCount from '../ReactionCount';
+
 import ListCardSkeleton from './ListSkeleton';
 
 const ListCard = ({ data }) => {
@@ -23,9 +26,8 @@ const ListCard = ({ data }) => {
 
   useEffect(() => {
     const handleLoad = async () => {
-      const queryData = `/6-5/recipients/${data.id}/`;
       try {
-        const res = await getData(queryData);
+        const res = await getListCard(data.id);
         setCount(res.messageCount);
         setRecent(res.recentMessages);
         setReaction(res.topReactions);
