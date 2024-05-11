@@ -46,7 +46,8 @@ const MessageListItem = ({ message, showDeleteButton }) => {
     </MessageContainer>
   );
 };
-const MessageList = ({ messages, recipientId, showDeleteButton }) => {
+const MessageList = ({ theme, messages, recipientId, showDeleteButton }) => {
+  const isDarkMode = theme !== 'light';
   const themeContext = useContext(ThemeContext);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalData, setModalData] = useState({});
@@ -63,6 +64,18 @@ const MessageList = ({ messages, recipientId, showDeleteButton }) => {
 
   return (
     <>
+      {showDeleteButton && (
+        <MessageEditHeader>
+          <DeletePaperButton type="button">
+            <Icons
+              src={DeleteButton}
+              alt="페이퍼삭제"
+              isDarkMode={isDarkMode}
+            />
+            <ButtonLabel>페이퍼 삭제</ButtonLabel>
+          </DeletePaperButton>
+        </MessageEditHeader>
+      )}
       <MessageListContainer>
         <AddMessageContainer>
           <MessageAddButton>
@@ -232,4 +245,62 @@ const Icons = styled.img`
     width: 24px;
     height: 24px;
   }
+`;
+
+const MessageEditHeader = styled.div`
+  max-width: 1200px;
+  width: 100%;
+  height: 0;
+  margin: 0 auto;
+  padding: 0;
+  text-decoration: none;
+  position: relative;
+
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+`;
+
+const DeletePaperButton = styled.div`
+  height: 39px;
+  padding: 0 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+
+  position: absolute;
+  top: 10px;
+
+  background-color: ${({ theme }) => theme.colors.PURPLE};
+  color: ${({ theme }) => theme.colors.DARKGRAY};
+  font-size: ${({ theme }) => theme.fontsize.MEDIUM_TXT};
+  font-weight: ${({ theme }) => theme.fontweight.REGULAR};
+  z-index: 1;
+
+  border-radius: 8px;
+
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.PURPLE_D};
+  }
+  &:active {
+    background-color: ${({ theme }) => theme.colors.PURPLE_DD};
+  }
+  @media ${({ theme }) => theme.device.Tablet} {
+    position: fixed;
+    max-width: 1200px;
+    width: 90%;
+    height: 55px;
+    font-size: ${({ theme }) => theme.fontsize.LARGE_TXT};
+
+    top: 90vh;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+`;
+
+const ButtonLabel = styled.p`
+  font-size: ${({ theme }) => theme.fontsize.MEDIUM_TXT};
+  font-weight: ${({ theme }) => theme.fontweight.REGULAR};
+  color: ${({ theme }) => theme.colors.BLACK};
 `;

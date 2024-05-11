@@ -1,42 +1,39 @@
 import styled from 'styled-components';
-import DeleteButton from '../assets/icons/IconDelete.svg';
+import IconSettings from '../assets/icons/IconSettings.svg';
+import IconChecked from '../assets/icons/IconChecked.svg';
 import { Link } from 'react-router-dom';
-import { useRef, useState } from 'react';
-import useClickOutside from '../hooks/useClickOutside';
 
-const EditModeButton = ({ theme, handleToast, recipientId }) => {
+const EditModeButton = ({ theme, recipientId, isEditMode }) => {
   const isDarkMode = theme !== 'light';
-  const [isOpen, setIsOpen] = useState(false);
-  const dropdownRef = useRef();
 
-  useClickOutside(dropdownRef, () => {
-    setIsOpen(false);
-  });
-
-  const toggleDropdown = () => {
-    setIsOpen(!isOpen);
-  };
-
-  return (
-    <EditButtonWrapper ref={dropdownRef} onClick={toggleDropdown}>
-      <Icons src={DeleteButton} alt="삭제" isDarkMode={isDarkMode} />
-      <DropDownList style={isOpen ? {} : { display: 'none' }}>
-        <DropDownItem>
-          <DropDownLabel>페이퍼 삭제하기</DropDownLabel>
-        </DropDownItem>
-        <Link to={`/post/${recipientId}/edit`}>
-          <DropDownItem>
-            <DropDownLabel>메세지 편집</DropDownLabel>
-          </DropDownItem>
-        </Link>
-      </DropDownList>
-    </EditButtonWrapper>
-  );
+  if (isEditMode) {
+    return (
+      <Link to={`/post/${recipientId}`} style={{ textDecoration: 'none' }}>
+        <EditButtonWrapper as="button">
+          <Icons src={IconChecked} alt="편집완료" isDarkMode={isDarkMode} />
+          <ButtonLabel style={isEditMode ? {} : { display: 'none' }}>
+            편집완료
+          </ButtonLabel>
+        </EditButtonWrapper>
+      </Link>
+    );
+  } else {
+    return (
+      <Link to={`/post/${recipientId}/edit`} style={{ textDecoration: 'none' }}>
+        <EditButtonWrapper>
+          <Icons src={IconSettings} alt="편집하기" isDarkMode={isDarkMode} />
+          <ButtonLabel style={!isEditMode ? {} : { display: 'none' }}>
+            편집하기
+          </ButtonLabel>
+        </EditButtonWrapper>
+      </Link>
+    );
+  }
 };
 
 const EditButtonWrapper = styled.button`
-  width: 36px;
   height: 36px;
+  padding: 6px 16px;
   border-radius: 6px;
   border: 1px solid ${({ theme }) => theme.colors.GRAY};
 
@@ -51,28 +48,6 @@ const EditButtonWrapper = styled.button`
   gap: 4px;
   position: relative;
 
-  @media ${({ theme }) => theme.device.Mobile} {
-    width: 36px;
-  }
-`;
-
-const DropDownList = styled.div`
-  position: absolute;
-  top: 42px;
-  right: 0;
-  padding: 10px 0;
-  background-color: ${({ theme }) => theme.colors.WHITE};
-  border: 1px solid ${({ theme }) => theme.colors.GRAY};
-  border-radius: 8px;
-  z-index: 100;
-`;
-
-const DropDownItem = styled.div`
-  width: 120px;
-  height: 50px;
-  padding: 12px 0;
-  background-color: ${({ theme }) => theme.colors.WHITE};
-
   &:hover {
     background-color: ${({ theme }) => theme.colors.PURPLE};
   }
@@ -80,12 +55,10 @@ const DropDownItem = styled.div`
   &:active {
     background-color: ${({ theme }) => theme.colors.PURPLE_D};
   }
-`;
 
-const DropDownLabel = styled.p`
-  font-size: ${({ theme }) => theme.fontsize.MEDIUM_TXT};
-  font-weight: ${({ theme }) => theme.fontweight.REGULAR};
-  line-height: 26px;
+  @media ${({ theme }) => theme.device.Mobile} {
+    width: 36px;
+  }
 `;
 
 const Icons = styled.img`
@@ -99,5 +72,11 @@ const Icons = styled.img`
     width: 24px;
     height: 24px;
   }
+`;
+
+const ButtonLabel = styled.p`
+  font-size: ${({ theme }) => theme.fontsize.MEDIUM_TXT};
+  font-weight: ${({ theme }) => theme.fontweight.REGULAR};
+  color: ${({ theme }) => theme.colors.BLACK};
 `;
 export default EditModeButton;

@@ -14,9 +14,10 @@ const ShareButton = ({ handleToast, theme, isEditMode }) => {
   const location = useLocation();
 
   const toggleDropdown = () => {
-    setIsOpen(!isOpen);
     if (isEditMode) {
       handleToast('편집 모드에서는 사용이 불가합니다.');
+    } else {
+      setIsOpen(!isOpen);
     }
   };
 
@@ -65,6 +66,15 @@ const ShareButtonWrapper = styled.button`
   align-items: center;
   gap: 4px;
   position: relative;
+
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.PURPLE};
+  }
+
+  &:active {
+    background-color: ${({ theme }) => theme.colors.PURPLE_D};
+  }
+
   p {
     color: ${({ theme }) => theme.colors.BLACK};
   }
