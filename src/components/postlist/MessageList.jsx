@@ -54,7 +54,13 @@ const MessageListItem = ({
     </MessageContainer>
   );
 };
-const MessageList = ({ theme, messages, recipientId, showDeleteButton }) => {
+const MessageList = ({
+  theme,
+  messages,
+  recipientId,
+  showDeleteButton,
+  updateRecipientData,
+}) => {
   const isDarkMode = theme !== 'light';
   const themeContext = useContext(ThemeContext);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -64,7 +70,6 @@ const MessageList = ({ theme, messages, recipientId, showDeleteButton }) => {
   useEffect(() => {
     if (messages) {
       setMessageList(messages);
-      console.log(messageList);
     }
   }, [messages]);
 
@@ -87,8 +92,11 @@ const MessageList = ({ theme, messages, recipientId, showDeleteButton }) => {
         setMessageList((prevMessage) =>
           prevMessage.filter((message) => message.id !== messageIdToDelete),
         );
+
         console.log('Message deleted successfully!');
       }
+      const updatedData = messageList.length;
+      updateRecipientData(updatedData);
     } catch (e) {
       console.error(e);
     }

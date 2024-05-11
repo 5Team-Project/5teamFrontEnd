@@ -10,7 +10,7 @@ import ShareButton from './ShareButton';
 import ToastMessage from './ToastMessage';
 import EditModeButton from './EditModeButton';
 
-const NavigationBar = ({ recipientId, isEditMode }) => {
+const NavigationBar = ({ recipientId, recipientData, isEditMode }) => {
   const [title, setTitle] = useState('Dear');
   const [messageCount, setMessageCount] = useState(0);
   const [recentSenders, setRecentSenders] = useState([]);
@@ -20,20 +20,12 @@ const NavigationBar = ({ recipientId, isEditMode }) => {
   const [toastMessage, setToastMessage] = useState('');
 
   useEffect(() => {
-    const handleLoadRecipientData = async () => {
-      try {
-        const res = await getDataByRecipientId(`${recipientId}/`);
-        if (res) {
-          setTitle(res.name);
-          setMessageCount(res.messageCount);
-          setRecentSenders(res.recentMessages);
-        }
-      } catch (e) {
-        console.error(e);
-      }
-    };
-    handleLoadRecipientData();
-  }, []);
+    if (recipientData) {
+      setTitle(recipientData.name);
+      setMessageCount(recipientData.messageCount);
+      setRecentSenders(recipientData.recentMessages);
+    }
+  }, [recipientData]);
 
   useEffect(() => {
     const handleLoadReactions = async () => {

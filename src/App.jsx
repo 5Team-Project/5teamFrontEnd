@@ -30,9 +30,9 @@ function App() {
             path="/post/:messageId/message"
             element={<AddRollingPaper />}
           />
-          <Route path="/post/:messageId" element={<RollingPaperPage />} />
+          <Route path="/post/:recipientId" element={<RollingPaperPage />} />
           <Route
-            path="/post/:messageId/edit"
+            path="/post/:recipientId/edit"
             element={<RollingPaperPageEdit />}
           />
         </Routes>
