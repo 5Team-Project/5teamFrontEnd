@@ -30,7 +30,7 @@ const ToastMessageBox = styled.div`
   left: 50%;
   transform: translateX(-50%);
 
-  animation: fadeout 3s ease-in-out;
+  animation: fadeout 2s ease-in-out;
   opacity: 0;
   @keyframes fadeout {
     0% {

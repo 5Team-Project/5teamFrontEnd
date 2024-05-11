@@ -33,19 +33,17 @@ const ShareButton = ({ handleToast, theme }) => {
   });
 
   return (
-    <>
-      <ShareButtonWrapper ref={dropdownRef} onClick={toggleDropdown}>
-        <Icons src={ShareIcon} alt="공유" isDarkMode={isDarkMode} />
-        <DropDownList style={isOpen ? {} : { display: 'none' }}>
-          <DropDownItem>
-            <DropDownLabel>카카오톡 공유</DropDownLabel>
-          </DropDownItem>
-          <DropDownItem onClick={handleCopyUrl}>
-            <DropDownLabel>URL 공유</DropDownLabel>
-          </DropDownItem>
-        </DropDownList>
-      </ShareButtonWrapper>
-    </>
+    <ShareButtonWrapper ref={dropdownRef} onClick={toggleDropdown}>
+      <Icons src={ShareIcon} alt="공유" isDarkMode={isDarkMode} />
+      <DropDownList style={isOpen ? {} : { display: 'none' }}>
+        <DropDownItem>
+          <DropDownLabel>카카오톡 공유</DropDownLabel>
+        </DropDownItem>
+        <DropDownItem onClick={handleCopyUrl}>
+          <DropDownLabel>URL 공유</DropDownLabel>
+        </DropDownItem>
+      </DropDownList>
+    </ShareButtonWrapper>
   );
 };
 

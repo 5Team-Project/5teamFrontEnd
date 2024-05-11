@@ -75,6 +75,9 @@ const AllReactionsBox = styled.div`
   position: absolute;
   left: -267px;
   top: 45px;
+  @media ${({ theme }) => theme.device.Tablet} {
+    left: -15%;
+  }
 
   display: grid;
   grid-template-columns: repeat(4, 65px);

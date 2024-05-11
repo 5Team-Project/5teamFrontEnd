@@ -8,6 +8,7 @@ import DropReactions from './DropReactions';
 import { getDataByRecipientId } from '../api/getDataByRecipientId';
 import ShareButton from './ShareButton';
 import ToastMessage from './ToastMessage';
+import EditModeButton from './EditModeButton';
 
 const NavigationBar = ({ recipientId }) => {
   const [title, setTitle] = useState('Dear');
@@ -64,7 +65,7 @@ const NavigationBar = ({ recipientId }) => {
     const toastTimer = setTimeout(() => {
       setIsToastOpen(false);
       setToastMessage('');
-    }, 3000);
+    }, 2000);
     return () => clearTimeout(toastTimer);
   };
 
@@ -95,6 +96,7 @@ const NavigationBar = ({ recipientId }) => {
                 handleToast={handleToast}
               />
               <ShareButton handleToast={handleToast} />
+              <EditModeButton handleToast={handleToast} />
             </ActionButtons>
           </PostStats>
         </NavBox>
