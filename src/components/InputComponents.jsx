@@ -7,9 +7,9 @@ const InputComponent = ({ placeholder, value, onChange, onBlur }) => {
 
   const handleInputChange = (e) => {
     const inputValue = e.target.value;
-    if (inputValue.length > 8) {
+    if (inputValue.length > 10) {
       setIsError(true);
-      setErrorMessage('8글자를 넘을 수 없습니다.');
+      setErrorMessage('10글자를 넘을 수 없습니다.');
       return;
     }
     setIsError(false);

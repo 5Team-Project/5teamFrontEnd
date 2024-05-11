@@ -102,7 +102,6 @@ const MessageContainer = styled.div`
   height: 280px;
   border-radius: 16px;
   padding: 28px 24px 24px 24px;
-  font:;
 `;
 const AddMessageContainer = styled(MessageContainer)`
   display: flex;

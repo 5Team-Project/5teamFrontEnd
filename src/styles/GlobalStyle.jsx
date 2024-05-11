@@ -13,6 +13,7 @@ const GlobalStyle = createGlobalStyle`
     src: url(${Gmarket}) format('truetype');
     font-weight: normal;
     font-style: normal;
+    font-display: block;
   }
 
   @font-face {
@@ -20,6 +21,7 @@ const GlobalStyle = createGlobalStyle`
     src: url(${BMJUATtf}) format('truetype');
     font-weight: normal;
     font-style: normal;
+    font-display: block;
   }
 
   @font-face {
@@ -45,9 +47,11 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
   }
 
-  html{
-    font-family:'BMJUATtf','Pretendard', 'NanumMyeongjo', 'NanumPen',  sans-serif;
-  }
+  // html{
+  //   font-family:'BMJUATtf','Pretendard', 'NanumMyeongjo', 'NanumPen',  sans-serif;
+  // }
+
+
   body {
     background-color: ${({ theme }) =>
       theme.mode === 'dark' ? theme.colors.BLACK : theme.colors.WHITE};
@@ -73,7 +77,6 @@ const GlobalStyle = createGlobalStyle`
     border: none;
     background-color: transparent;
     resize: none;
-    font-family: 'Pretendard', 'NanumMyeongjo', 'NanumPen', sans-serif;
   }
 
   input:focus, textarea:focus {

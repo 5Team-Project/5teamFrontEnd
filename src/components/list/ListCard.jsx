@@ -14,6 +14,7 @@ const ListCard = ({ data }) => {
   const [reaction, setReaction] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isImageLoaded, setIsImageLoaded] = useState(true);
+  const title = data.name.length >= 10 ? data.name : '';
   const COLOR_LIST = [
     { value: '#FFE5B4', name: 'beige' },
     { value: '#DCB9FF', name: 'purple' },
@@ -93,7 +94,10 @@ const ListCard = ({ data }) => {
         />
       )}
       <ListCardMain>
-        <ListCardName style={isBgImg ? { color: 'white' } : { color: `black` }}>
+        <ListCardName
+          title={title}
+          style={isBgImg ? { color: 'white' } : { color: 'black' }}
+        >
           To. {data.name}
         </ListCardName>
         <WriterCountIcon count={count} recent={recent} />
@@ -143,6 +147,9 @@ const ListCardName = styled.span`
   font-weight: ${({ theme }) => theme.fontweight.REGULAR};
   line-height: 36px;
   letter-spacing: -0.01em;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 `;
 
 const ListCardLine = styled.div`
