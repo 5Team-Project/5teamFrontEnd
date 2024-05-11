@@ -362,7 +362,7 @@ const ListSortWrap = styled.section`
 
 const ListSortSpan = styled.span`
   font-size: ${({ theme }) => theme.fontsize.M_TITLE};
-  font-weight: ${({ theme }) => theme.fontweight.BOLD};
+  font-weight: ${({ theme }) => theme.fontweight.REGULAR};
 
   line-height: 36px;
   letter-spacing: -0.01em;

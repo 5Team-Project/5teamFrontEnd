@@ -13,6 +13,13 @@ const ListCard = ({ data }) => {
   const [recent, setRecent] = useState([]);
   const [reaction, setReaction] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isImageLoaded, setIsImageLoaded] = useState(true);
+  const COLOR_LIST = [
+    { value: '#FFE5B4', name: 'beige' },
+    { value: '#DCB9FF', name: 'purple' },
+    { value: '#B9E0FF', name: 'blue' },
+    { value: '#B3F0C8', name: 'green' },
+  ];
 
   useEffect(() => {
     const handleLoad = async () => {
@@ -22,7 +29,6 @@ const ListCard = ({ data }) => {
         setCount(res.messageCount);
         setRecent(res.recentMessages);
         setReaction(res.topReactions);
-
         setTimeout(() => {
           setIsLoading(false);
         }, 500);
@@ -42,25 +48,25 @@ const ListCard = ({ data }) => {
   }, [data.backgroundImageURL]);
 
   useEffect(() => {
-    switch (data.backgroundColor) {
-      case 'beige':
-        setBgColor(theme.colors.ORANGE);
-        break;
-      case 'purple':
-        setBgColor(theme.colors.PURPLE);
-        break;
-      case 'blue':
-        setBgColor(theme.colors.BLUE);
-        break;
-      case 'green':
-        setBgColor(theme.colors.GREEN);
-        break;
-      default:
-        setBgColor(theme.colors.ORANGE);
+    const colorObj = COLOR_LIST.find(
+      (item) => item.name === data.backgroundColor,
+    );
+    if (colorObj) {
+      setBgColor(colorObj.value);
+    } else {
+      setBgColor('#FFE5B4');
     }
-  }, [data.backgroundColor]); // 수정
+  }, [data.backgroundColor]);
 
-  if (isLoading) {
+  const handleImageLoad = () => {
+    setIsImageLoaded(true);
+  };
+
+  const handleImageError = () => {
+    setIsImageLoaded(true);
+  };
+
+  if (isLoading || (isBgImg && !isImageLoaded)) {
     return <ListCardSkeleton />;
   }
 
@@ -72,21 +78,22 @@ const ListCard = ({ data }) => {
       style={
         isBgImg
           ? {
-              backgroundImage: `linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3) ),url(${data.backgroundImageURL})`,
+              backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(${data.backgroundImageURL})`,
             }
           : { backgroundColor: bgColor }
       }
     >
+      {isBgImg && (
+        <img
+          src={data.backgroundImageURL}
+          alt="Background"
+          style={{ display: 'none' }}
+          onLoad={handleImageLoad}
+          onError={handleImageError}
+        />
+      )}
       <ListCardMain>
-        <ListCardName
-          style={
-            isBgImg
-              ? {
-                  color: 'white',
-                }
-              : { color: `black` }
-          }
-        >
+        <ListCardName style={isBgImg ? { color: 'white' } : { color: `black` }}>
           To. {data.name}
         </ListCardName>
         <WriterCountIcon count={count} recent={recent} />
@@ -103,22 +110,17 @@ export default ListCard;
 const ListCardWrap = styled(Link)`
   display: flex;
   flex-direction: column;
-
   text-align: start;
   width: 275px;
   height: 260px;
-
   border-radius: 16px;
   border: 1px solid ${({ theme }) => theme.colors.BLACK}1a;
   padding: 30px 24px 20px;
-
   text-decoration: none;
   color: ${({ theme }) => theme.colors.BLACK};
-
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-
   @media ${({ theme }) => theme.device.Tablet} {
     width: 245px;
     height: 250px;
@@ -138,7 +140,7 @@ const ListCardMain = styled.div`
 
 const ListCardName = styled.span`
   font-size: ${({ theme }) => theme.fontsize.M_TITLE};
-  font-weight: ${({ theme }) => theme.fontweight.BOLD};
+  font-weight: ${({ theme }) => theme.fontweight.REGULAR};
   line-height: 36px;
   letter-spacing: -0.01em;
 `;

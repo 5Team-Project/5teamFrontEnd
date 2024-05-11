@@ -3,12 +3,27 @@ import styled, { css } from 'styled-components';
 
 const InputComponent = ({ placeholder, value, onChange, onBlur }) => {
   const [isError, setIsError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const handleInputChange = (e) => {
+    const inputValue = e.target.value;
+    if (inputValue.length > 8) {
+      setIsError(true);
+      setErrorMessage('8글자를 넘을 수 없습니다.');
+      return;
+    }
+    setIsError(false);
+    setErrorMessage('');
+    onChange(e);
+  };
 
   const handleInputBlur = () => {
     if (value.trim() === '') {
       setIsError(true);
+      setErrorMessage('값을 입력해 주세요.');
     } else {
       setIsError(false);
+      setErrorMessage('');
     }
     onBlur();
   };
@@ -18,11 +33,11 @@ const InputComponent = ({ placeholder, value, onChange, onBlur }) => {
       <StyledInput
         placeholder={placeholder}
         value={value}
-        onChange={onChange}
+        onChange={handleInputChange}
         onBlur={handleInputBlur}
         isError={isError}
       />
-      {isError && <ErrorMessage>값을 입력해 주세요.</ErrorMessage>}
+      {isError && <ErrorMessage>{errorMessage}</ErrorMessage>}
     </InputContainer>
   );
 };

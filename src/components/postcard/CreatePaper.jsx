@@ -229,7 +229,7 @@ const SubmitButton = styled.button`
   padding: 14px 24px 14px 24px;
   gap: 10px;
   border-radius: 12px;
-
+  font-size: ${({ theme }) => theme.fontsize.LARGE_TXT};
   cursor: pointer;
   background-color: ${({ theme }) => theme.colors.PURPLE};
   color: ${({ theme }) => theme.colors.BLACK};
