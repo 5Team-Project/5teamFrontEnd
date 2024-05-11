@@ -15,6 +15,14 @@ const CreatePaper = () => {
   const [isColorSelected, setIsColorSelected] = useState(true);
   const [isImageSelected, setIsImageSelected] = useState(false);
   const [backGroundImages, setBackGroundImages] = useState([]);
+
+  const COLOR_LIST = [
+    { value: '#FFE5B4', name: 'beige' },
+    { value: '#DCB9FF', name: 'purple' },
+    { value: '#B9E0FF', name: 'blue' },
+    { value: '#B3F0C8', name: 'green' },
+  ];
+
   const navigate = useNavigate();
 
   const handleInputChange = (e) => {
@@ -148,13 +156,6 @@ const CreatePaper = () => {
     </AddPageWrapper>
   );
 };
-
-const COLOR_LIST = [
-  { value: '#FFE5B4', name: 'beige' },
-  { value: '#DCB9FF', name: 'purple' },
-  { value: '#B9E0FF', name: 'blue' },
-  { value: '#B3F0C8', name: 'green' },
-];
 
 const AddPageWrapper = styled.div`
   display: flex;

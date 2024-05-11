@@ -34,7 +34,7 @@ const ColorButton = styled.button`
   height: 168px;
   border-radius: 8px;
   background-color: ${({ color }) => color};
-  border: ${({ selected }) => (selected ? '2px solid black' : 'none')};
+  border: ${({ selected }) => (selected ? '2px solid #AB57FF' : 'none')};
   cursor: pointer;
   display: flex;
   justify-content: center;

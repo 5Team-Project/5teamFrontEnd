@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import ProfileImageComponent from '../components/postMessage/ProfileComponents';
 import DropdownRelative from '../components/postMessage/DropRelative';
-import ReactQuillContext from '../utils/ReactQuill';
+import ReactQuillContext from '../components/postMessage/ReactQuill';
 import DropdownFont from '../components/postMessage/DropFont';
 import { PostMessages } from '../api/postMessage';
 import InputComponent from '../components/InputComponents';

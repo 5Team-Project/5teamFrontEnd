@@ -61,8 +61,10 @@ const BackgroundImageSelector = ({ onImageSelect }) => {
     }
   };
 
-  const handlePreviewImage = (event) => {
-    const file = event.target.files[0];
+  const handlePreviewImage = (e) => {
+    e.prr;
+
+    const file = e.target.files[0];
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
@@ -118,6 +120,7 @@ const SelectImageWrapper = styled.div`
   display: flex;
   width: 100%;
   gap: 15px;
+
   //모바일
   @media (max-width: 767px) {
     flex-wrap: wrap;
@@ -143,7 +146,7 @@ const FileInputLabel = styled.label`
   cursor: pointer;
   background-color: #f0f0f0;
   border-radius: 8px;
-  border: 2px dashed #ccc;
+  border: 1px solid #ccc;
   font-size: 16px;
   font-weight: 600;
   color: #333;
@@ -160,7 +163,7 @@ const BackgroundImages = styled.div`
   background-image: url(${({ src }) => src});
   background-size: cover;
   cursor: pointer;
-  border: ${({ selected }) => (selected ? '2px solid black' : 'none')};
+  border: ${({ selected }) => (selected ? '2px solid #DCB9FF' : 'none')};
   position: relative;
   ${({ selected, isUploaded }) =>
     selected &&
