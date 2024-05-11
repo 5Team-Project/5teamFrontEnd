@@ -78,5 +78,8 @@ const ButtonLabel = styled.p`
   font-size: ${({ theme }) => theme.fontsize.MEDIUM_TXT};
   font-weight: ${({ theme }) => theme.fontweight.REGULAR};
   color: ${({ theme }) => theme.colors.BLACK};
+  @media ${({ theme }) => theme.device.Mobile} {
+    display: none;
+  }
 `;
 export default EditModeButton;

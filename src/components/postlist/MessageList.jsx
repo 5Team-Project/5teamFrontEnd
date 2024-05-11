@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import PlusIcon from '../../assets/icons/ic_plus.svg';
 import styled, { ThemeContext } from 'styled-components';
 import { formatDate } from '../../utils/formatDate';
@@ -6,6 +6,7 @@ import MessageModal from './MessageModal';
 import { mapFontName } from '../../utils/mapFont';
 import { Link } from 'react-router-dom';
 import DeleteButton from '../../assets/icons/IconDelete.svg';
+import { deleteMessage } from '../../api/deleteMessage';
 
 const RELATIONSHIPS = {
   가족: 'GREEN',
@@ -14,7 +15,11 @@ const RELATIONSHIPS = {
   지인: 'ORANGE',
 };
 
-const MessageListItem = ({ message, showDeleteButton }) => {
+const MessageListItem = ({
+  message,
+  showDeleteButton,
+  handleDeleteMessage,
+}) => {
   return (
     <MessageContainer>
       <ProfileContainer>
@@ -30,8 +35,11 @@ const MessageListItem = ({ message, showDeleteButton }) => {
           </ProfileRelation>
         </ProfileTextWrap>
         {showDeleteButton && (
-          <DeleteMessageButton>
-            <Icons src={DeleteButton} alt="삭제" />
+          <DeleteMessageButton
+            onClick={() => handleDeleteMessage(message.id)}
+            type="button"
+          >
+            <Icons src={DeleteButton} alt="메세지삭제" />
           </DeleteMessageButton>
         )}
       </ProfileContainer>
@@ -51,15 +59,39 @@ const MessageList = ({ theme, messages, recipientId, showDeleteButton }) => {
   const themeContext = useContext(ThemeContext);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalData, setModalData] = useState({});
+  const [messageList, setMessageList] = useState([]);
+
+  useEffect(() => {
+    if (messages) {
+      setMessageList(messages);
+      console.log(messageList);
+    }
+  }, [messages]);
 
   const handleMessageClick = (data) => {
-    setIsModalOpen(true);
-    setModalData(data);
+    if (!showDeleteButton) {
+      setIsModalOpen(true);
+      setModalData(data);
+    }
   };
 
   const closeModal = () => {
     setIsModalOpen(false);
     setModalData({});
+  };
+
+  const handleDeleteMessage = async (messageIdToDelete) => {
+    try {
+      const res = await deleteMessage(`${messageIdToDelete}`);
+      if (res) {
+        setMessageList((prevMessage) =>
+          prevMessage.filter((message) => message.id !== messageIdToDelete),
+        );
+        console.log('Message deleted successfully!');
+      }
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   return (
@@ -76,6 +108,11 @@ const MessageList = ({ theme, messages, recipientId, showDeleteButton }) => {
           </DeletePaperButton>
         </MessageEditHeader>
       )}
+      <MessageModal
+        message={modalData}
+        isModalOpen={isModalOpen}
+        closeModal={closeModal}
+      />
       <MessageListContainer>
         <AddMessageContainer>
           <MessageAddButton>
@@ -84,13 +121,17 @@ const MessageList = ({ theme, messages, recipientId, showDeleteButton }) => {
             </Link>
           </MessageAddButton>
         </AddMessageContainer>
-        {messages &&
-          messages.map((message) => {
+        {messageList &&
+          messageList.map((message) => {
             return (
-              <li key={message.id} onClick={() => handleMessageClick(message)}>
+              <li
+                key={message.id}
+                onClick={() => handleMessageClick(message.id)}
+              >
                 <MessageListItem
                   message={message}
                   showDeleteButton={showDeleteButton}
+                  handleDeleteMessage={handleDeleteMessage}
                 />
               </li>
             );

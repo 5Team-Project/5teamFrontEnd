@@ -63,7 +63,6 @@ const GlobalStyle = createGlobalStyle`
     border: none;
     cursor: pointer;
     background-color: transparent;
-    z-index: 99;
   }
 
   input, textarea {
