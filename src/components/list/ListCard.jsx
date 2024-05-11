@@ -25,7 +25,7 @@ const ListCard = ({ data }) => {
 
         setTimeout(() => {
           setIsLoading(false);
-        }, 3000);
+        }, 500);
       } catch (e) {
         console.error(e);
         setIsLoading(false);
@@ -58,7 +58,7 @@ const ListCard = ({ data }) => {
       default:
         setBgColor(theme.colors.ORANGE);
     }
-  }, [data.backgroundColor]);
+  }, [data.backgroundColor]); // 수정
 
   if (isLoading) {
     return <ListCardSkeleton />;
