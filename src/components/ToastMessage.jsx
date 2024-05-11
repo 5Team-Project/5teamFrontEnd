@@ -15,7 +15,7 @@ const ToastMessage = ({ isOpen, text }) => {
 const ToastMessageBox = styled.div`
   min-width: 320px;
   max-width: 524px;
-  width: 40%;
+  width: 90%;
   height: 64px;
   background-color: ${({ theme }) => theme.colors.BLACK}CC;
   border-radius: 8px;

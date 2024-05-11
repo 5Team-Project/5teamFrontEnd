@@ -5,7 +5,7 @@ const EditModeButton = ({ theme, handleToast }) => {
   const isDarkMode = theme !== 'light';
 
   const underConstruction = () => {
-    handleToast('!!! It is under construction !!!');
+    handleToast('It is under construction !!!');
   };
 
   return (
