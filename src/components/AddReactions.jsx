@@ -56,7 +56,7 @@ const AddReactions = ({
     <AddReactionsWrapper ref={pickerRef}>
       <ButtonWrapper onClick={handleShowEmojiPicker} type="button">
         <Icons src={AddReactionIcon} alt="리액션추가" isDarkMode={isDarkMode} />
-        <ButtonLabel>추가</ButtonLabel>
+        {/* <ButtonLabel>추가</ButtonLabel> */}
       </ButtonWrapper>
       {!isEditMode && (
         <PickerWrapper>
