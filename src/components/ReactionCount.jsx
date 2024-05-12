@@ -21,11 +21,6 @@ const ReactionCount = ({ topReactions }) => {
 const ReactionCountWrapper = styled.div`
   height: 36px;
   display: flex;
-  margin-right: 14px;
-
-  @media ${({ theme }) => theme.device.Mobile} {
-    margin-right: 0;
-  }
 `;
 
 const ReactionButtonBox = styled.div`
@@ -35,7 +30,8 @@ const ReactionButtonBox = styled.div`
 `;
 
 const ReactionButtons = styled.button`
-  width: 63px;
+  max-width: 63px;
+  min-width: 50px;
   height: 36px;
   border-radius: 32px;
   padding: 8px;

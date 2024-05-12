@@ -1,15 +1,17 @@
-import styled from 'styled-components';
+import styled, { ThemeContext } from 'styled-components';
 import IconSettings from '../assets/icons/IconSettings.svg';
 import IconChecked from '../assets/icons/IconChecked.svg';
 import { Link } from 'react-router-dom';
+import { useContext } from 'react';
 
 const EditModeButton = ({ theme, recipientId, isEditMode }) => {
   const isDarkMode = theme !== 'light';
+  const themeContext = useContext(ThemeContext);
 
   if (isEditMode) {
     return (
       <Link to={`/post/${recipientId}`} style={{ textDecoration: 'none' }}>
-        <EditButtonWrapper as="button">
+        <EditButtonWrapper as="button" isEditMode={isEditMode}>
           <Icons src={IconChecked} alt="편집완료" isDarkMode={isDarkMode} />
           <ButtonLabel style={isEditMode ? {} : { display: 'none' }}>
             편집완료
@@ -20,7 +22,7 @@ const EditModeButton = ({ theme, recipientId, isEditMode }) => {
   } else {
     return (
       <Link to={`/post/${recipientId}/edit`} style={{ textDecoration: 'none' }}>
-        <EditButtonWrapper>
+        <EditButtonWrapper as="button" isEditMode={isEditMode}>
           <Icons src={IconSettings} alt="편집하기" isDarkMode={isDarkMode} />
           <ButtonLabel style={!isEditMode ? {} : { display: 'none' }}>
             편집하기
@@ -42,6 +44,8 @@ const EditButtonWrapper = styled.button`
   letter-spacing: -0.01em;
   text-align: center;
   justify-content: center;
+  background-color: ${({ theme, isEditMode }) =>
+    isEditMode ? theme.colors.GREEN : theme.colors.WHITE};
 
   display: flex;
   align-items: center;

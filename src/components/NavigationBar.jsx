@@ -126,6 +126,9 @@ const Title = styled.a`
   line-height: 45px;
   letter-spacing: -0.01em;
   text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 
   @media ${({ theme }) => theme.device.Mobile} {
     position: absolute;
