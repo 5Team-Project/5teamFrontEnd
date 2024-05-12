@@ -1,14 +1,35 @@
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 import ListSort from '../components/list/ListSort';
+import ListSearch from '../components/list/ListSearch';
+import queryString from 'query-string';
 
 const ListPage = () => {
+  const location = useLocation();
+  const { search } = location;
+  const { name: searchValue } = queryString.parse(search);
+
+  const navigate = useNavigate();
+
+  const handleSearch = (value) => {
+    navigate(`/list?name=${value}`);
+  };
+
   return (
     <ListMainContainer>
+      <ListSearch onSearch={handleSearch} />
       <ListContent>
-        <ListSort sort={'like'} />
-        <ListSort />
+        {searchValue ? (
+          <ListSort searchValue={searchValue} />
+        ) : (
+          <>
+            <ListSort listSort={'like'} />
+            <ListSort />
+          </>
+        )}
+
         <ToPostPageDiv>
           <Link to={'/post'}>나도 만들어보기</Link>
         </ToPostPageDiv>
@@ -22,6 +43,7 @@ export default ListPage;
 const ListMainContainer = styled.main`
   max-width: 1200px;
   margin: 0 auto;
+  height: 80dvh;
   @media ${({ theme }) => theme.device.Tablet} {
     max-width: 768px;
   }
@@ -32,18 +54,20 @@ const ListMainContainer = styled.main`
 
 const ListContent = styled.article`
   width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: start;
 `;
 
 const ToPostPageDiv = styled.div`
   margin-top: 25px;
   display: flex;
-  align-items: center;
+  align-items: end;
   justify-content: center;
 
+  flex-grow: 1;
   & a {
     display: flex;
     align-items: center;
@@ -67,12 +91,13 @@ const ToPostPageDiv = styled.div`
   }
 
   @media ${({ theme }) => theme.device.Tablet} {
-    margin-top: 10px;
+    margin: 0;
     & a {
       width: 760px;
       height: 56px;
     }
   }
+
   @media ${({ theme }) => theme.device.Mobile} {
     & a {
       width: 360px;

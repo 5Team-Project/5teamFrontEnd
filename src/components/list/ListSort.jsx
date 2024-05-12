@@ -6,9 +6,13 @@ import { getList } from '../../api/getList';
 import useDeviceSize from '../../hooks/useDeviceSize';
 import ListCard from './ListCard';
 import ListSlideMoveButtons from './ListSlideMoveButtons';
+import { useLocation } from 'react-router-dom';
+import queryString from 'query-string';
 
-const ListSort = ({ sort, theme }) => {
+const ListSort = ({ listSort, theme }) => {
   const isDarkMode = theme !== 'light';
+
+  const sort = listSort;
 
   const [userList, setUserList] = useState([]);
   const [userLastList, setUserLastList] = useState([]);
@@ -37,6 +41,10 @@ const ListSort = ({ sort, theme }) => {
 
   const limit = 6;
 
+  const location = useLocation();
+  const { search } = location;
+  const { name: searchValue } = queryString.parse(search);
+
   useEffect(() => {
     if (userList.length > 0) return;
 
@@ -47,6 +55,7 @@ const ListSort = ({ sort, theme }) => {
 
       try {
         if (path === null) return;
+
         // console.log('처음데이터');
         const res = await getList(path);
 
@@ -96,10 +105,46 @@ const ListSort = ({ sort, theme }) => {
     if (slideList.length != 0) return;
 
     setSlideList([...userLastList, ...userList]);
+
+    setIsLoading(false);
   }, [userLastList, userList]);
+
+  // 검색 데이터 불러오기
+  useEffect(() => {
+    if (!searchValue) {
+      setSlideList([...userLastList, ...userList]);
+      setCurrentIndex(6);
+      return;
+    }
+
+    setIsLoading(true);
+
+    const handleGetSearchList = async () => {
+      const commonPath = `/6-5/recipients/?limit=50`;
+
+      try {
+        const res = await getList(commonPath);
+
+        const filteredList = res.results.filter((item) =>
+          item.name.includes(searchValue),
+        );
+
+        setSlideList(filteredList);
+        setCurrentIndex(0);
+
+        setIsLoading(false);
+      } catch (e) {
+        console.error(e);
+      }
+    };
+
+    handleGetSearchList();
+  }, [searchValue]);
 
   // 마지막 데이터를 한번 더 안불러오게 nextPath의 limit을 설정
   useEffect(() => {
+    if (searchValue) return;
+
     if (offset <= 0) return;
 
     const handleOffsetCheck = () => {
@@ -134,7 +179,9 @@ const ListSort = ({ sort, theme }) => {
   // 다음 리스트 불러오기
   useEffect(() => {
     const HandleAddListData = async () => {
-      if (!isLoading) return;
+      if (searchValue) return;
+
+      if (!isUpdate) return;
 
       if (isNext) {
         try {
@@ -180,17 +227,19 @@ const ListSort = ({ sort, theme }) => {
         }
       }
 
-      setIsLoading(false);
+      setIsUpdate(false);
     };
 
     HandleAddListData();
-  }, [isLoading, isNext]);
+  }, [isUpdate, isNext]);
 
   // SlideData 업데이트
   useEffect(() => {
-    if (nextPath === null) return;
+    if (searchValue) return;
+
     if (isUpdate) {
-      // console.log('업데이트');
+      if (nextPath === null) return;
+
       if (slideList[0] === userList[0])
         setSlideList([...userList, ...userLastList]);
       else setSlideList([...userLastList, ...userList]);
@@ -202,6 +251,8 @@ const ListSort = ({ sort, theme }) => {
   // 캐러셀 이동 시 SlideData 순서 변경
   const SlideChange = (num) => {
     // console.log('num ', num, ' isNext ', isNext);
+
+    if (searchValue) return;
 
     if (slideList[0] === userList[0]) {
       if (isNext) {
@@ -254,10 +305,10 @@ const ListSort = ({ sort, theme }) => {
       (currentIndex - 1 + length - currentLength) % (length - currentLength);
 
     setCurrentIndex(newIndex);
+
     if (newIndex <= Math.floor(length / 2 - 1)) {
       if (prevPath === null) return;
 
-      setIsLoading(true);
       setIsUpdate(true);
     }
   };
@@ -275,13 +326,14 @@ const ListSort = ({ sort, theme }) => {
 
     if (newIndex >= Math.floor(length / 2 + 1)) {
       if (nextPath === null) return;
-      setIsLoading(true);
       setIsUpdate(true);
     }
   };
 
   // 터치 슬라이드
   const handleTouchStart = (e) => {
+    if (slideList.length < 4) return;
+
     if (!touchStart) {
       setTouchStart(e.touches[0].clientX);
     }
@@ -308,44 +360,53 @@ const ListSort = ({ sort, theme }) => {
 
   return (
     <ListSortWrap>
-      <ListSortSpan>
-        {sort !== 'like'
-          ? '최근에 만든 롤링 페이퍼 ⭐️️'
-          : '인기 롤링 페이퍼 🔥'}
-      </ListSortSpan>
-      <ListCarousel
-        onTouchStart={handleTouchStart}
-        onTouchMove={handleTouchMove}
-        onTouchEnd={handleTouchEnd}
-      >
-        <ListSortSlide
-          style={{
-            transform: `translateX(-${currentIndex * itemWidth}px)`,
-            transition: `transform ${isAnimate ? 0.5 : 0}s ease`,
-          }}
-          onTransitionEnd={() => {
-            setIsAnimate(false);
+      {isLoading ? null : (
+        <>
+          <ListSortSpan>
+            {searchValue
+              ? '검색 결과 🔍'
+              : sort !== 'like'
+                ? '최근에 만든 롤링 페이퍼 ⭐️️'
+                : '인기 롤링 페이퍼 🔥'}
+          </ListSortSpan>
+          <ListCarousel
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+          >
+            <ListSortSlide
+              style={{
+                transform: `translateX(-${currentIndex * itemWidth}px)`,
+                transition: `transform ${isAnimate ? 0.5 : 0}s ease`,
+              }}
+              onTransitionEnd={() => {
+                setIsAnimate(false);
 
-            // console.log('currentIndex ', currentIndex);
-            if (
-              (currentIndex === slideList.length - 4 && isNext) ||
-              (currentIndex === 0 && !isNext)
-            ) {
-              SlideChange(currentIndex);
-            }
-          }}
-        >
-          {slideList.map((data) => (
-            <ListCard key={data.id} data={data} />
-          ))}
-        </ListSortSlide>
-      </ListCarousel>
+                if (
+                  (currentIndex === slideList.length - 4 && isNext) ||
+                  (currentIndex === 0 && !isNext)
+                ) {
+                  SlideChange(currentIndex);
+                }
+              }}
+            >
+              {slideList.length ? (
+                slideList.map((data) => <ListCard key={data.id} data={data} />)
+              ) : (
+                <ListSearchResultNull>롤링페이퍼가 없어요</ListSearchResultNull>
+              )}
+            </ListSortSlide>
+          </ListCarousel>
 
-      <ListSlideMoveButtons
-        handlePrev={handlePrev}
-        handleNext={handleNext}
-        isDarkMode={isDarkMode}
-      />
+          {slideList.length > 4 && (
+            <ListSlideMoveButtons
+              handlePrev={handlePrev}
+              handleNext={handleNext}
+              isDarkMode={isDarkMode}
+            />
+          )}
+        </>
+      )}
     </ListSortWrap>
   );
 };
@@ -397,4 +458,11 @@ const ListSortSlide = styled.div`
     gap: 10px;
     margin: 0 20px;
   }
+`;
+
+const ListSearchResultNull = styled.span`
+  padding: 30px 0;
+
+  font-size: ${({ theme }) => theme.fontsize.TITLE};
+  font-weight: ${({ theme }) => theme.fontweight.REGULAR};
 `;

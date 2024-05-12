@@ -24,7 +24,10 @@ function App() {
         <Header toggleTheme={toggleTheme} isDarkMode={isDarkMode} />
         <Routes>
           <Route path="/" element={<LandingPage />} />
-          <Route path="/list" element={<ListPage />} />
+          <Route path="/list" element={<ListPage />}>
+            <Route path="?name=:name" element={<ListPage />} />
+          </Route>
+
           <Route path="/post" element={<CreatePaperPage />} />
           <Route
             path="/post/:messageId/message"

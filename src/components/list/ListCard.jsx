@@ -113,16 +113,21 @@ const ListCardWrap = styled(Link)`
   display: flex;
   flex-direction: column;
   text-align: start;
+
   width: 275px;
   height: 260px;
+
   border-radius: 16px;
   border: 1px solid ${({ theme }) => theme.colors.BLACK}1a;
   padding: 30px 24px 20px;
+
   text-decoration: none;
   color: ${({ theme }) => theme.colors.BLACK};
+
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
+
   @media ${({ theme }) => theme.device.Tablet} {
     width: 245px;
     height: 250px;
