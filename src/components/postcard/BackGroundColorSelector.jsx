@@ -47,6 +47,16 @@ const ColorButton = styled.button`
     padding-bottom: calc(50% - 10px);
   }
 
+  &:hover {
+    transform: scale(1.07);
+  }
+
+  ${({ selected }) =>
+    selected &&
+    css`
+      opacity: 0.6;
+    `}
+
   ${({ selected }) =>
     selected &&
     css`
@@ -58,7 +68,7 @@ const ColorButton = styled.button`
         transform: translate(-50%, -50%);
         font-size: 40px;
         font-weight: 700;
-        color: white;
+        color: black;
       }
     `}
 `;

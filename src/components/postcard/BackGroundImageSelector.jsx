@@ -21,7 +21,7 @@ const BackgroundImageSelector = ({ onImageSelect }) => {
           response.items.map((itemRef) => getDownloadURL(itemRef)),
         );
         setImageOptions(imageUrls);
-        setSelectedImage(imageUrls[0]);
+
         setIsLoading(false);
       } catch (error) {
         console.error(error);
@@ -183,6 +183,16 @@ const BackgroundImage = styled.div`
   border: ${({ selected }) => (selected ? '2px solid #DCB9FF' : 'none')};
   position: relative;
 
+  &:hover {
+    transform: scale(1.1);
+  }
+
+  ${({ selected }) =>
+    selected &&
+    css`
+      opacity: 0.6;
+    `}
+
   ${({ selected, isUploaded }) =>
     selected &&
     !isUploaded &&
@@ -195,7 +205,7 @@ const BackgroundImage = styled.div`
         transform: translate(-50%, -50%);
         font-size: 40px;
         font-weight: 700;
-        color: white;
+        color: black;
       }
     `}
 `;
