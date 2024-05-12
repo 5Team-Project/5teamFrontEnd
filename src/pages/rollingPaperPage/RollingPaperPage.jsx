@@ -1,22 +1,42 @@
 import MessageList from '../../components/postlist/MessageList';
-import styled, { ThemeContext } from 'styled-components';
+import styled, { ThemeContext, css } from 'styled-components';
 import { useContext, useEffect, useState } from 'react';
-import { getMessage } from '../../api/getMessage';
+import { getMessage, getBackgroundByRecipientId } from '../../api/getMessage';
 import { useParams } from 'react-router-dom';
 import NavigationBar from '../../components/NavigationBar';
 import { getDataByRecipientId } from '../../api/getDataByRecipientId';
 
 const MESSAGE_LIMIT = 8;
 
+const CONVERT_BGCOLOR = {
+  'green': 'GREEN',
+  'purple': 'PURPLE',
+  'blue': 'BLUE',
+  'beige': 'ORANGE',
+};
+
 const RollingPaperPage = () => {
   const themeContext = useContext(ThemeContext);
   const { recipientId } = useParams();
+
   const [messages, setMessages] = useState([]);
   const [offset, setOffset] = useState(0);
   const [hasNext, setHasNext] = useState(true);
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [recipientData, setRecipientData] = useState({});
+
+  const [bgImage, setBgImage] = useState();
+  const [isColor, setIsColor] = useState('');
+  const [bgColor, setBgColor] = useState('');
+
+  const loadBackground = async (recipientId) => {
+    const responseBackground = await getBackgroundByRecipientId(recipientId);
+    setBgImage(responseBackground.backgroundImageURL);
+    setBgColor(responseBackground.backgroundColor);
+
+    //setBackground(backgroundImage || backgroundColor);
+  };
 
   const handleScroll = () => {
     const { scrollTop, clientHeight, scrollHeight } = document.documentElement;
@@ -62,6 +82,10 @@ const RollingPaperPage = () => {
   }, [page]);
 
   useEffect(() => {
+    loadBackground(recipientId);
+  }, [recipientId]);
+
+  useEffect(() => {
     window.addEventListener('scroll', handleScroll);
     return () => {
       window.removeEventListener('scroll', handleScroll);
@@ -71,7 +95,7 @@ const RollingPaperPage = () => {
   return (
     <>
       <NavigationBar recipientId={recipientId} recipientData={recipientData} />
-      <MessageMainContainer>
+      <MessageMainContainer bgImage={bgImage} bgColor={bgColor}>
         <MessageList
           messages={messages}
           recipientId={recipientId}
@@ -86,5 +110,14 @@ export default RollingPaperPage;
 const MessageMainContainer = styled.div`
   width: 100%;
   height: auto;
-  background-color: ${({ theme }) => theme.colors.ORANGE};
+
+  ${({ bgImage, bgColor, theme }) =>
+    bgImage
+      ? css`
+          background-image: url(${bgImage});
+          background-repeat: no-repeat;
+          background-position: top center;
+          background-size: cover;
+        `
+      : css`background-color: ${theme.colors[CONVERT_BGCOLOR[bgColor]]};`}
 `;
