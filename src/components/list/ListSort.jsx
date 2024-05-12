@@ -13,6 +13,12 @@ const ListSort = ({ listSort, theme }) => {
 
   const sort = listSort;
 
+  const [searchParams] = useSearchParams();
+  const searchValue = searchParams.get('name') || '';
+
+  const commonPath = `/6-5/recipients/`;
+  const limit = 6;
+
   const [userList, setUserList] = useState([]);
   const [userLastList, setUserLastList] = useState([]);
   const [slideList, setSlideList] = useState([]);
@@ -27,8 +33,8 @@ const ListSort = ({ listSort, theme }) => {
   const { deviceSize } = useDeviceSize();
 
   const [currentIndex, setCurrentIndex] = useState(6);
-  const [currentLength, setCurrentLength] = useState(3);
-  const [itemWidth, setItemWidth] = useState(295);
+  let currentLength = 3;
+  let itemWidth = 295;
 
   const [touchStart, setTouchStart] = useState();
 
@@ -37,13 +43,6 @@ const ListSort = ({ listSort, theme }) => {
 
   const [isAnimate, setIsAnimate] = useState(false);
   const [isNext, setIsNext] = useState(false);
-
-  const limit = 6;
-
-  const [searchParams] = useSearchParams();
-  const searchValue = searchParams.get('name') || '';
-
-  const commonPath = `/6-5/recipients/`;
 
   useEffect(() => {
     if (userList.length > 0) return;
@@ -277,20 +276,20 @@ const ListSort = ({ listSort, theme }) => {
   useEffect(() => {
     switch (deviceSize) {
       case 'desktop':
-        setCurrentLength(3);
-        setItemWidth(295);
+        currentLength = 3;
+        itemWidth = 295;
         break;
       case 'tablet':
-        setCurrentLength(2);
-        setItemWidth(255);
+        currentLength = 2;
+        itemWidth = 255;
         break;
       case 'mobile':
-        setCurrentLength(0);
-        setItemWidth(325);
+        currentLength = 0;
+        itemWidth = 325;
         break;
       default:
-        setCurrentLength(3);
-        setItemWidth(295);
+        currentLength = 3;
+        itemWidth = 295;
     }
   }, [deviceSize]);
 
