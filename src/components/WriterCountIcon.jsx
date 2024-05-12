@@ -7,13 +7,14 @@ const WriterCountIcon = ({ count, recent }) => {
   const isListPage = location === '/list';
   return (
     <WriterCountIconWrapper>
-      {recent.map((profile) => {
-        return (
-          <ProfileImageBox key={profile.id}>
-            <ProfileImage src={profile.profileImageURL} alt="profile" />
-          </ProfileImageBox>
-        );
-      })}
+      {recent &&
+        recent.map((profile) => {
+          return (
+            <ProfileImageBox key={profile.id}>
+              <ProfileImage src={profile.profileImageURL} alt="profile" />
+            </ProfileImageBox>
+          );
+        })}
       <CountButton style={count <= 3 ? { display: 'none' } : { left: '42px' }}>
         <CountWriter>{count <= 3 ? `` : `+${count - 3}`}</CountWriter>
       </CountButton>

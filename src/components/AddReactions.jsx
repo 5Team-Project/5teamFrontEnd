@@ -10,6 +10,7 @@ const AddReactions = ({
   updateReactionCount,
   theme,
   handleToast,
+  isEditMode,
 }) => {
   const [showPicker, setShowPicker] = useState(false);
   const [reactionData, setReactionData] = useState({
@@ -20,7 +21,11 @@ const AddReactions = ({
   const pickerRef = useRef();
 
   const handleShowEmojiPicker = () => {
-    setShowPicker(!showPicker);
+    if (isEditMode) {
+      handleToast('편집 모드에서는 사용이 불가합니다.');
+    } else {
+      setShowPicker(!showPicker);
+    }
   };
 
   const handleEmojiClick = async (emojiData) => {
@@ -33,9 +38,11 @@ const AddReactions = ({
         newReactionData,
         recipientId,
       );
-      setShowPicker(false);
-      updateReactionCount(updatedReaction);
-      handleToast('You sent your emotions!!');
+      if (updatedReaction) {
+        setShowPicker(false);
+        updateReactionCount();
+        handleToast('You sent your emotions!!');
+      }
     } catch (e) {
       console.error('리액션 추가 실패', e);
     }
@@ -49,17 +56,19 @@ const AddReactions = ({
     <AddReactionsWrapper ref={pickerRef}>
       <ButtonWrapper onClick={handleShowEmojiPicker} type="button">
         <Icons src={AddReactionIcon} alt="리액션추가" isDarkMode={isDarkMode} />
-        <p>추가</p>
+        <ButtonLabel>추가</ButtonLabel>
       </ButtonWrapper>
-      <PickerWrapper>
-        <EmojiPicker
-          open={showPicker}
-          onEmojiClick={handleEmojiClick}
-          theme="auto"
-          searchPlaceHolder=" Search your Emoji"
-          searchDisabled={true}
-        />
-      </PickerWrapper>
+      {!isEditMode && (
+        <PickerWrapper>
+          <EmojiPicker
+            open={showPicker}
+            onEmojiClick={handleEmojiClick}
+            theme="auto"
+            searchPlaceHolder=" Search your Emoji"
+            searchDisabled={true}
+          />
+        </PickerWrapper>
+      )}
     </AddReactionsWrapper>
   );
 };
@@ -72,7 +81,7 @@ const ButtonWrapper = styled.button`
   border-radius: 6px;
   border: 1px solid ${({ theme }) => theme.colors.GRAY};
 
-  font-size: 16px;
+  font-size: ${({ theme }) => theme.fontsize.MEDIUM_TXT};
   line-height: 20px;
   letter-spacing: -0.01em;
   text-align: center;
@@ -99,6 +108,11 @@ const ButtonWrapper = styled.button`
       display: none;
     }
   }
+`;
+
+const ButtonLabel = styled.p`
+  font-size: ${({ theme }) => theme.fontsize.MEDIUM_TXT};
+  color: ${({ theme }) => theme.colors.BLACK};
 `;
 
 const Icons = styled.img`

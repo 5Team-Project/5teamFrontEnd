@@ -201,6 +201,14 @@ const ButtonToLink = styled.button`
     text-decoration: none;
   }
 
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.PURPLE};
+  }
+
+  &:active {
+    background-color: ${({ theme }) => theme.colors.PURPLE_D};
+  }
+
   @media ${({ theme }) => theme.device.Tablet} {
     max-width: 1200px;
     width: 100%;

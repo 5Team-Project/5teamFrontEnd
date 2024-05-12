@@ -27,7 +27,9 @@ const DropReactions = ({ reactions, theme }) => {
         />
       </ShowAllButton>
       {isOpen && (
-        <AllReactionsBox>
+        <AllReactionsBox
+          style={reactions.length >= 1 ? {} : { display: 'none' }}
+        >
           {reactions.map((reaction) => {
             return (
               <Reactions key={reaction.id}>
@@ -75,6 +77,10 @@ const AllReactionsBox = styled.div`
   position: absolute;
   left: -267px;
   top: 45px;
+
+  @media ${({ theme }) => theme.device.Mobile} {
+    left: -15%;
+  }
 
   display: grid;
   grid-template-columns: repeat(4, 65px);

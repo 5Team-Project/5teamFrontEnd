@@ -8,8 +8,9 @@ import DropReactions from './DropReactions';
 import { getDataByRecipientId } from '../api/getDataByRecipientId';
 import ShareButton from './ShareButton';
 import ToastMessage from './ToastMessage';
+import EditModeButton from './EditModeButton';
 
-const NavigationBar = ({ recipientId }) => {
+const NavigationBar = ({ recipientId, recipientData, isEditMode }) => {
   const [title, setTitle] = useState('Dear');
   const [messageCount, setMessageCount] = useState(0);
   const [recentSenders, setRecentSenders] = useState([]);
@@ -17,45 +18,34 @@ const NavigationBar = ({ recipientId }) => {
   const [topReactions, setTopReactions] = useState([]);
   const [isToastOpen, setIsToastOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
+  const [needUpdateReactions, setNeedUpdateReactions] = useState(true);
 
   useEffect(() => {
-    const handleLoadRecipientData = async () => {
-      try {
-        const res = await getDataByRecipientId(`${recipientId}/`);
-        if (res) {
-          setTitle(res.name);
-          setMessageCount(res.messageCount);
-          setRecentSenders(res.recentMessages);
-        }
-      } catch (e) {
-        console.error(e);
-      }
-    };
-    handleLoadRecipientData();
-  }, []);
+    setTitle(recipientData.name);
+    setMessageCount(recipientData.messageCount);
+    setRecentSenders(recipientData.recentMessages);
+  }, [recipientData]);
 
   useEffect(() => {
     const handleLoadReactions = async () => {
-      try {
-        const res = await getDataByRecipientId(`${recipientId}/reactions/`);
-        if (res && res.results) {
-          setAllReactions(res.results);
-          setTopReactions(res.results.slice(0, 3));
+      if (needUpdateReactions) {
+        try {
+          const res = await getDataByRecipientId(`${recipientId}/reactions/`);
+          if (res && res.results) {
+            setAllReactions(res.results);
+            setTopReactions(res.results.slice(0, 3));
+          }
+        } catch (e) {
+          console.error(e);
         }
-      } catch (e) {
-        console.error(e);
       }
+      setNeedUpdateReactions(false);
     };
     handleLoadReactions();
-  }, []);
+  }, [needUpdateReactions]);
 
-  const updateReactionCount = (updatedReaction) => {
-    const updatedReactions = allReactions.map((reaction) =>
-      reaction.emoji === updatedReaction.emoji ? updatedReaction : reaction,
-    );
-    updatedReactions.sort((a, b) => b.count - a.count);
-    setAllReactions(updatedReactions);
-    setTopReactions(updatedReactions.slice(0, 3));
+  const updateReactionCount = () => {
+    setNeedUpdateReactions(true);
   };
 
   const handleToast = (text) => {
@@ -64,7 +54,7 @@ const NavigationBar = ({ recipientId }) => {
     const toastTimer = setTimeout(() => {
       setIsToastOpen(false);
       setToastMessage('');
-    }, 3000);
+    }, 2000);
     return () => clearTimeout(toastTimer);
   };
 
@@ -93,8 +83,14 @@ const NavigationBar = ({ recipientId }) => {
                 recipientId={recipientId}
                 updateReactionCount={updateReactionCount}
                 handleToast={handleToast}
+                isEditMode={isEditMode}
               />
-              <ShareButton handleToast={handleToast} />
+              <ShareButton handleToast={handleToast} isEditMode={isEditMode} />
+              <EditModeButton
+                handleToast={handleToast}
+                recipientId={recipientId}
+                isEditMode={isEditMode}
+              />
             </ActionButtons>
           </PostStats>
         </NavBox>
@@ -110,6 +106,7 @@ const NavWrapper = styled.nav`
   border-bottom: 1px solid ${({ theme }) => theme.colors.GRAY};
   background-color: ${({ theme }) => theme.colors.WHITE};
   position: relative;
+  z-index: 999;
 `;
 
 const NavBox = styled.div`

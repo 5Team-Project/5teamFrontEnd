@@ -7,10 +7,10 @@ import Gmarket from '../assets/font/GmarketSansTTFMedium.ttf';
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
-
+  
   @font-face {
-    font-family: 'Gmarket';
-    src: url(${Gmarket}) format('truetype');
+    font-family: 'NanumMyeongjo';
+    src: url(${NanumMyeongjoTtf}) format('truetype');
     font-weight: normal;
     font-style: normal;
     font-display: block;
@@ -25,8 +25,8 @@ const GlobalStyle = createGlobalStyle`
   }
 
   @font-face {
-    font-family: 'NanumMyeongjo';
-    src: url(${NanumMyeongjoTtf}) format('truetype');
+    font-family: 'Gmarket';
+    src: url(${Gmarket}) format('truetype');
     font-weight: normal;
     font-style: normal;
   }
@@ -40,16 +40,16 @@ const GlobalStyle = createGlobalStyle`
 
   * {
   box-sizing: border-box;
-  font-family:'BMJUATtf','Pretendard', 'NanumMyeongjo', 'NanumPen',  sans-serif;
+  font-family: 'Pretendard', 'BMJUATtf', 'NanumMyeongjo', 'NanumPen',  sans-serif;
 }
 
   p {
     margin: 0;
   }
 
-  // html{
-  //   font-family:'BMJUATtf','Pretendard', 'NanumMyeongjo', 'NanumPen',  sans-serif;
-  // }
+  html{
+    font-family: 'BMJUATtf','Pretendard', 'NanumMyeongjo', 'NanumPen',  sans-serif;
+  }
 
 
   body {
@@ -57,7 +57,7 @@ const GlobalStyle = createGlobalStyle`
       theme.mode === 'dark' ? theme.colors.BLACK : theme.colors.WHITE};
     color: ${({ theme }) =>
       theme.mode === 'dark' ? theme.colors.WHITE : theme.colors.BLACK};
-    font-family:'BMJUATtf','Pretendard', 'NanumMyeongjo', 'NanumPen',  sans-serif;
+    font-family: 'BMJUATtf', 'Pretendard', 'NanumMyeongjo', 'NanumPen',  sans-serif;
 
   }
 
@@ -67,6 +67,7 @@ const GlobalStyle = createGlobalStyle`
     border: none;
     cursor: pointer;
     background-color: transparent;
+    font-family: 'BMJUATtf', 'Pretendard', 'NanumMyeongjo', 'NanumPen',  sans-serif;
   }
 
   input, textarea {
