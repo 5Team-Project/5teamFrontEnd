@@ -35,7 +35,7 @@ const SelectBackGroundWrapper = styled.div`
 const ColorButton = styled.button`
   width: calc(25% - 15px);
   padding-bottom: calc(25% - 15px);
-  border-radius: 8px;
+  border-radius: 15px;
   background-color: ${({ color }) => color};
   border: ${({ selected }) => (selected ? '2px solid #AB57FF' : 'none')};
   cursor: pointer;

@@ -38,8 +38,8 @@ const BackgroundImageSelector = ({ onImageSelect }) => {
   };
 
   const handleImageUpload = async (event) => {
-    const imageFile = event.target.files[0];
-    if (imageFile) {
+    if (event.target.files && event.target.files.length > 0) {
+      const imageFile = event.target.files[0];
       const storageRef = ref(storage, `background/${imageFile.name}`);
       uploadBytes(storageRef, imageFile)
         .then((snapshot) => {
@@ -162,7 +162,7 @@ const FileInputLabel = styled.label`
   height: 100%;
   cursor: pointer;
   background-color: #f0f0f0;
-  border-radius: 8px;
+  border-radius: 15px;
   border: 1px solid #ccc;
   font-size: 16px;
   font-weight: 600;
@@ -176,7 +176,7 @@ const PlusIcon = styled(FaPlus)`
 const BackgroundImage = styled.div`
   width: 100%;
   padding-bottom: 100%;
-  border-radius: 8px;
+  border-radius: 15px;
   background-image: url(${({ src }) => src});
   background-size: cover;
   cursor: pointer;
@@ -207,7 +207,7 @@ const PreviewImageContainer = styled.div`
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  border-radius: 8px;
+  border-radius: 15px;
 `;
 
 const PreviewImage = styled.img`
