@@ -20,8 +20,35 @@ const RELATIONSHIPS = {
 const MessageListItem = ({
   message,
   showDeleteButton,
-  handleDeleteMessage,
+  updateRecipientData,
+  updateMessageData,
 }) => {
+  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
+  const [messageIdToDelete, setMessageIdToDelete] = useState('');
+
+  const openConfirmModal = () => {
+    setIsConfirmModalOpen(true);
+    setMessageIdToDelete(message.id);
+  };
+  const closeConfirmModal = () => {
+    setIsConfirmModalOpen(false);
+    setMessageIdToDelete('');
+  };
+
+  const handleDeleteMessage = async () => {
+    try {
+      const res = await deleteMessage(`${messageIdToDelete}`);
+      if (res) {
+        console.log('Message deleted successfully!');
+        updateRecipientData();
+        updateMessageData();
+        closeConfirmModal();
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   return (
     <MessageContainer>
       <ProfileContainer>
@@ -37,12 +64,16 @@ const MessageListItem = ({
           </ProfileRelation>
         </ProfileTextWrap>
         {showDeleteButton && (
-          <DeleteMessageButton
-            onClick={() => handleDeleteMessage(message.id)}
-            type="button"
-          >
-            <Icons src={DeleteButton} alt="메세지삭제" />
-          </DeleteMessageButton>
+          <>
+            <DeleteMessageButton onClick={openConfirmModal} type="button">
+              <Icons src={DeleteButton} alt="메세지삭제" />
+            </DeleteMessageButton>
+            <ConfirmModal
+              isConfirmModalOpen={isConfirmModalOpen}
+              closeConfirmModal={closeConfirmModal}
+              handleDelete={handleDeleteMessage}
+            />
+          </>
         )}
       </ProfileContainer>
       <MessageHr />
@@ -62,20 +93,15 @@ const MessageList = ({
   recipientId,
   showDeleteButton,
   updateRecipientData,
+  updateMessageData,
 }) => {
   const isDarkMode = theme !== 'light';
   const themeContext = useContext(ThemeContext);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalData, setModalData] = useState({});
-  const [messageList, setMessageList] = useState([]);
   const navigate = useNavigate();
-  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(true);
-
-  useEffect(() => {
-    if (messages) {
-      setMessageList(messages);
-    }
-  }, [messages]);
+  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
+  const [paperIdToDelete, setPaperIdToDelete] = useState('');
 
   const handleMessageClick = (data) => {
     if (!showDeleteButton) {
@@ -89,32 +115,16 @@ const MessageList = ({
     setModalData({});
   };
 
-  const handleDeleteMessage = async (messageIdToDelete) => {
-    try {
-      const res = await deleteMessage(`${messageIdToDelete}`);
-      if (res) {
-        setMessageList(
-          (prevMessage) =>
-            prevMessage.filter((message) => message.id !== messageIdToDelete),
-          console.log('Message deleted successfully!'),
-        );
-        updateRecipientData();
-      }
-    } catch (e) {
-      console.error(e);
-    }
-  };
-
   const openConfirmModal = () => {
     setIsConfirmModalOpen(true);
+    setPaperIdToDelete(recipientId);
   };
   const closeConfirmModal = () => {
     setIsConfirmModalOpen(false);
+    setPaperIdToDelete('');
   };
 
-  const handleClickDeletePaper = (paperIdToDelete) => {};
-
-  const handleDeletePaper = async (paperIdToDelete) => {
+  const handleDeletePaper = async () => {
     try {
       const res = await deletePaper(`${paperIdToDelete}`);
       if (res) {
@@ -131,10 +141,7 @@ const MessageList = ({
       {showDeleteButton && (
         <>
           <MessageEditHeader>
-            <DeletePaperButton
-              type="button"
-              onClick={() => handleDeletePaper(recipientId)}
-            >
+            <DeletePaperButton type="button" onClick={openConfirmModal}>
               <Icons
                 src={DeleteButton}
                 alt="페이퍼삭제"
@@ -143,7 +150,13 @@ const MessageList = ({
               <ButtonLabel>페이퍼 삭제</ButtonLabel>
             </DeletePaperButton>
           </MessageEditHeader>
-          <ConfirmModal isConfirmModalOpen={isConfirmModalOpen} />
+          {isConfirmModalOpen && (
+            <ConfirmModal
+              isConfirmModalOpen={isConfirmModalOpen}
+              closeConfirmModal={closeConfirmModal}
+              handleDelete={handleDeletePaper}
+            />
+          )}
         </>
       )}
       <MessageModal
@@ -159,14 +172,15 @@ const MessageList = ({
             </Link>
           </MessageAddButton>
         </AddMessageContainer>
-        {messageList &&
-          messageList.map((message) => {
+        {messages &&
+          messages.map((message) => {
             return (
               <li key={message.id} onClick={() => handleMessageClick(message)}>
                 <MessageListItem
                   message={message}
                   showDeleteButton={showDeleteButton}
-                  handleDeleteMessage={handleDeleteMessage}
+                  updateRecipientData={updateRecipientData}
+                  updateMessageData={updateMessageData}
                 />
               </li>
             );

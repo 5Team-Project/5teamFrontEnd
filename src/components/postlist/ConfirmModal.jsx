@@ -1,7 +1,11 @@
 import styled, { ThemeContext } from 'styled-components';
 import React, { useContext } from 'react';
 
-const ConfirmModal = ({ isConfirmModalOpen, closeConfirmModal }) => {
+const ConfirmModal = ({
+  isConfirmModalOpen,
+  closeConfirmModal,
+  handleDelete,
+}) => {
   const theme = useContext(ThemeContext);
   return (
     <>
@@ -12,11 +16,19 @@ const ConfirmModal = ({ isConfirmModalOpen, closeConfirmModal }) => {
               <p>정말 삭제 하시겠습니까?</p>
             </ModalHeader>
             <MessageBox>
-              <p>삭제된 페이퍼는 복구가 불가합니다.</p>
+              <p>삭제된 콘텐츠는 복구가 불가합니다.</p>
             </MessageBox>
             <ButtonWrapper>
-              <ModalAnswerButton>예</ModalAnswerButton>
-              <ModalAnswerButton>아니오</ModalAnswerButton>
+              <ModalAnswerButtonYes
+                onClick={() => {
+                  handleDelete();
+                }}
+              >
+                예
+              </ModalAnswerButtonYes>
+              <ModalAnswerButton onClick={closeConfirmModal}>
+                아니오
+              </ModalAnswerButton>
             </ButtonWrapper>
           </MyModal>
         </MyModalBG>
@@ -74,6 +86,24 @@ const ButtonWrapper = styled.div`
   gap: 20px;
 `;
 
+const ModalAnswerButtonYes = styled.button`
+  width: 80px;
+  height: 30px;
+  padding: 7px 16px;
+  border: none;
+  border-radius: 6px;
+  margin-top: 26px;
+
+  background-color: ${({ theme }) => theme.colors.PURPLE_D};
+
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.BLUE};
+  }
+  &:active {
+    background-color: ${({ theme }) => theme.colors.RED};
+  }
+`;
+
 const ModalAnswerButton = styled.button`
   width: 80px;
   height: 30px;
@@ -88,7 +118,7 @@ const ModalAnswerButton = styled.button`
     background-color: ${({ theme }) => theme.colors.BLUE};
   }
   &:active {
-    background-color: ${({ theme }) => theme.colors.RED};
+    background-color: ${({ theme }) => theme.colors.PURPLE_DD};
   }
 `;
 export default ConfirmModal;

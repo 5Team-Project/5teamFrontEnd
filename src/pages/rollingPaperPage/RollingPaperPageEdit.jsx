@@ -6,9 +6,9 @@ import { useParams } from 'react-router-dom';
 import NavigationBar from '../../components/NavigationBar';
 import { getDataByRecipientId } from '../../api/getDataByRecipientId';
 
-const MESSAGE_LIMIT = 8;
+const MESSAGE_LIMIT = 6;
 
-const RollingPaperPage = () => {
+const RollingPaperPageEdit = () => {
   const themeContext = useContext(ThemeContext);
   const { recipientId } = useParams();
   const [messages, setMessages] = useState([]);
@@ -17,7 +17,8 @@ const RollingPaperPage = () => {
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [recipientData, setRecipientData] = useState({});
-  const [needUpdate, setNeedUpdate] = useState(true);
+  const [needUpdateRecipientData, setNeedUpdateRecipientData] = useState(true);
+  const [needUpdateMessages, setNeedUpdateMessages] = useState(true);
 
   const handleScroll = () => {
     const { scrollTop, clientHeight, scrollHeight } = document.documentElement;
@@ -28,7 +29,7 @@ const RollingPaperPage = () => {
 
   useEffect(() => {
     const handleLoadRecipientData = async () => {
-      if (needUpdate) {
+      if (needUpdateRecipientData) {
         try {
           const res = await getDataByRecipientId(`${recipientId}/`);
           if (res) {
@@ -37,11 +38,11 @@ const RollingPaperPage = () => {
         } catch (e) {
           console.error(e);
         }
-        setNeedUpdate(false);
       }
+      setNeedUpdateRecipientData(false);
     };
     handleLoadRecipientData();
-  }, [needUpdate]);
+  }, [needUpdateRecipientData]);
 
   useEffect(() => {
     const handleLoadMessage = async (options) => {
@@ -61,9 +62,10 @@ const RollingPaperPage = () => {
         setHasNext(true);
       }
       setLoading(false);
+      setNeedUpdateMessages(false);
     };
     handleLoadMessage({ recipientId, offset, MESSAGE_LIMIT });
-  }, [page]);
+  }, [page, needUpdateMessages]);
 
   useEffect(() => {
     window.addEventListener('scroll', handleScroll);
@@ -73,7 +75,12 @@ const RollingPaperPage = () => {
   }, [handleScroll]);
 
   const updateRecipientData = () => {
-    setNeedUpdate(true);
+    setNeedUpdateRecipientData(true);
+  };
+  const updateMessageData = () => {
+    setOffset(0);
+    setMessages([]);
+    setNeedUpdateMessages(true);
   };
 
   return (
@@ -89,12 +96,13 @@ const RollingPaperPage = () => {
           recipientId={recipientId}
           showDeleteButton={true}
           updateRecipientData={updateRecipientData}
+          updateMessageData={updateMessageData}
         />
       </MessageMainContainer>
     </>
   );
 };
-export default RollingPaperPage;
+export default RollingPaperPageEdit;
 
 const MessageMainContainer = styled.div`
   width: 100%;
