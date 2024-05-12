@@ -33,8 +33,8 @@ const ListSort = ({ listSort, theme }) => {
   const { deviceSize } = useDeviceSize();
 
   const [currentIndex, setCurrentIndex] = useState(6);
-  let currentLength = 3;
-  let itemWidth = 295;
+  const [currentLength, setCurrentLength] = useState(3);
+  const [itemWidth, setItemWidth] = useState(295);
 
   const [touchStart, setTouchStart] = useState();
 
@@ -276,20 +276,20 @@ const ListSort = ({ listSort, theme }) => {
   useEffect(() => {
     switch (deviceSize) {
       case 'desktop':
-        currentLength = 3;
-        itemWidth = 295;
+        setCurrentLength(3);
+        setItemWidth(295);
         break;
       case 'tablet':
-        currentLength = 2;
-        itemWidth = 255;
+        setCurrentLength(2);
+        setItemWidth(255);
         break;
       case 'mobile':
-        currentLength = 0;
-        itemWidth = 325;
+        setCurrentLength(0);
+        setItemWidth(325);
         break;
       default:
-        currentLength = 3;
-        itemWidth = 295;
+        setCurrentLength(3);
+        setItemWidth(295);
     }
   }, [deviceSize]);
 
