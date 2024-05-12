@@ -15,11 +15,12 @@ const ToastMessage = ({ isOpen, text }) => {
 const ToastMessageBox = styled.div`
   min-width: 320px;
   max-width: 524px;
-  width: 40%;
+  width: 90%;
   height: 64px;
   background-color: ${({ theme }) => theme.colors.BLACK}CC;
   border-radius: 8px;
   padding: 19px 30px;
+  z-index: 999;
 
   display: flex;
   align-items: center;
@@ -30,7 +31,7 @@ const ToastMessageBox = styled.div`
   left: 50%;
   transform: translateX(-50%);
 
-  animation: fadeout 3s ease-in-out;
+  animation: fadeout 2s ease-in-out;
   opacity: 0;
   @keyframes fadeout {
     0% {

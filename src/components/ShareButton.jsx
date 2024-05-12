@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import ShareIcon from '../assets/icons/IconShare.svg';
 import useClickOutside from '../hooks/useClickOutside';
 
-const ShareButton = ({ handleToast, theme }) => {
+const ShareButton = ({ handleToast, theme, isEditMode }) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef();
 
@@ -14,7 +14,11 @@ const ShareButton = ({ handleToast, theme }) => {
   const location = useLocation();
 
   const toggleDropdown = () => {
-    setIsOpen(!isOpen);
+    if (isEditMode) {
+      handleToast('편집 모드에서는 사용이 불가합니다.');
+    } else {
+      setIsOpen(!isOpen);
+    }
   };
 
   const handleCopyUrl = async (text) => {
@@ -33,19 +37,17 @@ const ShareButton = ({ handleToast, theme }) => {
   });
 
   return (
-    <>
-      <ShareButtonWrapper ref={dropdownRef} onClick={toggleDropdown}>
-        <Icons src={ShareIcon} alt="공유" isDarkMode={isDarkMode} />
-        <DropDownList style={isOpen ? {} : { display: 'none' }}>
-          <DropDownItem>
-            <DropDownLabel>카카오톡 공유</DropDownLabel>
-          </DropDownItem>
-          <DropDownItem onClick={handleCopyUrl}>
-            <DropDownLabel>URL 공유</DropDownLabel>
-          </DropDownItem>
-        </DropDownList>
-      </ShareButtonWrapper>
-    </>
+    <ShareButtonWrapper ref={dropdownRef} onClick={toggleDropdown}>
+      <Icons src={ShareIcon} alt="공유" isDarkMode={isDarkMode} />
+      <DropDownList style={isOpen ? {} : { display: 'none' }}>
+        <DropDownItem>
+          <DropDownLabel>카카오톡 공유</DropDownLabel>
+        </DropDownItem>
+        <DropDownItem onClick={handleCopyUrl}>
+          <DropDownLabel>URL 공유</DropDownLabel>
+        </DropDownItem>
+      </DropDownList>
+    </ShareButtonWrapper>
   );
 };
 
@@ -64,6 +66,15 @@ const ShareButtonWrapper = styled.button`
   align-items: center;
   gap: 4px;
   position: relative;
+
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.PURPLE};
+  }
+
+  &:active {
+    background-color: ${({ theme }) => theme.colors.PURPLE_D};
+  }
+
   p {
     color: ${({ theme }) => theme.colors.BLACK};
   }

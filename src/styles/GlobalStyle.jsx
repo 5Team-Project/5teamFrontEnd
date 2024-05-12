@@ -7,10 +7,10 @@ import Gmarket from '../assets/font/GmarketSansTTFMedium.ttf';
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
-
+  
   @font-face {
-    font-family: 'Gmarket';
-    src: url(${Gmarket}) format('truetype');
+    font-family: 'NanumMyeongjo';
+    src: url(${NanumMyeongjoTtf}) format('truetype');
     font-weight: normal;
     font-style: normal;
   }
@@ -23,8 +23,8 @@ const GlobalStyle = createGlobalStyle`
   }
 
   @font-face {
-    font-family: 'NanumMyeongjo';
-    src: url(${NanumMyeongjoTtf}) format('truetype');
+    font-family: 'Gmarket';
+    src: url(${Gmarket}) format('truetype');
     font-weight: normal;
     font-style: normal;
   }
@@ -38,7 +38,7 @@ const GlobalStyle = createGlobalStyle`
 
   * {
   box-sizing: border-box;
-  font-family:'BMJUATtf','Pretendard', 'NanumMyeongjo', 'NanumPen',  sans-serif;
+  font-family: 'Pretendard', 'BMJUATtf', 'NanumMyeongjo', 'NanumPen',  sans-serif;
 }
 
   p {
