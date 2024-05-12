@@ -68,13 +68,6 @@ const RollingPaperPage = () => {
     };
   }, [handleScroll]);
 
-  const updateRecipientData = (updatedData) => {
-    const dataForUpdate = recipientData.map((prevData) =>
-      prevData.messageCount === updatedData ? updatedData : prevData,
-    );
-    setRecipientData(dataForUpdate);
-  };
-
   return (
     <>
       <NavigationBar recipientId={recipientId} recipientData={recipientData} />
@@ -83,7 +76,6 @@ const RollingPaperPage = () => {
           messages={messages}
           recipientId={recipientId}
           showDeleteButton={false}
-          updateRecipientData={updateRecipientData}
         />
       </MessageMainContainer>
     </>
