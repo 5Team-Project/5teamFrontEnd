@@ -92,11 +92,9 @@ const MessageList = ({
         setMessageList((prevMessage) =>
           prevMessage.filter((message) => message.id !== messageIdToDelete),
         );
-
+        updateRecipientData();
         console.log('Message deleted successfully!');
       }
-      const updatedData = messageList.length;
-      updateRecipientData(updatedData);
     } catch (e) {
       console.error(e);
     }
@@ -132,10 +130,7 @@ const MessageList = ({
         {messageList &&
           messageList.map((message) => {
             return (
-              <li
-                key={message.id}
-                onClick={() => handleMessageClick(message.id)}
-              >
+              <li key={message.id} onClick={() => handleMessageClick(message)}>
                 <MessageListItem
                   message={message}
                   showDeleteButton={showDeleteButton}

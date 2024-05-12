@@ -38,9 +38,11 @@ const AddReactions = ({
         newReactionData,
         recipientId,
       );
-      setShowPicker(false);
-      updateReactionCount(updatedReaction);
-      handleToast('You sent your emotions!!');
+      if (updatedReaction) {
+        setShowPicker(false);
+        updateReactionCount();
+        handleToast('You sent your emotions!!');
+      }
     } catch (e) {
       console.error('리액션 추가 실패', e);
     }

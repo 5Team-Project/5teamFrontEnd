@@ -18,37 +18,34 @@ const NavigationBar = ({ recipientId, recipientData, isEditMode }) => {
   const [topReactions, setTopReactions] = useState([]);
   const [isToastOpen, setIsToastOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
+  const [needUpdateReactions, setNeedUpdateReactions] = useState(true);
 
   useEffect(() => {
-    if (recipientData) {
-      setTitle(recipientData.name);
-      setMessageCount(recipientData.messageCount);
-      setRecentSenders(recipientData.recentMessages);
-    }
+    setTitle(recipientData.name);
+    setMessageCount(recipientData.messageCount);
+    setRecentSenders(recipientData.recentMessages);
   }, [recipientData]);
 
   useEffect(() => {
     const handleLoadReactions = async () => {
-      try {
-        const res = await getDataByRecipientId(`${recipientId}/reactions/`);
-        if (res && res.results) {
-          setAllReactions(res.results);
-          setTopReactions(res.results.slice(0, 3));
+      if (needUpdateReactions) {
+        try {
+          const res = await getDataByRecipientId(`${recipientId}/reactions/`);
+          if (res && res.results) {
+            setAllReactions(res.results);
+            setTopReactions(res.results.slice(0, 3));
+          }
+        } catch (e) {
+          console.error(e);
         }
-      } catch (e) {
-        console.error(e);
       }
+      setNeedUpdateReactions(false);
     };
     handleLoadReactions();
-  }, []);
+  }, [needUpdateReactions]);
 
-  const updateReactionCount = (updatedReaction) => {
-    const updatedReactions = allReactions.map((reaction) =>
-      reaction.emoji === updatedReaction.emoji ? updatedReaction : reaction,
-    );
-    updatedReactions.sort((a, b) => b.count - a.count);
-    setAllReactions(updatedReactions);
-    setTopReactions(updatedReactions.slice(0, 3));
+  const updateReactionCount = () => {
+    setNeedUpdateReactions(true);
   };
 
   const handleToast = (text) => {

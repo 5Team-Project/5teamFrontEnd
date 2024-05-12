@@ -17,6 +17,7 @@ const RollingPaperPage = () => {
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [recipientData, setRecipientData] = useState({});
+  const [needUpdate, setNeedUpdate] = useState(true);
 
   const handleScroll = () => {
     const { scrollTop, clientHeight, scrollHeight } = document.documentElement;
@@ -27,17 +28,20 @@ const RollingPaperPage = () => {
 
   useEffect(() => {
     const handleLoadRecipientData = async () => {
-      try {
-        const res = await getDataByRecipientId(`${recipientId}/`);
-        if (res) {
-          setRecipientData(res);
+      if (needUpdate) {
+        try {
+          const res = await getDataByRecipientId(`${recipientId}/`);
+          if (res) {
+            setRecipientData(res);
+          }
+        } catch (e) {
+          console.error(e);
         }
-      } catch (e) {
-        console.error(e);
+        setNeedUpdate(false);
       }
     };
     handleLoadRecipientData();
-  }, []);
+  }, [needUpdate]);
 
   useEffect(() => {
     const handleLoadMessage = async (options) => {
@@ -68,11 +72,8 @@ const RollingPaperPage = () => {
     };
   }, [handleScroll]);
 
-  const updateRecipientData = (updatedData) => {
-    const dataForUpdate = recipientData.map((prevData) =>
-      prevData.messageCount === updatedData ? updatedData : prevData,
-    );
-    setRecipientData(dataForUpdate);
+  const updateRecipientData = () => {
+    setNeedUpdate(true);
   };
 
   return (
