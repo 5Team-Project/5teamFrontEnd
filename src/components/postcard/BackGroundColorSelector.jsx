@@ -19,16 +19,16 @@ const BackgroundColorSelector = ({ colors, selectedColor, onColorClick }) => {
 
 const SelectBackGroundWrapper = styled.div`
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+
   gap: 15px;
   width: 100%;
-  max-width: 800px;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 0 15px;
 
   @media (max-width: 767px) {
+    flex-wrap: wrap;
     gap: 10px;
+    padding-left: 10px;
   }
 `;
 
@@ -40,8 +40,6 @@ const ColorButton = styled.button`
   border: ${({ selected }) => (selected ? '2px solid #AB57FF' : 'none')};
   cursor: pointer;
   display: flex;
-  justify-content: center;
-  align-items: center;
   position: relative;
 
   @media (max-width: 767px) {

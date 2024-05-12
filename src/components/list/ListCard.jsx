@@ -125,6 +125,7 @@ const ListCardWrap = styled(Link)`
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
+
   @media ${({ theme }) => theme.device.Tablet} {
     width: 245px;
     height: 250px;

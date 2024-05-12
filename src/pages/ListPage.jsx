@@ -20,6 +20,7 @@ const ListPage = () => {
 const ListMainContainer = styled.main`
   max-width: 1200px;
   margin: 0 auto;
+
   @media ${({ theme }) => theme.device.Tablet} {
     max-width: 768px;
   }

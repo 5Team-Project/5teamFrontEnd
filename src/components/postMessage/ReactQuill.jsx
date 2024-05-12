@@ -56,7 +56,8 @@ const StyledEditorContainer = styled.div`
     background-color: ${({ theme }) => theme.colors.GRAY};
     color: white;
   }
-  height: 100%;
+  height: 180px;
+  min-width: 350px;
 `;
 
 export default ReactQuillTemplate;

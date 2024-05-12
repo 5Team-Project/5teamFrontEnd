@@ -121,16 +121,16 @@ const BackgroundImageSelector = ({ onImageSelect }) => {
 
 const SelectImageWrapper = styled.div`
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+
   gap: 15px;
   width: 100%;
-  max-width: 800px;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 0 15px;
 
   @media (max-width: 767px) {
+    flex-wrap: wrap;
     gap: 10px;
+    padding-left: 10px;
   }
 `;
 
@@ -155,8 +155,6 @@ const FileInput = styled.input`
 
 const FileInputLabel = styled.label`
   position: absolute;
-  top: 0;
-  left: 0;
   display: flex;
   align-items: center;
   justify-content: center;
