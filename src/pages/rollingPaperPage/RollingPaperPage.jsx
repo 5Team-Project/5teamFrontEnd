@@ -27,15 +27,12 @@ const RollingPaperPage = () => {
   const [recipientData, setRecipientData] = useState({});
 
   const [bgImage, setBgImage] = useState();
-  const [isColor, setIsColor] = useState('');
   const [bgColor, setBgColor] = useState('');
 
   const loadBackground = async (recipientId) => {
     const responseBackground = await getBackgroundByRecipientId(recipientId);
     setBgImage(responseBackground.backgroundImageURL);
     setBgColor(responseBackground.backgroundColor);
-
-    //setBackground(backgroundImage || backgroundColor);
   };
 
   const handleScroll = () => {
