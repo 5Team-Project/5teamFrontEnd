@@ -1,7 +1,5 @@
 import styled, { ThemeContext } from 'styled-components';
-import { Theme } from '../../styles/Theme';
 import React, { useContext } from 'react';
-import TestImage from '../../assets/images/ProfileForTest.png';
 import { formatDate } from '../../utils/formatDate';
 import { mapFontName } from '../../utils/mapFont';
 

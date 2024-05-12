@@ -4,9 +4,11 @@ import styled, { ThemeContext } from 'styled-components';
 import { formatDate } from '../../utils/formatDate';
 import MessageModal from './MessageModal';
 import { mapFontName } from '../../utils/mapFont';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import DeleteButton from '../../assets/icons/IconDelete.svg';
 import { deleteMessage } from '../../api/deleteMessage';
+import { deletePaper } from '../../api/deletePaper';
+import ConfirmModal from './ConfirmModal';
 
 const RELATIONSHIPS = {
   가족: 'GREEN',
@@ -66,6 +68,8 @@ const MessageList = ({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalData, setModalData] = useState({});
   const [messageList, setMessageList] = useState([]);
+  const navigate = useNavigate();
+  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(true);
 
   useEffect(() => {
     if (messages) {
@@ -89,11 +93,33 @@ const MessageList = ({
     try {
       const res = await deleteMessage(`${messageIdToDelete}`);
       if (res) {
-        setMessageList((prevMessage) =>
-          prevMessage.filter((message) => message.id !== messageIdToDelete),
+        setMessageList(
+          (prevMessage) =>
+            prevMessage.filter((message) => message.id !== messageIdToDelete),
+          console.log('Message deleted successfully!'),
         );
         updateRecipientData();
-        console.log('Message deleted successfully!');
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const openConfirmModal = () => {
+    setIsConfirmModalOpen(true);
+  };
+  const closeConfirmModal = () => {
+    setIsConfirmModalOpen(false);
+  };
+
+  const handleClickDeletePaper = (paperIdToDelete) => {};
+
+  const handleDeletePaper = async (paperIdToDelete) => {
+    try {
+      const res = await deletePaper(`${paperIdToDelete}`);
+      if (res) {
+        navigate('/list');
+        console.log('Paper deleted successfully!');
       }
     } catch (e) {
       console.error(e);
@@ -103,16 +129,22 @@ const MessageList = ({
   return (
     <>
       {showDeleteButton && (
-        <MessageEditHeader>
-          <DeletePaperButton type="button">
-            <Icons
-              src={DeleteButton}
-              alt="페이퍼삭제"
-              isDarkMode={isDarkMode}
-            />
-            <ButtonLabel>페이퍼 삭제</ButtonLabel>
-          </DeletePaperButton>
-        </MessageEditHeader>
+        <>
+          <MessageEditHeader>
+            <DeletePaperButton
+              type="button"
+              onClick={() => handleDeletePaper(recipientId)}
+            >
+              <Icons
+                src={DeleteButton}
+                alt="페이퍼삭제"
+                isDarkMode={isDarkMode}
+              />
+              <ButtonLabel>페이퍼 삭제</ButtonLabel>
+            </DeletePaperButton>
+          </MessageEditHeader>
+          <ConfirmModal isConfirmModalOpen={isConfirmModalOpen} />
+        </>
       )}
       <MessageModal
         message={modalData}
@@ -163,7 +195,6 @@ const MessageContainer = styled.div`
   height: 280px;
   border-radius: 16px;
   padding: 28px 24px 24px 24px;
-  font:;
   position: relative;
 `;
 const AddMessageContainer = styled(MessageContainer)`
