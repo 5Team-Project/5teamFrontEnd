@@ -6,8 +6,7 @@ import { getList } from '../../api/getList';
 import useDeviceSize from '../../hooks/useDeviceSize';
 import ListCard from './ListCard';
 import ListSlideMoveButtons from './ListSlideMoveButtons';
-import { useLocation } from 'react-router-dom';
-import queryString from 'query-string';
+import { useSearchParams } from 'react-router-dom';
 
 const ListSort = ({ listSort, theme }) => {
   const isDarkMode = theme !== 'light';
@@ -41,17 +40,21 @@ const ListSort = ({ listSort, theme }) => {
 
   const limit = 6;
 
-  const location = useLocation();
-  const { search } = location;
-  const { name: searchValue } = queryString.parse(search);
+  const [searchParams] = useSearchParams();
+  const searchValue = searchParams.get('name') || '';
+
+  const commonPath = `/6-5/recipients/`;
 
   useEffect(() => {
     if (userList.length > 0) return;
 
     // 처음 데이터 6개 받아오기
     const handleLoadFirst = async () => {
-      const commonPath = `/6-5/recipients/?limit=${limit}`;
-      setPath(sort === 'like' ? `${commonPath}&sort=like` : `${commonPath}`);
+      setPath(
+        sort === 'like'
+          ? `${commonPath}?limit=${limit}&sort=like`
+          : `${commonPath}?limit=${limit}`,
+      );
 
       try {
         if (path === null) return;
@@ -78,11 +81,10 @@ const ListSort = ({ listSort, theme }) => {
     if (dataLength < 12) return;
 
     const handleLoadLast = async () => {
-      const commonPath = `/6-5/recipients/?limit=${limit}`;
       const lastPath =
         sort === 'like'
-          ? `${commonPath}&offset=${offset}&sort=like`
-          : `${commonPath}&offset=${offset}`;
+          ? `${commonPath}?limit=${limit}&offset=${offset}&sort=like`
+          : `${commonPath}?limit=${limit}&offset=${offset}`;
 
       try {
         if (path === null) return;
@@ -120,10 +122,8 @@ const ListSort = ({ listSort, theme }) => {
     setIsLoading(true);
 
     const handleGetSearchList = async () => {
-      const commonPath = `/6-5/recipients/?limit=50`;
-
       try {
-        const res = await getList(commonPath);
+        const res = await getList(`${commonPath}?limit=50`);
 
         const filteredList = res.results.filter((item) =>
           item.name.includes(searchValue),

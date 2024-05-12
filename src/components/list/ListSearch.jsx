@@ -1,17 +1,14 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 
 import icSearch from '../../assets/icons/IconSearch.svg';
-import queryString from 'query-string';
 
-const ListSearch = ({ onSearch }) => {
-  const location = useLocation();
-  const { search } = location;
-  const { name } = queryString.parse(location.search);
+const ListSearch = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const name = searchParams.get('name');
 
-  const [searchValue, setSearchValue] = useState(name);
-  const navigate = useNavigate();
+  const [searchValue, setSearchValue] = useState(name || '');
 
   const handleChange = (e) => {
     setSearchValue(e.target.value);
@@ -21,9 +18,9 @@ const ListSearch = ({ onSearch }) => {
     e.preventDefault();
 
     if (searchValue.trim() === '') {
-      navigate('/list');
+      setSearchParams({});
     } else {
-      onSearch(searchValue.trim());
+      setSearchParams({ name: searchValue.trim() });
     }
   };
 

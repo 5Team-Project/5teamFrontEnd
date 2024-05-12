@@ -1,28 +1,19 @@
 import styled from 'styled-components';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { Link, useSearchParams } from 'react-router-dom';
 
 import ListSort from '../components/list/ListSort';
 import ListSearch from '../components/list/ListSearch';
-import queryString from 'query-string';
 
 const ListPage = () => {
-  const location = useLocation();
-  const { search } = location;
-  const { name: searchValue } = queryString.parse(search);
-
-  const navigate = useNavigate();
-
-  const handleSearch = (value) => {
-    navigate(`/list?name=${value}`);
-  };
+  const [searchParams] = useSearchParams();
+  const name = searchParams.get('name');
 
   return (
     <ListMainContainer>
-      <ListSearch onSearch={handleSearch} />
+      <ListSearch />
       <ListContent>
-        {searchValue ? (
-          <ListSort searchValue={searchValue} />
+        {name ? (
+          <ListSort searchValue={name} />
         ) : (
           <>
             <ListSort listSort={'like'} />
