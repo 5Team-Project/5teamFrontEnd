@@ -107,7 +107,6 @@ export default RollingPaperPage;
 const MessageMainContainer = styled.div`
   width: 100%;
   height: auto;
-
   ${({ bgImage, bgColor, theme }) =>
     bgImage
       ? css`
