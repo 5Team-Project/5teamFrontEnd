@@ -73,7 +73,6 @@ const NavigationBar = ({ recipientId, recipientData, isEditMode }) => {
                 <WriterCountIcon count={messageCount} recent={recentSenders} />
                 <WriterCountText count={messageCount} />
               </WriterCountWrapper>
-              <Divider />
               <ReactionCount topReactions={topReactions} />
               <DropReactions reactions={allReactions} />
             </PostStatsBox>
@@ -120,15 +119,19 @@ const NavBox = styled.div`
 `;
 
 const Title = styled.a`
+  width: 400px;
   height: 42px;
   font-size: ${({ theme }) => theme.fontsize.TITLE};
   font-weight: ${({ theme }) => theme.fontweight.BOLD};
-  line-height: 45px;
-  letter-spacing: -0.01em;
+
   text-align: left;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
 
   @media ${({ theme }) => theme.device.Mobile} {
     position: absolute;
@@ -145,7 +148,6 @@ const PostStats = styled.div`
   align-items: center;
 
   @media ${({ theme }) => theme.device.Mobile} {
-    width: 100%;
     justify-content: space-between;
   }
 `;
@@ -153,11 +155,14 @@ const PostStats = styled.div`
 const PostStatsBox = styled.div`
   display: flex;
   align-items: center;
+  gap: 8px;
 `;
 
 const WriterCountWrapper = styled.div`
+  width: 100%;
   display: flex;
   align-items: center;
+  gap: 8px;
   @media ${({ theme }) => theme.device.Tablet} {
     display: none;
   }

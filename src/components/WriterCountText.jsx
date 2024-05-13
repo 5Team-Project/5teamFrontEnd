@@ -1,12 +1,7 @@
 import styled, { ThemeContext } from 'styled-components';
 import React, { useContext, useEffect, useState } from 'react';
-import { getData } from '../api/getData';
-import { useLocation } from 'react-router-dom';
 
 const WriterCountText = ({ count, isBgImg = false }) => {
-  const location = useLocation().pathname;
-  const isListPage = location === '/list';
-
   const theme = useContext(ThemeContext);
   const [fontColor, setFontColor] = useState();
 
@@ -14,19 +9,33 @@ const WriterCountText = ({ count, isBgImg = false }) => {
     setFontColor(!isBgImg ? theme.colors.DARKGRAY : theme.colors.WHITE);
   }, []);
 
-  return (
-    <WriterCountTextWrapper style={{ color: fontColor }}>
-      <span>{count}</span>
-      <CountText style={{ color: fontColor }}>명이 작성했어요!</CountText>
-    </WriterCountTextWrapper>
-  );
+  if (count > 0) {
+    return (
+      <WriterCountTextWrapper style={{ color: fontColor }}>
+        <span>{count}</span>
+        <CountText style={{ color: fontColor }}>명이 작성했어요!</CountText>
+      </WriterCountTextWrapper>
+    );
+  } else {
+    return (
+      <WriterCountTextWrapper style={{ color: fontColor }}>
+        <CountText style={{ color: fontColor }}>
+          첫번째 편지를 작성해보세요!
+        </CountText>
+      </WriterCountTextWrapper>
+    );
+  }
 };
 
 const WriterCountTextWrapper = styled.div`
   font-size: ${({ theme }) => theme.fontsize.LARGE_TXT};
   font-weight: ${({ theme }) => theme.fontweight.BOLD};
+  width: 100%;
   height: 27px;
-  line-height: 30px;
+  white-space: nowrap;
+
+  display: flex;
+  align-items: center;
 `;
 
 const CountText = styled.span`
