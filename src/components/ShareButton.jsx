@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import ShareIcon from '../assets/icons/IconShare.svg';
 import useClickOutside from '../hooks/useClickOutside';
-import ShareKakaoButton from './ShareKakaoButton';
+import ShareKakao from './ShareKakaoButton';
 
 const ShareButton = ({ handleToast, theme, isEditMode }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -44,7 +44,7 @@ const ShareButton = ({ handleToast, theme, isEditMode }) => {
         <DropDownList style={isOpen ? {} : { display: 'none' }}>
           <DropDownItem>
             <DropDownLabel>
-              <ShareKakaoButton />
+              <ShareKakao />
             </DropDownLabel>
           </DropDownItem>
           <DropDownItem onClick={handleCopyUrl}>
