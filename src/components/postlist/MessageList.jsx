@@ -99,9 +99,15 @@ const MessageList = ({
   const themeContext = useContext(ThemeContext);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalData, setModalData] = useState({});
-  const navigate = useNavigate();
+
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
   const [paperIdToDelete, setPaperIdToDelete] = useState('');
+
+  const navigate = useNavigate();
+
+  const handleRedirectionToList = () => {
+    navigate('/list');
+  };
 
   const handleMessageClick = (data) => {
     if (!showDeleteButton) {
@@ -127,10 +133,9 @@ const MessageList = ({
   const handleDeletePaper = async () => {
     try {
       const res = await deletePaper(`${paperIdToDelete}`);
-      if (res) {
-        navigate('/list');
-        console.log('Paper deleted successfully!');
-      }
+      closeConfirmModal();
+      handleRedirectionToList();
+      console.log(`Paper No.${recipientId} has successfully deleted.`);
     } catch (e) {
       console.error(e);
     }
