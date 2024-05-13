@@ -132,7 +132,7 @@ const BannerTextBox = styled.div`
 const BannerLabel = styled.h2`
   width: 300px;
   font-size: 24px;
-  font-weight: 700;
+  font-weight: 400;
   line-height: 36px;
   text-align: left;
   color: #181818;
@@ -195,7 +195,8 @@ const ButtonToLink = styled.button`
   padding: 14px 24px;
   border-radius: 12px;
   font-size: ${({ theme }) => theme.fontsize.LARGE_TXT};
-  color: ${({ theme }) => theme.colors.DARKGRAY};
+  font-weight: ${({ theme }) => theme.fontweight.REGULAR};
+  color: ${({ theme }) => theme.colors.WHITE};
 
   & a {
     text-decoration: none;

@@ -239,7 +239,7 @@ const SubmitButton = styled.button`
   font-size: ${({ theme }) => theme.fontsize.LARGE_TXT};
   cursor: pointer;
   background-color: ${({ theme }) => theme.colors.PURPLE};
-  color: ${({ theme }) => theme.colors.BLACK};
+  color: ${({ theme }) => theme.colors.WHITE};
 
   ${(props) =>
     props.disabled &&

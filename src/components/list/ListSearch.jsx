@@ -80,7 +80,7 @@ const SearchInput = styled.input`
   border-radius: 16px;
 
   font-size: ${({ theme }) => theme.fontsize.S_TITLE};
-  font-weight: ${({ theme }) => theme.fontweight.BOLD};
+  font-weight: ${({ theme }) => theme.fontweight.REGULAR};
   &::placeholder {
     color: ${({ theme }) => theme.colors.GRAY};
   }
@@ -103,9 +103,9 @@ const SearchButton = styled.button`
   /* border-radius: 0 16px 16px 0; */
   border-radius: 16px;
 
-  color: ${({ theme }) => theme.colors.BLACK};
+  color: ${({ theme }) => theme.colors.WHITE};
   font-size: ${({ theme }) => theme.fontsize.LARGE_TXT};
-  font-weight: ${({ theme }) => theme.fontweight.BOLD};
+  font-weight: ${({ theme }) => theme.fontweight.REGULAR};
 
   cursor: pointer;
 

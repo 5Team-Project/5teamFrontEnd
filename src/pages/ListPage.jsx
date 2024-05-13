@@ -73,12 +73,12 @@ const ToPostPageDiv = styled.div`
     background-color: ${({ theme }) => theme.colors.PURPLE};
 
     font-size: ${({ theme }) => theme.fontsize.LARGE_TXT};
-    font-weight: ${({ theme }) => theme.fontweight.BOLD};
+    font-weight: ${({ theme }) => theme.fontweight.REGULAR};
     line-height: 28px;
     text-align: center;
 
     text-decoration: none;
-    color: ${({ theme }) => theme.colors.DARKGRAY};
+    color: ${({ theme }) => theme.colors.WHITE};
   }
 
   @media ${({ theme }) => theme.device.Tablet} {
