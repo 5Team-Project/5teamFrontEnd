@@ -202,17 +202,17 @@ const ButtonWrapper = styled.div`
     align-items: center;
     justify-content: center;
 
-    &:hover {
-      background-color: ${({ theme }) => theme.colors.PURPLE};
-    }
-
-    &:active {
-      background-color: ${({ theme }) => theme.colors.PURPLE_D};
-    }
-
     @media ${({ theme }) => theme.device.Tablet} {
       width: 100%;
     }
+
+    &:hover {
+      background-color: ${({ theme }) => theme.colors.PURPLE_D};
+    }
+    &:active {
+      background-color: ${({ theme }) => theme.colors.PURPLE_DD};
+    }
   }
 `;
+
 export default Banner;
