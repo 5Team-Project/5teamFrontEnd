@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import PlusIcon from '../../assets/icons/ic_plus.svg';
+import PlusIcon from '../../assets/icons/IconPlus.svg';
 import styled, { ThemeContext } from 'styled-components';
 import { formatDate } from '../../utils/formatDate';
 import MessageModal from './MessageModal';
