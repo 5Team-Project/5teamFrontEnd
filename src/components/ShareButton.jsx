@@ -82,9 +82,6 @@ const ShareButtonWrapper = styled.button`
   @media ${({ theme }) => theme.device.Mobile} {
     width: 36px;
     padding: 6px 9px;
-    p {
-      display: none;
-    }
   }
 `;
 

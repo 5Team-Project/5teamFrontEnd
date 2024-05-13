@@ -79,7 +79,7 @@ const AllReactionsBox = styled.div`
   top: 45px;
 
   @media ${({ theme }) => theme.device.Mobile} {
-    left: -15%;
+    left: -200px;
   }
 
   display: grid;

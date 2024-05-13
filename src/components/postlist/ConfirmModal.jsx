@@ -13,10 +13,12 @@ const ConfirmModal = ({
         <MyModalBG onClick={closeConfirmModal}>
           <MyModal onClick={(e) => e.stopPropagation()}>
             <ModalHeader>
-              <p>정말 삭제 하시겠습니까?</p>
+              <ModalLabel>정말 삭제 하시겠습니까?</ModalLabel>
             </ModalHeader>
             <MessageBox>
-              <p>삭제된 콘텐츠는 복구가 불가합니다.</p>
+              <ModalDescription>
+                삭제된 콘텐츠는 복구가 불가합니다.
+              </ModalDescription>
             </MessageBox>
             <ButtonWrapper>
               <ModalAnswerButtonYes
@@ -67,10 +69,13 @@ const MyModal = styled.div`
 
 const ModalHeader = styled.div`
   width: 100%;
+
   display: flex;
   align-items: center;
   justify-content: space-between;
 `;
+
+const ModalLabel = styled.p``;
 
 const MessageBox = styled.div`
   width: 100%;
@@ -80,6 +85,8 @@ const MessageBox = styled.div`
   color: ${({ theme }) => theme.colors.DARKGRAY};
   border-top: 1px solid ${({ theme }) => theme.colors.GRAY};
 `;
+
+const ModalDescription = styled.p``;
 
 const ButtonWrapper = styled.div`
   display: flex;
