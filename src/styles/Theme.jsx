@@ -11,6 +11,7 @@ export const lightTheme = {
     WHITE: '#FFFFFF',
     RED: '#DC3A3A',
     BLACK: '#000000',
+    YELLOW: '#fff9db',
     SURFACE: '#fff9db',
   },
   fontsize: {
@@ -48,6 +49,7 @@ export const darkTheme = {
     RED: '#A32929',
     BLACK: '#fcfcfc',
     SURFACE: '#fff3bf',
+    YELLOW: '#fab005',
   },
   fontsize: {
     TITLE: '28px',

@@ -132,5 +132,9 @@ const PickerWrapper = styled.div`
   position: absolute;
   top: 40px;
   left: -200px;
+
+  @media ${({ theme }) => theme.device.Mobile} {
+    left: -228px;
+  }
 `;
 export default AddReactions;

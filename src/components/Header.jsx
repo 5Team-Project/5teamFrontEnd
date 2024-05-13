@@ -28,9 +28,7 @@ const Header = ({ toggleTheme, isDarkMode }) => {
       <HeaderBox>
         <Logo href="/">
           <IconLogoImg src={IconLogo} alt="롤링로고" />
-          <TextLogo style={showButton ? { display: 'block' } : {}}>
-            Rolling
-          </TextLogo>
+          <TextLogo>Rolling</TextLogo>
         </Logo>
         <ButtonWrapper>
           {showButton && (
@@ -122,16 +120,24 @@ const ButtonWrapper = styled.div`
 const ButtonMakeNewPaper = styled.button`
   width: 157px;
   height: 40px;
-  padding: 8px 8px;
+  padding: 8px;
   border-radius: 6px;
   border: 1px solid ${({ theme }) => theme.colors.GRAY};
   font-size: ${({ theme }) => theme.fontsize.MEDIUM_TXT};
   font-weight: ${({ theme }) => theme.fontweight.REGULAR};
   color: ${({ theme }) => theme.colors.BLACK};
-  line-height: 26px;
-  letter-spacing: -0.01em;
-  text-align: center;
   margin-right: 16px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.PURPLE};
+  }
+  &:active {
+    background-color: ${({ theme }) => theme.colors.PURPLE_D};
+  }
 
   @media ${({ theme }) => theme.device.Mobile} {
     width: 142px;
