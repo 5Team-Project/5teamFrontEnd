@@ -8,12 +8,12 @@ import { getDataByRecipientId } from '../../api/getDataByRecipientId';
 
 const MESSAGE_LIMIT = 8;
 
-const CONVERT_BGCOLOR = {
-  green: 'GREEN',
-  purple: 'PURPLE',
-  blue: 'BLUE',
-  beige: 'ORANGE',
-};
+const COLOR_LIST = [
+  { value: '#FFE5B4', name: 'beige' },
+  { value: '#DCB9FF', name: 'purple' },
+  { value: '#B9E0FF', name: 'blue' },
+  { value: '#B3F0C8', name: 'green' },
+];
 
 const RollingPaperPage = () => {
   const themeContext = useContext(ThemeContext);
@@ -27,6 +27,7 @@ const RollingPaperPage = () => {
   const [recipientData, setRecipientData] = useState({});
 
   const [bgImage, setBgImage] = useState();
+  const [resColor, setResColor] = useState('');
   const [bgColor, setBgColor] = useState('');
 
   const handleScroll = () => {
@@ -76,10 +77,21 @@ const RollingPaperPage = () => {
     const loadBackground = async (recipientId) => {
       const responseBackground = await getBackgroundByRecipientId(recipientId);
       setBgImage(responseBackground.backgroundImageURL);
-      setBgColor(responseBackground.backgroundColor);
+      setResColor(responseBackground.backgroundColor);
     };
     loadBackground(recipientId);
   }, [recipientId]);
+
+  useEffect(() => {
+    const tempColor = COLOR_LIST.find((elementColor) => {
+      return elementColor.name === resColor;
+    });
+    if (tempColor) {
+      setBgColor(tempColor.value);
+    } else {
+      setBgColor('#FFFFFF');
+    }
+  }, [resColor]);
 
   useEffect(() => {
     window.addEventListener('scroll', handleScroll);
@@ -106,7 +118,7 @@ export default RollingPaperPage;
 const MessageMainContainer = styled.div`
   width: 100%;
   height: auto;
-  ${({ bgImage, bgColor, theme }) =>
+  ${({ bgImage, bgColor }) =>
     bgImage
       ? css`
           background-image: url(${bgImage});
@@ -115,6 +127,6 @@ const MessageMainContainer = styled.div`
           background-size: cover;
         `
       : css`
-          background-color: ${theme.colors[CONVERT_BGCOLOR[bgColor]]};
+          background-color: ${bgColor};
         `}
 `;
