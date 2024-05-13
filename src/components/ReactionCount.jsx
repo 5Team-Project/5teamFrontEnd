@@ -30,15 +30,16 @@ const ReactionButtonBox = styled.div`
 `;
 
 const ReactionButtons = styled.button`
-  max-width: 63px;
-  min-width: 50px;
+  min-width: 56px;
   height: 36px;
   border-radius: 32px;
   padding: 8px;
+
   display: flex;
   justify-content: center;
   align-items: center;
-  background: ${({ theme }) => theme.colors.BLACK}8a;
+
+  background: ${({ theme }) => theme.colors.DARKGRAY};
   color: ${({ theme }) => theme.colors.WHITE};
   font-size: ${({ theme }) => theme.fontsize.MEDIUM};
   font-weight: ${({ theme }) => theme.fontweight.REGULAR};

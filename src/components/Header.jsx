@@ -28,7 +28,7 @@ const Header = ({ toggleTheme, isDarkMode }) => {
       <HeaderBox>
         <Logo href="/">
           <IconLogoImg src={IconLogo} alt="롤링로고" />
-          {showButton && <TextLogo>Rolling</TextLogo>}
+          <TextLogo>Rolling</TextLogo>
         </Logo>
         <ButtonWrapper>
           {showButton && (

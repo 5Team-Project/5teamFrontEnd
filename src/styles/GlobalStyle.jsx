@@ -68,6 +68,7 @@ const GlobalStyle = createGlobalStyle`
     cursor: pointer;
     background-color: transparent;
     font-family: 'BMJUATtf', 'Pretendard', 'NanumMyeongjo', 'NanumPen',  sans-serif;
+    white-space: nowrap;
   }
 
   input, textarea {

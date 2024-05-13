@@ -139,7 +139,7 @@ const MyModalBG = styled.div`
   background-color: rgba(0, 0, 0, 0.4);
   width: 100%;
   height: 100vh;
-  z-index: 99;
+  z-index: 999;
   position: fixed;
   top: 0;
   left: 0;

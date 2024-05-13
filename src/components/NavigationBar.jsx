@@ -66,7 +66,6 @@ const NavigationBar = ({ recipientId, recipientData, isEditMode }) => {
             <span>To. </span>
             <span>{title}</span>
           </Title>
-
           <PostStats>
             <PostStatsBox>
               <WriterCountWrapper>
@@ -148,6 +147,7 @@ const PostStats = styled.div`
   align-items: center;
 
   @media ${({ theme }) => theme.device.Mobile} {
+    width: 100%;
     justify-content: space-between;
   }
 `;
