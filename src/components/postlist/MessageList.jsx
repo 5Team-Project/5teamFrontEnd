@@ -194,14 +194,30 @@ export default MessageList;
 
 const MessageListContainer = styled.ul`
   margin: 0 auto;
-  padding-top: 64px;
+  padding-top: 113px;
   padding-bottom: 64px;
   width: 1200px;
+  min-height: 100vh;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-auto-rows: 280px;
   grid-column-gap: 24px;
   grid-row-gap: 28px;
+  @media ${({ theme }) => theme.device.Tablet} {
+    padding-top: 93px;
+    width: 720px;
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: 284px;
+    grid-column-gap: 16px;
+    grid-row-gap: 16px;
+  }
+  @media ${({ theme }) => theme.device.Mobile} {
+    padding-top: 80px;
+    width: 320px;
+    grid-template-columns: repeat(1, 1fr);
+    grid-auto-rows: 230px;
+    grid-row-gap: 16px;
+  }
 `;
 const MessageContainer = styled.div`
   background-color: ${({ theme }) => theme.colors.WHITE};
@@ -210,6 +226,17 @@ const MessageContainer = styled.div`
   border-radius: 16px;
   padding: 28px 24px 24px 24px;
   position: relative;
+  & p {
+    margin-bottom: 24px;
+  }
+  @media ${({ theme }) => theme.device.Tablet} {
+    width: 352px;
+    height: 284px;
+  }
+  @media ${({ theme }) => theme.device.Mobile} {
+    width: 320px;
+    height: 230px;
+  }
 `;
 const AddMessageContainer = styled(MessageContainer)`
   display: flex;
@@ -297,6 +324,10 @@ const MessageText = styled.div`
   line-height: 20px;
   font-size: ${({ theme }) => theme.fontsize.MEDIUM_TXT};
   font-weight: ${({ theme }) => theme.fontweight.REGULAR};
+  @media ${({ theme }) => theme.device.Mobile} {
+    height: 42px;
+    -webkit-line-clamp: 2;
+  }
 `;
 
 const DeleteMessageButton = styled.button`
