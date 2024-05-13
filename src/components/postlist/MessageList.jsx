@@ -208,6 +208,7 @@ const MessageListContainer = styled.ul`
   grid-auto-rows: 280px;
   grid-column-gap: 24px;
   grid-row-gap: 28px;
+
   @media ${({ theme }) => theme.device.Tablet} {
     padding-top: 93px;
     width: 720px;
@@ -231,8 +232,8 @@ const MessageContainer = styled.div`
   border-radius: 16px;
   padding: 28px 24px 24px 24px;
   position: relative;
+  justify-content: center;
   & p {
-    margin-bottom: 24px;
   }
   @media ${({ theme }) => theme.device.Tablet} {
     width: 352px;
@@ -286,6 +287,7 @@ const ProfileImg = styled.img`
 const ProfileTextWrap = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: center;
   gap: 6px;
   font-size: ${({ theme }) => theme.fontsize.S_TITLE};
   font-weight: ${({ theme }) => theme.fontweight.REGULAR};
