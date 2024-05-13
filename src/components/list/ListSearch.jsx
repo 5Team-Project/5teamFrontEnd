@@ -45,14 +45,20 @@ export default ListSearch;
 
 const SearchContainer = styled.section`
   margin-top: 20px;
-  padding: 0 30px;
+  padding: 0 200px;
   width: 100%;
+
+  @media ${({ theme }) => theme.device.Tablet} {
+    padding: 0px;
+  }
 `;
 
 const SearchFrom = styled.form`
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
+  gap: 30px;
+
   position: relative;
 
   width: 100%;
@@ -64,6 +70,8 @@ const IconSearch = styled.img`
 `;
 
 const SearchInput = styled.input`
+  flex-grow: 6;
+
   width: 100%;
   height: 60px;
 
@@ -85,15 +93,15 @@ const SearchInput = styled.input`
 `;
 
 const SearchButton = styled.button`
-  position: absolute;
-  right: -2px;
+  flex-grow: 2;
 
-  width: 80px;
+  width: 130px;
   height: 60px;
   padding: 8px 16px;
   background-color: ${({ theme }) => theme.colors.PURPLE};
   border: none;
-  border-radius: 0 16px 16px 0;
+  /* border-radius: 0 16px 16px 0; */
+  border-radius: 16px;
 
   color: ${({ theme }) => theme.colors.BLACK};
   font-size: ${({ theme }) => theme.fontsize.LARGE_TXT};
