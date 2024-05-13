@@ -76,7 +76,7 @@ const ProfileImageComponent = ({ onImageSelect }) => {
         <Description>프로필 이미지를 선택해주세요!</Description>
         <OptionImageContainer>
           {isLoading
-            ? Array.from({ length: 9 }).map((_, index) => (
+            ? Array.from({ length: 8 }).map((_, index) => (
                 <OptionImageSkeleton key={index} />
               ))
             : imageOptions.map((imageUrl, index) => (
