@@ -1,14 +1,26 @@
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { Link, useSearchParams } from 'react-router-dom';
 
 import ListSort from '../components/list/ListSort';
+import ListSearch from '../components/list/ListSearch';
 
 const ListPage = () => {
+  const [searchParams] = useSearchParams();
+  const name = searchParams.get('name');
+
   return (
     <ListMainContainer>
+      <ListSearch />
       <ListContent>
-        <ListSort sort={'like'} />
-        <ListSort />
+        {name ? (
+          <ListSort searchValue={name} />
+        ) : (
+          <>
+            <ListSort listSort={'like'} />
+            <ListSort />
+          </>
+        )}
+
         <ToPostPageDiv>
           <Link to={'/post'}>나도 만들어보기</Link>
         </ToPostPageDiv>
@@ -17,10 +29,12 @@ const ListPage = () => {
   );
 };
 
+export default ListPage;
+
 const ListMainContainer = styled.main`
   max-width: 1200px;
   margin: 0 auto;
-
+  height: 80dvh;
   @media ${({ theme }) => theme.device.Tablet} {
     max-width: 768px;
   }
@@ -31,18 +45,20 @@ const ListMainContainer = styled.main`
 
 const ListContent = styled.article`
   width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: start;
 `;
 
 const ToPostPageDiv = styled.div`
   margin-top: 25px;
   display: flex;
-  align-items: center;
+  align-items: end;
   justify-content: center;
 
+  flex-grow: 1;
   & a {
     display: flex;
     align-items: center;
@@ -66,12 +82,13 @@ const ToPostPageDiv = styled.div`
   }
 
   @media ${({ theme }) => theme.device.Tablet} {
-    margin-top: 10px;
+    margin: 0;
     & a {
       width: 760px;
       height: 56px;
     }
   }
+
   @media ${({ theme }) => theme.device.Mobile} {
     & a {
       width: 360px;
@@ -79,5 +96,3 @@ const ToPostPageDiv = styled.div`
     }
   }
 `;
-
-export default ListPage;
