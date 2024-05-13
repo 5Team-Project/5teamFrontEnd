@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import BannerImageExampleCards from '../../assets/icons/BannerImageExampleCards.svg';
-import BannerImageExampleEmojis from '../../assets/images/BannerImageExampleEmojis.png';
+import BannerImageCards from '../../assets/images/BannerImageCards.png';
+import BannerImageEmojis from '../../assets/images/BannerImageEmojis.png';
 import { Link } from 'react-router-dom';
 
 const Banner = () => {
@@ -19,7 +19,7 @@ const Banner = () => {
             </BannerTextBox>
           </BannerDescriptionBox>
           <BannerImageBox>
-            <BannerImage src={BannerImageExampleCards} alt="메세지 카드 예시" />
+            <BannerImage src={BannerImageCards} alt="메세지 카드 예시" />
           </BannerImageBox>
         </BannerWrapper>
         <BannerWrapper>
@@ -34,16 +34,13 @@ const Banner = () => {
             </BannerTextBox>
           </BannerDescriptionBox>
           <BannerImageBox>
-            <BannerImage
-              src={BannerImageExampleEmojis}
-              alt="이모지 리액션 예시"
-            />
+            <BannerImage src={BannerImageEmojis} alt="이모지 리액션 예시" />
           </BannerImageBox>
         </BannerWrapper>
       </ContentWrapper>
       <ButtonWrapper>
-        <Link to={'/list'} type="button">
-          <ButtonToLink>구경해보기</ButtonToLink>
+        <Link to={'/list'} as="button" type="button">
+          구경해보기
         </Link>
       </ButtonWrapper>
     </ContentContainer>
@@ -80,7 +77,7 @@ const BannerWrapper = styled.section`
   background-color: ${({ theme }) => theme.colors.SURFACE};
   display: flex;
   justify-content: space-between;
-  gap: 36px;
+  gap: 12px;
 
   &:nth-child(odd) {
     padding-left: 60px;
@@ -88,24 +85,31 @@ const BannerWrapper = styled.section`
   &:nth-child(even) {
     flex-direction: row-reverse;
     padding-right: 192px;
-
-    @media ${({ theme }) => theme.device.Tablet} {
-      flex-direction: column;
-      padding: 60px;
-    }
   }
 
   @media ${({ theme }) => theme.device.Tablet} {
-    height: 440px;
-    flex-direction: column;
+    &:nth-child(odd) {
+      flex-direction: column;
+    }
+    &:nth-child(even) {
+      flex-direction: column;
+      padding-right: 60px;
+    }
     padding: 60px;
+    height: 460px;
+    align-items: center;
   }
 `;
 
 const BannerDescriptionBox = styled.article`
   display: flex;
   flex-direction: column;
+  text-align: left;
   gap: 16px;
+
+  @media ${({ theme }) => theme.device.Tablet} {
+    width: 100%;
+  }
 `;
 
 const BannerNumberTag = styled.div`
@@ -130,7 +134,7 @@ const BannerTextBox = styled.div`
 `;
 
 const BannerLabel = styled.h2`
-  width: 300px;
+  width: 100%;
   font-size: 24px;
   font-weight: 700;
   line-height: 36px;
@@ -160,58 +164,55 @@ const BannerText = styled.p`
 `;
 
 const BannerImageBox = styled.div`
-  width: 100%;
+  width: 720px;
   display: flex;
   justify-content: center;
-  overflow-x: scroll;
-  overflow: visible;
-  white-space: nowrap;
+
+  @media ${({ theme }) => theme.device.Mobile} {
+    width: 650px;
+  }
 `;
 
 const BannerImage = styled.img`
-  width: 720px;
-  height: 100%;
-
-  @media ${({ theme }) => theme.device.Mobile} {
-    width: 540px;
-    height: 100%;
-  }
+  width: 100%;
 `;
 
 const ButtonWrapper = styled.div`
   max-width: 1248px;
+  width: 100%;
   height: 104px;
   padding: 0 24px;
+  margin: 0 auto;
   display: flex;
-  justify-content: center;
   align-items: center;
-`;
-
-const ButtonToLink = styled.button`
-  width: 280px;
-  height: 56px;
-  border-radius: 12px;
-  background-color: ${({ theme }) => theme.colors.PURPLE};
-  padding: 14px 24px;
-  border-radius: 12px;
-  font-size: ${({ theme }) => theme.fontsize.LARGE_TXT};
-  color: ${({ theme }) => theme.colors.DARKGRAY};
 
   & a {
+    width: 280px;
+    height: 56px;
+    padding: 14px 24px;
+    margin: 0 auto;
+    border-radius: 12px;
     text-decoration: none;
-  }
 
-  &:hover {
+    font-size: ${({ theme }) => theme.fontsize.LARGE_TXT};
+    color: ${({ theme }) => theme.colors.DARKGRAY};
     background-color: ${({ theme }) => theme.colors.PURPLE};
-  }
 
-  &:active {
-    background-color: ${({ theme }) => theme.colors.PURPLE_D};
-  }
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-  @media ${({ theme }) => theme.device.Tablet} {
-    max-width: 1200px;
-    width: 100%;
+    &:hover {
+      background-color: ${({ theme }) => theme.colors.PURPLE};
+    }
+
+    &:active {
+      background-color: ${({ theme }) => theme.colors.PURPLE_D};
+    }
+
+    @media ${({ theme }) => theme.device.Tablet} {
+      width: 100%;
+    }
   }
 `;
 export default Banner;
