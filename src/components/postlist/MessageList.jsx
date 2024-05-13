@@ -397,7 +397,7 @@ const DeletePaperButton = styled.div`
   position: absolute;
   top: 10px;
 
-  background-color: ${({ theme }) => theme.colors.PURPLE};
+  background-color: ${({ theme }) => theme.colors.PURPLE_D};
   color: ${({ theme }) => theme.colors.DARKGRAY};
   font-size: ${({ theme }) => theme.fontsize.MEDIUM_TXT};
   font-weight: ${({ theme }) => theme.fontweight.REGULAR};
@@ -406,10 +406,10 @@ const DeletePaperButton = styled.div`
   border-radius: 8px;
 
   &:hover {
-    background-color: ${({ theme }) => theme.colors.PURPLE_D};
+    background-color: ${({ theme }) => theme.colors.PURPLE_DD};
   }
   &:active {
-    background-color: ${({ theme }) => theme.colors.PURPLE_DD};
+    background-color: ${({ theme }) => theme.colors.RED};
   }
   @media ${({ theme }) => theme.device.Tablet} {
     position: fixed;
