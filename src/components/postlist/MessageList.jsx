@@ -197,6 +197,7 @@ const MessageListContainer = styled.ul`
   padding-top: 113px;
   padding-bottom: 64px;
   width: 1200px;
+  min-height: 100vh;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-auto-rows: 280px;

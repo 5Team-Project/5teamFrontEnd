@@ -29,12 +29,6 @@ const RollingPaperPage = () => {
   const [bgImage, setBgImage] = useState();
   const [bgColor, setBgColor] = useState('');
 
-  const loadBackground = async (recipientId) => {
-    const responseBackground = await getBackgroundByRecipientId(recipientId);
-    setBgImage(responseBackground.backgroundImageURL);
-    setBgColor(responseBackground.backgroundColor);
-  };
-
   const handleScroll = () => {
     const { scrollTop, clientHeight, scrollHeight } = document.documentElement;
     if (scrollTop + clientHeight >= scrollHeight - 3 && !loading && hasNext) {
@@ -79,6 +73,11 @@ const RollingPaperPage = () => {
   }, [page]);
 
   useEffect(() => {
+    const loadBackground = async (recipientId) => {
+      const responseBackground = await getBackgroundByRecipientId(recipientId);
+      setBgImage(responseBackground.backgroundImageURL);
+      setBgColor(responseBackground.backgroundColor);
+    };
     loadBackground(recipientId);
   }, [recipientId]);
 
@@ -115,5 +114,7 @@ const MessageMainContainer = styled.div`
           background-position: top center;
           background-size: cover;
         `
-      : css`background-color: ${theme.colors[CONVERT_BGCOLOR[bgColor]]};`}
+      : css`
+          background-color: ${theme.colors[CONVERT_BGCOLOR[bgColor]]};
+        `}
 `;
