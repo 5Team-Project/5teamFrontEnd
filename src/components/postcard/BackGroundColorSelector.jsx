@@ -37,7 +37,7 @@ const ColorButton = styled.button`
   padding-bottom: calc(25% - 15px);
   border-radius: 15px;
   background-color: ${({ color }) => color};
-  border: ${({ selected }) => (selected ? '2px solid #AB57FF' : 'none')};
+  border: ${({ selected }) => (selected ? '2px solid #fab005' : 'none')};
   cursor: pointer;
   display: flex;
   position: relative;
@@ -48,13 +48,13 @@ const ColorButton = styled.button`
   }
 
   &:hover {
-    transform: scale(1.07);
+    transform: scale(1.05);
   }
 
   ${({ selected }) =>
     selected &&
     css`
-      opacity: 0.6;
+      opacity: 0.7;
     `}
 
   ${({ selected }) =>
@@ -68,7 +68,7 @@ const ColorButton = styled.button`
         transform: translate(-50%, -50%);
         font-size: 40px;
         font-weight: 700;
-        color: black;
+        color: #e67700;
       }
     `}
 `;
