@@ -172,8 +172,8 @@ const MessageList = ({
       <MessageListContainer>
         <AddMessageContainer>
           <MessageAddButton>
-            <Link to={`/post/${recipientId}/message/`}>
-              <Icon src={PlusIcon} alt="메세지 추가" />
+            <Link to={`/post/${recipientId}/message`}>
+              <IconPlus src={PlusIcon} alt="메세지 추가" />
             </Link>
           </MessageAddButton>
         </AddMessageContainer>
@@ -250,7 +250,7 @@ const AddMessageContainer = styled(MessageContainer)`
   align-items: center;
 `;
 
-const Icon = styled.img`
+const IconPlus = styled.img`
   height: 24px;
   width: 24px;
 `;
@@ -262,7 +262,7 @@ const MessageAddButton = styled.button`
   height: 56px;
   border-radius: 50%;
   background-color: ${({ theme }) => theme.colors.DARKGRAY};
-  ${Icon} {
+  ${IconPlus} {
     width: 1.5rem;
     height: 1.5rem;
   }
