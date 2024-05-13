@@ -24,7 +24,7 @@ const ListSlideMoveButtons = ({ handlePrev, handleNext, isDarkMode }) => {
 const ListBtnLeft = styled.button`
   position: absolute;
   left: -10px;
-  top: 150px;
+  top: 165px;
 
   border: 1px solid #dadcdf;
   border-radius: 64px;
@@ -55,7 +55,7 @@ const ListBtnLeft = styled.button`
 const ListBtnRight = styled.button`
   position: absolute;
   right: -10px;
-  top: 150px;
+  top: 165px;
 
   border: 1px solid #dadcdf;
   border-radius: 64px;

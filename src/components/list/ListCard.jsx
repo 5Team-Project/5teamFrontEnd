@@ -132,9 +132,18 @@ const ListCardWrap = styled(Link)`
   background-size: cover;
   background-position: center;
 
+  transition: transform 0.5s ease;
+
+  &:hover {
+    transform: scale(1.1);
+  }
   @media ${({ theme }) => theme.device.Tablet} {
     width: 245px;
     height: 250px;
+
+    &:hover {
+      transform: scale(1.05);
+    }
   }
   @media ${({ theme }) => theme.device.Mobile} {
     width: 315px;

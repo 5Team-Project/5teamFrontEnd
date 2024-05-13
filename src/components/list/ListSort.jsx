@@ -446,15 +446,22 @@ const ListCarousel = styled.div`
 `;
 
 const ListSortSlide = styled.div`
+  height: 290px;
+
   display: flex;
+  align-items: center;
   padding: 0 10px;
   gap: 20px;
 
   @media ${({ theme }) => theme.device.Tablet} {
+    height: 280px;
+
     gap: 10px;
     padding: 0 2.5px;
   }
   @media ${({ theme }) => theme.device.Mobile} {
+    height: 330px;
+
     gap: 10px;
     margin: 0 20px;
   }
