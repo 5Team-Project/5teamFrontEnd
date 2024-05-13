@@ -9,10 +9,10 @@ import { getDataByRecipientId } from '../../api/getDataByRecipientId';
 const MESSAGE_LIMIT = 8;
 
 const CONVERT_BGCOLOR = {
-  'green': 'GREEN',
-  'purple': 'PURPLE',
-  'blue': 'BLUE',
-  'beige': 'ORANGE',
+  green: 'GREEN',
+  purple: 'PURPLE',
+  blue: 'BLUE',
+  beige: 'ORANGE',
 };
 
 const RollingPaperPage = () => {
