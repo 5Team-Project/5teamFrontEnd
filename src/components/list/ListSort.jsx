@@ -77,7 +77,7 @@ const ListSort = ({ listSort, theme }) => {
   useEffect(() => {
     if (offset <= 0 || userLastList.length > 0) return;
 
-    if (dataLength < 12) return;
+    if (dataLength < 6) return;
 
     const handleLoadLast = async () => {
       const lastPath =
@@ -140,39 +140,33 @@ const ListSort = ({ listSort, theme }) => {
     handleGetSearchList();
   }, [searchValue]);
 
-  // 마지막 데이터를 한번 더 안불러오게 nextPath의 limit을 설정
+  // 이미 불러온 마지막 데이터를 못 불러오게 nextPath의 limit을 설정
   useEffect(() => {
     if (searchValue) return;
 
     if (offset <= 0) return;
 
-    const handleOffsetCheck = () => {
-      if (offset - limit < limit) {
-        if (nextPath !== null) {
-          setNextPath(
-            nextPath.replace(`limit=${limit}`, `limit=${offset - limit}`),
-          );
-        }
-
-        if (prevPath !== null) {
-          setPrevPath(
-            prevPath.replace(
-              `limit=${limit}&offset=${offset - limit}`,
-              `limit=${offset - limit}&offset=${offset - (offset - limit)}`,
-            ),
-          );
-        }
-
-        if (offset - limit <= 0) {
-          setNextPath(null);
-          setPrevPath(null);
-        }
-
-        return;
+    if (offset - limit < limit) {
+      if (nextPath !== null) {
+        setNextPath(
+          nextPath.replace(`limit=${limit}`, `limit=${offset - limit}`),
+        );
       }
-    };
 
-    handleOffsetCheck();
+      if (prevPath !== null) {
+        setPrevPath(
+          prevPath.replace(
+            `limit=${limit}&offset=${offset - limit}`,
+            `limit=${offset - limit}&offset=${offset - (offset - limit)}`,
+          ),
+        );
+      }
+
+      if (offset - limit <= 0) {
+        setNextPath(null);
+        setPrevPath(null);
+      }
+    }
   }, [offset]);
 
   // 다음 리스트 불러오기
@@ -182,8 +176,8 @@ const ListSort = ({ listSort, theme }) => {
 
       if (!isUpdate) return;
 
-      if (isNext) {
-        try {
+      try {
+        if (isNext) {
           if (nextPath === null) return;
 
           const res = await getList(nextPath);
@@ -197,11 +191,7 @@ const ListSort = ({ listSort, theme }) => {
           if (offset - limit > 0) setOffset(offset - limit);
 
           setUserList([...userList, ...newData]);
-        } catch (e) {
-          console.error(e);
-        }
-      } else {
-        try {
+        } else {
           if (prevPath === null) return;
 
           const res = await getList(prevPath);
@@ -221,9 +211,9 @@ const ListSort = ({ listSort, theme }) => {
           ];
 
           setUserList(setLists);
-        } catch (e) {
-          console.error(e);
         }
+      } catch (e) {
+        console.error(e);
       }
 
       setIsUpdate(false);

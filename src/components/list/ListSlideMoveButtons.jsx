@@ -9,78 +9,61 @@ const ListSlideMoveButtons = ({ handlePrev, handleNext, isDarkMode }) => {
     <>
       {deviceSize === 'desktop' && (
         <>
-          <ListBtnLeft onClick={handlePrev} isDarkMode={isDarkMode}>
-            <img src={arrowLeft} alt="왼쪽 화살표" />
-          </ListBtnLeft>
-          <ListBtnRight onClick={handleNext} isDarkMode={isDarkMode}>
-            <img src={arrowRight} alt="오른쪽 화살표" />
-          </ListBtnRight>
+          <ListSlideMoveButton
+            onClick={handlePrev}
+            isDarkMode={isDarkMode}
+            direction="left"
+          />
+          <ListSlideMoveButton
+            onClick={handleNext}
+            isDarkMode={isDarkMode}
+            direction="right"
+          />
         </>
       )}
     </>
   );
 };
 
-const ListBtnLeft = styled.button`
-  position: absolute;
-  left: -10px;
-  top: 165px;
-
-  border: 1px solid #dadcdf;
-  border-radius: 64px;
-
-  background-color: ${({ theme }) => theme.colors.WHITE}e5;
-
-  width: 40px;
-  height: 40px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  z-index: 1;
-
-  &:disabled {
-    display: none;
-  }
-
-  img {
-    filter: ${({ isDarkMode, theme }) =>
-      isDarkMode
-        ? `invert(1) sepia(1) saturate(0) hue-rotate(0deg) brightness(${theme.darkModeBrightness})`
-        : 'none'};
-  }
-`;
-
-const ListBtnRight = styled.button`
-  position: absolute;
-  right: -10px;
-  top: 165px;
-
-  border: 1px solid #dadcdf;
-  border-radius: 64px;
-
-  background-color: ${({ theme }) => theme.colors.WHITE}e5;
-
-  width: 40px;
-  height: 40px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  z-index: 1;
-
-  &:disabled {
-    display: none;
-  }
-
-  img {
-    filter: ${({ isDarkMode, theme }) =>
-      isDarkMode
-        ? `invert(1) sepia(1) saturate(0) hue-rotate(0deg) brightness(${theme.darkModeBrightness})`
-        : 'none'};
-  }
-`;
-
 export default ListSlideMoveButtons;
+
+const ListSlideMoveButton = ({ onClick, isDarkMode, direction }) => (
+  <StyledButton onClick={onClick} isDarkMode={isDarkMode} direction={direction}>
+    <img
+      src={direction === 'left' ? arrowLeft : arrowRight}
+      alt={`${direction === 'left' ? '왼쪽' : '오른쪽'} 화살표`}
+    />
+  </StyledButton>
+);
+
+const StyledButton = styled.button`
+  position: absolute;
+  ${({ direction }) =>
+    direction === 'left' ? 'left: -10px;' : 'right: -10px;'}
+  top: 165px;
+
+  border: 1px solid #dadcdf;
+  border-radius: 64px;
+
+  background-color: ${({ theme }) => theme.colors.WHITE}e5;
+
+  width: 40px;
+  height: 40px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  z-index: 1;
+
+  &:disabled {
+    display: none;
+  }
+
+  img {
+    filter: ${({ isDarkMode, theme }) =>
+      isDarkMode
+        ? `invert(1) sepia(1) saturate(0) hue-rotate(0deg) brightness(${theme.darkModeBrightness})`
+        : 'none'};
+  }
+`;

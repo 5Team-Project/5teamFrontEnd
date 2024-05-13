@@ -13,6 +13,10 @@ const getDeviceSize = () => {
   }
 };
 
+/**
+ * 디바이스 크기를 문자열로 반환
+ * @return {string}
+ */
 const useDeviceSize = () => {
   const [deviceSize, setDeviceSize] = useState(getDeviceSize());
 
