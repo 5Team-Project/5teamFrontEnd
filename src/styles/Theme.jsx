@@ -1,8 +1,8 @@
 export const lightTheme = {
   colors: {
-    PURPLE: '#DCB9FF',
-    PURPLE_D: '#AB57FF',
-    PURPLE_DD: '#6E0AD1',
+    PURPLE: '#ffd43b',
+    PURPLE_D: '#fcc419',
+    PURPLE_DD: '#fab005',
     ORANGE: '#FFC583',
     BLUE: '#7CD2FF',
     GREEN: '#9BE282',
@@ -36,14 +36,14 @@ export const lightTheme = {
 export const darkTheme = {
   darkModeBrightness: '70%',
   colors: {
-    PURPLE: '#4D2D6A',
-    PURPLE_D: '#3A1D51',
-    PURPLE_DD: '#2B1A3E',
+    PURPLE: '#fcc419',
+    PURPLE_D: '#F5B53B',
+    PURPLE_DD: '#2B1809',
     ORANGE: '#B36B2E',
     BLUE: '#2D6A7A',
     GREEN: '#3D612D',
     GRAY: '#bfbfbf',
-    DARKGRAY: '#cccaca',
+    DARKGRAY: '#484848',
     WHITE: '#2b2b2b',
     RED: '#A32929',
     BLACK: '#fcfcfc',

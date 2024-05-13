@@ -209,7 +209,7 @@ const ToggleButton = styled.button`
   font-size: 16px;
   font-weight: bold;
   border: none;
-  background-color: ${({ selected }) => (selected ? '#DCB9FF' : '#e0e0e0')};
+  background-color: ${({ selected }) => (selected ? '#ffd43b' : '#e0e0e0')};
   color: ${({ selected }) => (selected ? 'white' : 'black')};
   cursor: pointer;
   &:first-child {
