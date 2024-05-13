@@ -50,10 +50,6 @@ const ReactionsWrapper = styled.div`
 const ShowAllButton = styled.button`
   width: 36px;
   height: 36px;
-
-  @media ${({ theme }) => theme.device.Tablet} {
-    margin-right: 14px;
-  }
 `;
 
 const ArrowIcon = styled.img`

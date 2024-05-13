@@ -72,8 +72,10 @@ const NavigationBar = ({ recipientId, recipientData, isEditMode }) => {
                 <WriterCountIcon count={messageCount} recent={recentSenders} />
                 <WriterCountText count={messageCount} />
               </WriterCountWrapper>
-              <ReactionCount topReactions={topReactions} />
-              <DropReactions reactions={allReactions} />
+              <ReactionCountWrapper>
+                <ReactionCount topReactions={topReactions} />
+                <DropReactions reactions={allReactions} />
+              </ReactionCountWrapper>
             </PostStatsBox>
             <Divider />
             <ActionButtons>
@@ -155,7 +157,7 @@ const PostStats = styled.div`
 const PostStatsBox = styled.div`
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 24px;
 `;
 
 const WriterCountWrapper = styled.div`
@@ -166,6 +168,12 @@ const WriterCountWrapper = styled.div`
   @media ${({ theme }) => theme.device.Tablet} {
     display: none;
   }
+`;
+
+const ReactionCountWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
 `;
 
 const ActionButtons = styled.div`
@@ -182,9 +190,8 @@ const Divider = styled.div`
   background-color: ${({ theme }) => theme.colors.GRAY};
   margin: 0 14px;
 
-  @media ${({ theme }) => theme.device.Tablet} {
+  @media ${({ theme }) => theme.device.Mobile} {
     display: none;
-    margin: 0;
   }
 `;
 

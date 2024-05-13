@@ -44,13 +44,7 @@ const ShareButton = ({ handleToast, theme, isEditMode }) => {
       <ShareButtonWrapper ref={dropdownRef} onClick={toggleDropdown}>
         <Icons src={ShareIcon} alt="공유" isDarkMode={isDarkMode} />
         <DropDownList style={isOpen ? {} : { display: 'none' }}>
-          <DropDownItem onClick={kakaoShareWithDefault}>
-            <DropDownLabel>카카오톡 공유</DropDownLabel>
-          </DropDownItem>
           <DropDownItem onClick={kakaoShareWithtemplate}>
-            <DropDownLabel>카카오톡 공유</DropDownLabel>
-          </DropDownItem>
-          <DropDownItem onClick={kakaoShareWithScrap}>
             <DropDownLabel>카카오톡 공유</DropDownLabel>
           </DropDownItem>
           <DropDownItem onClick={handleCopyUrl}>

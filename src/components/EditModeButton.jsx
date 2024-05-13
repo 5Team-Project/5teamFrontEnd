@@ -45,7 +45,7 @@ const EditButtonWrapper = styled.button`
   text-align: center;
   justify-content: center;
   background-color: ${({ theme, isEditMode }) =>
-    isEditMode ? theme.colors.GREEN : theme.colors.WHITE};
+    isEditMode ? theme.colors.LIME : theme.colors.WHITE};
 
   display: flex;
   align-items: center;
@@ -53,15 +53,26 @@ const EditButtonWrapper = styled.button`
   position: relative;
 
   &:hover {
-    background-color: ${({ theme }) => theme.colors.PURPLE};
+    background-color: ${({ theme, isEditMode }) =>
+      isEditMode ? theme.colors.LIME_DD : theme.colors.PURPLE};
   }
 
   &:active {
-    background-color: ${({ theme }) => theme.colors.PURPLE_D};
+    background-color: ${({ theme, isEditMode }) =>
+      isEditMode ? theme.colors.ACTIVE : theme.colors.PURPLE_DD};
   }
 
   @media ${({ theme }) => theme.device.Mobile} {
     width: 36px;
+    &:hover {
+      background-color: ${({ theme, isEditMode }) =>
+        isEditMode ? theme.colors.LIME_DD : theme.colors.PURPLE};
+    }
+
+    &:active {
+      background-color: ${({ theme, isEditMode }) =>
+        isEditMode ? theme.colors.ACTIVE : theme.colors.PURPLE_DD};
+    }
   }
 `;
 

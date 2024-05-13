@@ -12,16 +12,13 @@ const WriterCountText = ({ count, isBgImg = false }) => {
   if (count > 0) {
     return (
       <WriterCountTextWrapper style={{ color: fontColor }}>
-        <span>{count}</span>
-        <CountText style={{ color: fontColor }}>명이 작성했어요!</CountText>
+        <CountText>{count}명이 작성했어요!</CountText>
       </WriterCountTextWrapper>
     );
   } else {
     return (
       <WriterCountTextWrapper style={{ color: fontColor }}>
-        <CountText style={{ color: fontColor }}>
-          첫번째 편지를 작성해보세요!
-        </CountText>
+        <CountText>첫번째 편지를 작성해보세요!</CountText>
       </WriterCountTextWrapper>
     );
   }

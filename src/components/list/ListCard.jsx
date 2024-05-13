@@ -102,7 +102,9 @@ const ListCard = ({ data }) => {
         >
           To. {data.name}
         </ListCardName>
-        <WriterCountIcon count={count} recent={recent} />
+        <IconWrapper>
+          <WriterCountIcon count={count} recent={recent} />
+        </IconWrapper>
         <WriterCountText count={count} isBgImg={isBgImg} />
       </ListCardMain>
       {!!reaction.length && <ListCardLine />}
@@ -171,4 +173,8 @@ const ListCardName = styled.span`
 const ListCardLine = styled.div`
   border-top: 1px solid ${({ theme }) => theme.colors.BLACK}1f;
   padding-bottom: 20px;
+`;
+
+const IconWrapper = styled.div`
+  transform: translateX(14px);
 `;
