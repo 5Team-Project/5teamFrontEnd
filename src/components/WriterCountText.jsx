@@ -11,7 +11,7 @@ const WriterCountText = ({ count, isBgImg = false }) => {
   const [fontColor, setFontColor] = useState();
 
   useEffect(() => {
-    setFontColor(!isBgImg ? theme.colors.DARKGRAY : theme.colors.WHITE);
+    setFontColor(!isBgImg ? '#484848' : '#fff');
   }, []);
 
   return (
