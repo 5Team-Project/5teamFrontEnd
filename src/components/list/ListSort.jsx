@@ -416,6 +416,7 @@ const ListSortWrap = styled.section`
   margin-top: 40px;
   max-width: 100%;
   position: relative;
+
   @media ${({ theme }) => theme.device.Mobile} {
     margin-top: 20px;
   }

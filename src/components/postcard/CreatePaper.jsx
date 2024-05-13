@@ -131,21 +131,21 @@ const CreatePaper = () => {
           이미지
         </ToggleButton>
       </ToggleWrapper>
-
-      {isColorSelected ? (
-        <BackgroundColorSelector
-          colors={COLOR_LIST}
-          selectedColor={selectedColor}
-          onColorClick={handleColorClick}
-        />
-      ) : (
-        <BackgroundImageSelector
-          images={backGroundImages}
-          selectedImage={selectedBackgroundImage}
-          onImageSelect={handleImageClick}
-        />
-      )}
-
+      <SelectorWrapper>
+        {isColorSelected ? (
+          <BackgroundColorSelector
+            colors={COLOR_LIST}
+            selectedColor={selectedColor}
+            onColorClick={handleColorClick}
+          />
+        ) : (
+          <BackgroundImageSelector
+            images={backGroundImages}
+            selectedImage={selectedBackgroundImage}
+            onImageSelect={handleImageClick}
+          />
+        )}
+      </SelectorWrapper>
       <SubmitButton
         type="submit"
         disabled={isButtonDisabled}
@@ -200,6 +200,7 @@ const SelectTextWrapper = styled.div`
 
 const ToggleWrapper = styled.div`
   display: flex;
+  min-width: 200px;
 `;
 
 const ToggleButton = styled.button`
@@ -221,8 +222,14 @@ const ToggleButton = styled.button`
   }
 `;
 
+const SelectorWrapper = styled.div`
+  display: flex;
+  min-width: 200px;
+`;
+
 const SubmitButton = styled.button`
   width: 100%;
+  min-width: 200px;
   height: 56px;
   top: 24px;
   left: 24px;

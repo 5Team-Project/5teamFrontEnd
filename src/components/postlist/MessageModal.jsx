@@ -116,6 +116,23 @@ const MessageBox = styled.div`
   border-top: 1px solid ${({ theme }) => theme.colors.GRAY};
   overflow: scroll;
   font-family: ${({ message }) => mapFontName(message.font)};
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: ${({ theme }) => theme.colors.GRAY};
+    border-radius: 3px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: ${({ theme }) => theme.colors.LIGHT_GRAY};
+  }
+
+  &::-webkit-scrollbar-button {
+    display: none;
+  }
 `;
 
 const MyModalBG = styled.div`

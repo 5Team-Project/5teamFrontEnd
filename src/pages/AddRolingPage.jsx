@@ -182,7 +182,7 @@ const FontContainer = styled.div`
   width: 320px;
   height: 98px;
   gap: 12px;
-  margin-top: 70px;
+  margin-top: 50px;
 `;
 
 const ButtonContainer = styled.div`
@@ -197,6 +197,8 @@ const SubmitButton = styled.button`
   padding: 14px 24px 14px 24px;
   gap: 10px;
   border-radius: 12px;
+  margin-bottom: 40px;
+  font-size: ${({ theme }) => theme.fontsize.LARGE_TXT};
 
   cursor: pointer;
   background-color: ${({ theme }) => theme.colors.PURPLE};
@@ -209,12 +211,6 @@ const SubmitButton = styled.button`
       color: ${({ theme }) => theme.colors.WHITE};
       cursor: not-allowed;
     `}
-`;
-
-const ErrorMessage = styled.div`
-  color: red;
-  font-size: 14px;
-  margin-top: 5px;
 `;
 
 export default AddRollingPaper;

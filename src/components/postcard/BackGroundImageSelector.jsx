@@ -21,7 +21,7 @@ const BackgroundImageSelector = ({ onImageSelect }) => {
           response.items.map((itemRef) => getDownloadURL(itemRef)),
         );
         setImageOptions(imageUrls);
-        setSelectedImage(imageUrls[0]);
+
         setIsLoading(false);
       } catch (error) {
         console.error(error);
@@ -38,8 +38,8 @@ const BackgroundImageSelector = ({ onImageSelect }) => {
   };
 
   const handleImageUpload = async (event) => {
-    const imageFile = event.target.files[0];
-    if (imageFile) {
+    if (event.target.files && event.target.files.length > 0) {
+      const imageFile = event.target.files[0];
       const storageRef = ref(storage, `background/${imageFile.name}`);
       uploadBytes(storageRef, imageFile)
         .then((snapshot) => {
@@ -121,16 +121,16 @@ const BackgroundImageSelector = ({ onImageSelect }) => {
 
 const SelectImageWrapper = styled.div`
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+
   gap: 15px;
   width: 100%;
-  max-width: 800px;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 0 15px;
 
   @media (max-width: 767px) {
+    flex-wrap: wrap;
     gap: 10px;
+    padding-left: 10px;
   }
 `;
 
@@ -155,8 +155,6 @@ const FileInput = styled.input`
 
 const FileInputLabel = styled.label`
   position: absolute;
-  top: 0;
-  left: 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -164,7 +162,7 @@ const FileInputLabel = styled.label`
   height: 100%;
   cursor: pointer;
   background-color: #f0f0f0;
-  border-radius: 8px;
+  border-radius: 15px;
   border: 1px solid #ccc;
   font-size: 16px;
   font-weight: 600;
@@ -178,12 +176,22 @@ const PlusIcon = styled(FaPlus)`
 const BackgroundImage = styled.div`
   width: 100%;
   padding-bottom: 100%;
-  border-radius: 8px;
+  border-radius: 15px;
   background-image: url(${({ src }) => src});
   background-size: cover;
   cursor: pointer;
   border: ${({ selected }) => (selected ? '2px solid #DCB9FF' : 'none')};
   position: relative;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+
+  ${({ selected }) =>
+    selected &&
+    css`
+      opacity: 0.6;
+    `}
 
   ${({ selected, isUploaded }) =>
     selected &&
@@ -197,7 +205,7 @@ const BackgroundImage = styled.div`
         transform: translate(-50%, -50%);
         font-size: 40px;
         font-weight: 700;
-        color: white;
+        color: black;
       }
     `}
 `;
@@ -209,7 +217,7 @@ const PreviewImageContainer = styled.div`
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  border-radius: 8px;
+  border-radius: 15px;
 `;
 
 const PreviewImage = styled.img`

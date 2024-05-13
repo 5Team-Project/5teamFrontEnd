@@ -101,6 +101,7 @@ const ProfileContainer = styled.div`
 `;
 
 const Description = styled.div`
+  min-width: 200px;
   font-size: ${({ theme }) => theme.fontsize.MEDIUM_TXT};
   font-weight: ${({ theme }) => theme.fontweight.REGULAR};
   line-height: 26px;
@@ -110,6 +111,7 @@ const Description = styled.div`
 `;
 
 const ProfileImageContainer = styled.div`
+  min-width: 80px;
   width: 80px;
   height: 80px;
   overflow: hidden;
@@ -138,6 +140,7 @@ const OptionsContainer = styled.div`
 `;
 
 const OptionImageContainer = styled.div`
+  min-width: 230px;
   display: flex;
   flex-direction: row;
 

@@ -19,35 +19,43 @@ const BackgroundColorSelector = ({ colors, selectedColor, onColorClick }) => {
 
 const SelectBackGroundWrapper = styled.div`
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+
   gap: 15px;
   width: 100%;
-  max-width: 800px;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 0 15px;
 
   @media (max-width: 767px) {
+    flex-wrap: wrap;
     gap: 10px;
+    padding-left: 10px;
   }
 `;
 
 const ColorButton = styled.button`
   width: calc(25% - 15px);
   padding-bottom: calc(25% - 15px);
-  border-radius: 8px;
+  border-radius: 15px;
   background-color: ${({ color }) => color};
   border: ${({ selected }) => (selected ? '2px solid #AB57FF' : 'none')};
   cursor: pointer;
   display: flex;
-  justify-content: center;
-  align-items: center;
   position: relative;
 
   @media (max-width: 767px) {
     width: calc(50% - 10px);
     padding-bottom: calc(50% - 10px);
   }
+
+  &:hover {
+    transform: scale(1.07);
+  }
+
+  ${({ selected }) =>
+    selected &&
+    css`
+      opacity: 0.6;
+    `}
 
   ${({ selected }) =>
     selected &&
@@ -60,7 +68,7 @@ const ColorButton = styled.button`
         transform: translate(-50%, -50%);
         font-size: 40px;
         font-weight: 700;
-        color: white;
+        color: black;
       }
     `}
 `;
