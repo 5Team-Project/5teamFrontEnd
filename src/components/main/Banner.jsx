@@ -136,7 +136,7 @@ const BannerTextBox = styled.div`
 const BannerLabel = styled.h2`
   width: 100%;
   font-size: 24px;
-  font-weight: 700;
+  font-weight: 400;
   line-height: 36px;
   text-align: left;
   color: #181818;

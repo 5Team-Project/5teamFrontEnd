@@ -180,17 +180,17 @@ const BackgroundImage = styled.div`
   background-image: url(${({ src }) => src});
   background-size: cover;
   cursor: pointer;
-  border: ${({ selected }) => (selected ? '2px solid #DCB9FF' : 'none')};
+  border: ${({ selected }) => (selected ? '2px solid #fab005' : 'none')};
   position: relative;
 
   &:hover {
-    transform: scale(1.1);
+    transform: scale(1.05);
   }
 
   ${({ selected }) =>
     selected &&
     css`
-      opacity: 0.6;
+      opacity: 0.7;
     `}
 
   ${({ selected, isUploaded }) =>
@@ -205,7 +205,7 @@ const BackgroundImage = styled.div`
         transform: translate(-50%, -50%);
         font-size: 40px;
         font-weight: 700;
-        color: black;
+        color: #f08c00;
       }
     `}
 `;

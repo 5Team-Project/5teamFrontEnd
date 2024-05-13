@@ -78,6 +78,7 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
     border: none;
     background-color: transparent;
+    font-family: 'BMJUATtf', 'Pretendard', 'NanumMyeongjo', 'NanumPen',  sans-serif;
     resize: none;
   }
 

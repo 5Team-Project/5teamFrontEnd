@@ -1,8 +1,8 @@
 export const lightTheme = {
   colors: {
-    PURPLE: '#DCB9FF',
-    PURPLE_D: '#AB57FF',
-    PURPLE_DD: '#6E0AD1',
+    PURPLE: '#ffd43b',
+    PURPLE_D: '#fcc419',
+    PURPLE_DD: '#fab005',
     ORANGE: '#FFC583',
     BLUE: '#7CD2FF',
     GREEN: '#9BE282',
@@ -11,7 +11,8 @@ export const lightTheme = {
     WHITE: '#FFFFFF',
     RED: '#DC3A3A',
     BLACK: '#000000',
-    SURFACE: '#F6F8FF',
+    YELLOW: '#fff9db',
+    SURFACE: '#fff9db',
   },
   fontsize: {
     TITLE: '28px',
@@ -36,9 +37,9 @@ export const lightTheme = {
 export const darkTheme = {
   darkModeBrightness: '70%',
   colors: {
-    PURPLE: '#4D2D6A',
-    PURPLE_D: '#3A1D51',
-    PURPLE_DD: '#2B1A3E',
+    PURPLE: '#fcc419',
+    PURPLE_D: '#F5B53B',
+    PURPLE_DD: '#fab005',
     ORANGE: '#B36B2E',
     BLUE: '#2D6A7A',
     GREEN: '#3D612D',
@@ -47,7 +48,8 @@ export const darkTheme = {
     WHITE: '#2b2b2b',
     RED: '#A32929',
     BLACK: '#fcfcfc',
-    SURFACE: '#dad1e3',
+    SURFACE: '#fff3bf',
+    YELLOW: '#fab005',
   },
   fontsize: {
     TITLE: '28px',
@@ -61,6 +63,7 @@ export const darkTheme = {
   fontweight: {
     BOLD: '700',
     REGULAR: '400',
+    THIN: '200',
   },
   device: {
     PC: `screen and (max-width: 1920px)`,

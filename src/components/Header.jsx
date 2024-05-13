@@ -48,7 +48,7 @@ const Header = ({ toggleTheme, isDarkMode }) => {
             borderRadius={12}
             uncheckedIcon={
               <IconWrapper>
-                <FaSun color="orange" size={16} />
+                <FaSun color="#fcc419" size={16} />
               </IconWrapper>
             }
             checkedIcon={
@@ -57,7 +57,7 @@ const Header = ({ toggleTheme, isDarkMode }) => {
               </IconWrapper>
             }
             onHandleColor="#9E9E9E"
-            offHandleColor="#FFC583"
+            offHandleColor="#ffe066"
           />
         </ButtonWrapper>
       </HeaderBox>

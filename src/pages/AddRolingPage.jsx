@@ -44,8 +44,9 @@ const AddRollingPaper = () => {
   useEffect(() => {
     const isInputEmpty = inputValue.trim() === '';
     const isQuillEmpty = quillValue === '' || quillValue === '<p><br></p>';
-    setIsButtonDisabled(isInputEmpty || isQuillEmpty);
-  }, [inputValue, quillValue]);
+    const isProfileSelect = selectedImage === '';
+    setIsButtonDisabled(isInputEmpty || isQuillEmpty || isProfileSelect);
+  }, [inputValue, quillValue, selectedImage]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
