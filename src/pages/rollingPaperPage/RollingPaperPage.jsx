@@ -2,9 +2,10 @@ import MessageList from '../../components/postlist/MessageList';
 import styled, { ThemeContext, css } from 'styled-components';
 import { useContext, useEffect, useState } from 'react';
 import { getMessage, getBackgroundByRecipientId } from '../../api/getMessage';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import NavigationBar from '../../components/NavigationBar';
 import { getDataByRecipientId } from '../../api/getDataByRecipientId';
+import ArrowLeftIcon from '../../assets/icons/IconArrowLeft.svg';
 
 const MESSAGE_LIMIT = 8;
 
@@ -104,6 +105,16 @@ const RollingPaperPage = () => {
     <>
       <NavigationBar recipientId={recipientId} recipientData={recipientData} />
       <MessageMainContainer bgImage={bgImage} bgColor={bgColor}>
+        <GoListPageButtonWrap>
+          <GoListPageButton>
+            <Link to={`/list`}>
+              <IconArrowLeft
+                src={ArrowLeftIcon}
+                alt="롤링페이퍼 목록페이지로 가기"
+              />
+            </Link>
+          </GoListPageButton>
+        </GoListPageButtonWrap>
         <MessageList
           messages={messages}
           recipientId={recipientId}
@@ -129,4 +140,38 @@ const MessageMainContainer = styled.div`
       : css`
           background-color: ${bgColor};
         `}
+`;
+const GoListPageButtonWrap = styled.div`
+  width: 100%;
+  height: 113px;
+  @media ${({ theme }) => theme.device.Tablet} {
+    height: 93px;
+  }
+  @media ${({ theme }) => theme.device.Mobile} {
+    height: 80px;
+  }
+`;
+const IconArrowLeft = styled.img``;
+const GoListPageButton = styled.button`
+  width: 1200px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  margin: 0 auto;
+  ${IconArrowLeft} {
+    width: 3rem;
+    height: 3rem;
+    @media ${({ theme }) => theme.device.Tablet} {
+      width: 2.5rem;
+    }
+    @media ${({ theme }) => theme.device.Mobile} {
+      width: 2rem;
+    }
+  }
+  @media ${({ theme }) => theme.device.Tablet} {
+    width: 720px;
+  }
+  @media ${({ theme }) => theme.device.Mobile} {
+    width: 320px;
+  }
 `;

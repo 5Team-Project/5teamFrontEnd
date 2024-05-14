@@ -199,7 +199,6 @@ export default MessageList;
 
 const MessageListContainer = styled.ul`
   margin: 0 auto;
-  padding-top: 113px;
   padding-bottom: 64px;
   width: 1200px;
   min-height: 100vh;
@@ -210,7 +209,6 @@ const MessageListContainer = styled.ul`
   grid-row-gap: 28px;
 
   @media ${({ theme }) => theme.device.Tablet} {
-    padding-top: 93px;
     width: 720px;
     grid-template-columns: repeat(2, 1fr);
     grid-auto-rows: 284px;
@@ -218,7 +216,6 @@ const MessageListContainer = styled.ul`
     grid-row-gap: 16px;
   }
   @media ${({ theme }) => theme.device.Mobile} {
-    padding-top: 80px;
     width: 320px;
     grid-template-columns: repeat(1, 1fr);
     grid-auto-rows: 230px;
