@@ -2,8 +2,6 @@ import { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled, { ThemeContext } from 'styled-components';
 
-import { getListCard } from '../../api/getListCard';
-
 import WriterCountIcon from '../WriterCountIcon';
 import WriterCountText from '../WriterCountText';
 import ReactionCount from '../ReactionCount';
@@ -11,9 +9,9 @@ import ReactionCount from '../ReactionCount';
 import ListCardSkeleton from './ListSkeleton';
 
 const ListCard = ({ data }) => {
-  const [count, setCount] = useState(0);
-  const [recent, setRecent] = useState([]);
-  const [reaction, setReaction] = useState([]);
+  const count = data.messageCount;
+  const recent = data.recentMessages;
+  const reaction = data.topReactions;
 
   const [isLoading, setIsLoading] = useState(true);
   const [isImageLoaded, setIsImageLoaded] = useState(true);
@@ -31,21 +29,9 @@ const ListCard = ({ data }) => {
   ];
 
   useEffect(() => {
-    const handleLoad = async () => {
-      try {
-        const res = await getListCard(data.id);
-        setCount(res.messageCount);
-        setRecent(res.recentMessages);
-        setReaction(res.topReactions);
-        setTimeout(() => {
-          setIsLoading(false);
-        }, 500);
-      } catch (e) {
-        console.error(e);
-        setIsLoading(false);
-      }
-    };
-    handleLoad();
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 500);
   }, []);
 
   useEffect(() => {

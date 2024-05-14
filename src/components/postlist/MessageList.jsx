@@ -12,7 +12,7 @@ import ConfirmModal from './ConfirmModal';
 
 const RELATIONSHIPS = {
   가족: 'GREEN',
-  동료: 'PURPLE',
+  동료: 'VIOLET',
   친구: 'BLUE',
   지인: 'ORANGE',
 };
@@ -170,13 +170,13 @@ const MessageList = ({
         closeModal={closeModal}
       />
       <MessageListContainer>
-        <AddMessageContainer>
-          <MessageAddButton>
-            <Link to={`/post/${recipientId}/message`}>
+        <Link to={`/post/${recipientId}/message`}>
+          <AddMessageContainer>
+            <MessageAddButton>
               <IconPlus src={PlusIcon} alt="메세지 추가" />
-            </Link>
-          </MessageAddButton>
-        </AddMessageContainer>
+            </MessageAddButton>
+          </AddMessageContainer>
+        </Link>
         {messages &&
           messages.map((message) => {
             return (
@@ -230,6 +230,8 @@ const MessageContainer = styled.div`
   padding: 28px 24px 24px 24px;
   position: relative;
   justify-content: center;
+  cursor: pointer;
+  margin-top:113px;
   transition: all 0.3s;
   &:hover {
     transform: translateY(-10px);
@@ -239,10 +241,12 @@ const MessageContainer = styled.div`
   @media ${({ theme }) => theme.device.Tablet} {
     width: 352px;
     height: 284px;
+    margin-top: 93px;
   }
   @media ${({ theme }) => theme.device.Mobile} {
     width: 320px;
     height: 230px;
+    margin-top: 80px;
   }
 `;
 const AddMessageContainer = styled(MessageContainer)`
@@ -325,7 +329,7 @@ const MessageTextContainer = styled.div`
   gap: 16px;
 `;
 const MessageText = styled.div`
-  height: 104px;
+  height: 102px;
   overflow: hidden;
   word-wrap: break-word;
   word-break: break-all;
@@ -336,6 +340,10 @@ const MessageText = styled.div`
   line-height: 20px;
   font-size: ${({ theme }) => theme.fontsize.MEDIUM_TXT};
   font-weight: ${({ theme }) => theme.fontweight.REGULAR};
+  @media ${({ theme }) => theme.device.Tablet} {
+    height: 102px;
+    -webkit-line-clamp: 5;
+  }
   @media ${({ theme }) => theme.device.Mobile} {
     height: 42px;
     -webkit-line-clamp: 2;
