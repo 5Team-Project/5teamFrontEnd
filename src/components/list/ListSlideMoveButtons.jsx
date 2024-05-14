@@ -40,7 +40,7 @@ const StyledButton = styled.button`
   position: absolute;
   ${({ direction }) =>
     direction === 'left' ? 'left: -10px;' : 'right: -10px;'}
-  top: 165px;
+  top: 150px;
 
   border: 1px solid #dadcdf;
   border-radius: 64px;
