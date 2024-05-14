@@ -5,8 +5,9 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import Switch from 'react-switch';
 import { FaSun, FaMoon } from 'react-icons/fa';
 
-import LogoIconFortune from '../assets/images/LogoIconFortune.jpeg';
-import LogoTextFortune from '../assets/images/LogoTextFortune.jpeg';
+import LogoIconFortune from '../assets/images/LogoIconFortune.png';
+import LogoTextFortune from '../assets/images/LogoTextFortune.png';
+import LogoArchFortune from '../assets/images/LogoArchFortune.png';
 
 const Header = ({ toggleTheme, isDarkMode }) => {
   const [showButton, setShowButton] = useState(false);
@@ -32,6 +33,7 @@ const Header = ({ toggleTheme, isDarkMode }) => {
         <Logo href="/">
           <IconLogoImg src={LogoIconFortune} alt="포춘아이콘로고" />
           <TextLogoImg src={LogoTextFortune} alt="포춘텍스트로고" />
+          <ArchLogoImg src={LogoArchFortune} alt="포춘로고" />
         </Logo>
         <ButtonWrapper>
           {showButton && (
@@ -104,13 +106,28 @@ const Logo = styled.a`
 const IconLogoImg = styled.img`
   width: 28px;
   height: 28px;
+  @media ${({ theme }) => theme.device.Mobile} {
+    display: none;
+  }
 `;
 
 const TextLogoImg = styled.img`
+  width: 110px;
   height: 28px;
+  object-fit: cover;
 
   @media ${({ theme }) => theme.device.Mobile} {
     display: none;
+  }
+`;
+
+const ArchLogoImg = styled.img`
+  width: 50px;
+  display: none;
+  object-fit: cover;
+
+  @media ${({ theme }) => theme.device.Mobile} {
+    display: block;
   }
 `;
 
