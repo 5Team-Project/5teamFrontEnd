@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import defaultImage from '../../assets/images/defaultimg.png';
 import { getProfileImg, getProfileImgs } from '../../api/getProfileImg';
@@ -7,22 +7,30 @@ import { storage } from '../../utils/firebase';
 import { ProfileImageSkeleton, OptionImageSkeleton } from './Skeleton';
 
 const ProfileImageComponent = ({ onImageSelect }) => {
-  const [selectedImage, setSelectedImage] = useState('');
+  const [selectedImage, setSelectedImage] = useState(defaultImage);
   const [imageOptions, setImageOptions] = useState([]);
-  const [isProfileImageLoading, setIsProfileImageLoading] = useState(true);
-  const [isOptionsLoading, setIsOptionsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
+  const profileImageRef = useRef(null);
+  const optionImagesRef = useRef([]);
 
   useEffect(() => {
     const fetchProfileImages = async () => {
       try {
-        setIsProfileImageLoading(false);
+        setIsLoading(true);
         const response = await getProfileImgs();
         setImageOptions(response.imageUrls);
-        setIsOptionsLoading(false);
+        setIsLoading(false);
+
+        // 스켈레톤 컴포넌트가 마운트된 후 실행
+        if (profileImageRef.current) {
+          profileImageRef.current.src = selectedImage;
+        }
+        optionImagesRef.current.forEach((ref, index) => {
+          ref.src = imageOptions[index];
+        });
       } catch (error) {
         console.error(error);
-        setIsProfileImageLoading(false);
-        setIsOptionsLoading(false);
+        setIsLoading(false);
       }
     };
     fetchProfileImages();
@@ -57,17 +65,12 @@ const ProfileImageComponent = ({ onImageSelect }) => {
   return (
     <ProfileContainer>
       <ProfileImageContainer>
-        {selectedImage ? (
-          <ProfileImage
-            src={selectedImage}
-            alt="Profile Image"
-            onClick={() => document.getElementById('fileInput').click()}
-          />
-        ) : isProfileImageLoading ? (
+        {isLoading ? (
           <ProfileImageSkeleton />
         ) : (
           <ProfileImage
-            src={defaultImage}
+            ref={profileImageRef}
+            src={selectedImage}
             alt="Profile Image"
             onClick={() => document.getElementById('fileInput').click()}
           />
@@ -83,13 +86,14 @@ const ProfileImageComponent = ({ onImageSelect }) => {
       <OptionsContainer>
         <Description>프로필 이미지를 선택해주세요!</Description>
         <OptionImageContainer>
-          {isOptionsLoading
+          {isLoading
             ? Array.from({ length: 8 }).map((_, index) => (
                 <OptionImageSkeleton key={index} />
               ))
             : imageOptions.map((imageUrl, index) => (
                 <OptionImage
                   key={index}
+                  ref={(el) => (optionImagesRef.current[index] = el)}
                   src={imageUrl}
                   alt={`Option ${index + 1}`}
                   onClick={() => handleImageClick(imageUrl)}
@@ -148,7 +152,7 @@ const OptionsContainer = styled.div`
 `;
 
 const OptionImageContainer = styled.div`
-  max-width: 240px;
+  min-width: 230px;
   display: flex;
   flex-direction: row;
 
@@ -167,7 +171,8 @@ const OptionImage = styled.img`
   object-fit: cover;
   margin: 5px 5px;
   @media (max-width: 767px) {
-    margin: 5px 5px;
+    // 모바일 화면 크기에서
+    margin: 5px 5px; // 가로 여백 조정
   }
 `;
 
