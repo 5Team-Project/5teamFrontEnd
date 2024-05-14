@@ -7,7 +7,10 @@ import { FaSun, FaMoon } from 'react-icons/fa';
 
 import LogoIconFortune from '../assets/images/LogoIconFortune.png';
 import LogoTextFortune from '../assets/images/LogoTextFortune.png';
+import LogoTextFortuneGray from '../assets/images/LogoTextFortuneGray.png';
+import LogoTextFortune80 from '../assets/images/LogoTextFortune80.png';
 import LogoArchFortune from '../assets/images/LogoArchFortune.png';
+import LogoArchFortuneGray from '../assets/images/LogoArchFortuneGray.png';
 
 const Header = ({ toggleTheme, isDarkMode }) => {
   const [showButton, setShowButton] = useState(false);
@@ -32,8 +35,17 @@ const Header = ({ toggleTheme, isDarkMode }) => {
       <HeaderBox>
         <Logo href="/">
           <IconLogoImg src={LogoIconFortune} alt="포춘아이콘로고" />
-          <TextLogoImg src={LogoTextFortune} alt="포춘텍스트로고" />
-          <ArchLogoImg src={LogoArchFortune} alt="포춘로고" />
+          {isDarkMode ? (
+            <>
+              <TextLogoImgDark src={LogoTextFortune80} alt="포춘텍스트로고" />
+              <ArchLogoImgDark src={LogoArchFortuneGray} alt="포춘로고" />
+            </>
+          ) : (
+            <>
+              <TextLogoImg src={LogoTextFortune} alt="포춘텍스트로고" />
+              <ArchLogoImg src={LogoArchFortune} alt="포춘로고" />
+            </>
+          )}
         </Logo>
         <ButtonWrapper>
           {showButton && (
@@ -122,6 +134,25 @@ const TextLogoImg = styled.img`
 `;
 
 const ArchLogoImg = styled.img`
+  width: 50px;
+  display: none;
+  object-fit: cover;
+
+  @media ${({ theme }) => theme.device.Mobile} {
+    display: block;
+  }
+`;
+
+const TextLogoImgDark = styled.img`
+  width: 110px;
+  height: 28px;
+  object-fit: cover;
+
+  @media ${({ theme }) => theme.device.Mobile} {
+    display: none;
+  }
+`;
+const ArchLogoImgDark = styled.img`
   width: 50px;
   display: none;
   object-fit: cover;
