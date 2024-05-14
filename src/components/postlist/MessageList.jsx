@@ -428,6 +428,8 @@ const DeletePaperButton = styled.div`
 
   border-radius: 8px;
 
+  cursor: pointer;
+
   &:hover {
     background-color: ${({ theme }) => theme.colors.DARK_DARKGRAY};
   }

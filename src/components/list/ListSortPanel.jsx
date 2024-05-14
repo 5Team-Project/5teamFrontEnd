@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 import { getList } from '../../api/getList';
@@ -31,7 +31,7 @@ const ListSortPanel = ({ listSort, theme }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isUpdate, setIsUpdate] = useState(false);
 
-  const { deviceSize } = useDeviceSize();
+  const deviceSize = useDeviceSize();
 
   const [currentIndex, setCurrentIndex] = useState(6);
   const [currentLength, setCurrentLength] = useState(3);
