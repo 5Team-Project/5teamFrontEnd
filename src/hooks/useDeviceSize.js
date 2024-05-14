@@ -32,7 +32,7 @@ const useDeviceSize = () => {
     };
   }, []);
 
-  return { deviceSize };
+  return deviceSize;
 };
 
 export default useDeviceSize;

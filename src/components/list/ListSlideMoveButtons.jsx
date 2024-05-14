@@ -4,7 +4,7 @@ import arrowRight from '../../assets/icons/IconArrowRight.svg';
 import useDeviceSize from '../../hooks/useDeviceSize';
 
 const ListSlideMoveButtons = ({ handlePrev, handleNext, isDarkMode }) => {
-  const { deviceSize } = useDeviceSize();
+  const deviceSize = useDeviceSize();
   return (
     <>
       {deviceSize === 'desktop' && (
