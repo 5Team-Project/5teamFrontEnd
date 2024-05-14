@@ -5,6 +5,13 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import Switch from 'react-switch';
 import { FaSun, FaMoon } from 'react-icons/fa';
 
+import LogoIconFortune from '../assets/images/LogoIconFortune.png';
+import LogoTextFortune from '../assets/images/LogoTextFortune.png';
+import LogoTextFortuneGray from '../assets/images/LogoTextFortuneGray.png';
+import LogoTextFortune80 from '../assets/images/LogoTextFortune80.png';
+import LogoArchFortune from '../assets/images/LogoArchFortune.png';
+import LogoArchFortuneGray from '../assets/images/LogoArchFortuneGray.png';
+
 const Header = ({ toggleTheme, isDarkMode }) => {
   const [showButton, setShowButton] = useState(false);
   const location = useLocation();
@@ -27,8 +34,18 @@ const Header = ({ toggleTheme, isDarkMode }) => {
     <HeaderWrapper>
       <HeaderBox>
         <Logo href="/">
-          <IconLogoImg src={IconLogo} alt="롤링로고" />
-          <TextLogo>Rolling</TextLogo>
+          <IconLogoImg src={LogoIconFortune} alt="포춘아이콘로고" />
+          {isDarkMode ? (
+            <>
+              <TextLogoImgDark src={LogoTextFortune80} alt="포춘텍스트로고" />
+              <ArchLogoImgDark src={LogoArchFortuneGray} alt="포춘로고" />
+            </>
+          ) : (
+            <>
+              <TextLogoImg src={LogoTextFortune} alt="포춘텍스트로고" />
+              <ArchLogoImg src={LogoArchFortune} alt="포춘로고" />
+            </>
+          )}
         </Logo>
         <ButtonWrapper>
           {showButton && (
@@ -101,14 +118,47 @@ const Logo = styled.a`
 const IconLogoImg = styled.img`
   width: 28px;
   height: 28px;
+  @media ${({ theme }) => theme.device.Mobile} {
+    display: none;
+  }
 `;
 
-const TextLogo = styled.p`
-  font-size: ${({ theme }) => theme.fontsize.S_TITLE};
-  font-weight: ${({ theme }) => theme.fontweight.BOLD};
+const TextLogoImg = styled.img`
+  width: 110px;
+  height: 28px;
+  object-fit: cover;
 
   @media ${({ theme }) => theme.device.Mobile} {
     display: none;
+  }
+`;
+
+const ArchLogoImg = styled.img`
+  width: 50px;
+  display: none;
+  object-fit: cover;
+
+  @media ${({ theme }) => theme.device.Mobile} {
+    display: block;
+  }
+`;
+
+const TextLogoImgDark = styled.img`
+  width: 110px;
+  height: 28px;
+  object-fit: cover;
+
+  @media ${({ theme }) => theme.device.Mobile} {
+    display: none;
+  }
+`;
+const ArchLogoImgDark = styled.img`
+  width: 50px;
+  display: none;
+  object-fit: cover;
+
+  @media ${({ theme }) => theme.device.Mobile} {
+    display: block;
   }
 `;
 
