@@ -148,7 +148,7 @@ const OptionsContainer = styled.div`
 `;
 
 const OptionImageContainer = styled.div`
-  min-width: 230px;
+  max-width: 240px;
   display: flex;
   flex-direction: row;
 
@@ -167,8 +167,7 @@ const OptionImage = styled.img`
   object-fit: cover;
   margin: 5px 5px;
   @media (max-width: 767px) {
-    // 모바일 화면 크기에서
-    margin: 5px 5px; // 가로 여백 조정
+    margin: 5px 5px;
   }
 `;
 
