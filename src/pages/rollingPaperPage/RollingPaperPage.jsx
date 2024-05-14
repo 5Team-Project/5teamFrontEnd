@@ -1,5 +1,5 @@
 import MessageList from '../../components/postlist/MessageList';
-import styled, { ThemeContext, css } from 'styled-components';
+import styled, { ThemeContext, css, keyframes } from 'styled-components';
 import { useContext, useEffect, useState } from 'react';
 import { getMessage, getBackgroundByRecipientId } from '../../api/getMessage';
 import { useParams, Link } from 'react-router-dom';
@@ -106,14 +106,17 @@ const RollingPaperPage = () => {
       <NavigationBar recipientId={recipientId} recipientData={recipientData} />
       <MessageMainContainer bgImage={bgImage} bgColor={bgColor}>
         <GoListPageButtonWrap>
-          <GoListPageButton>
-            <Link to={`/list`}>
-              <IconArrowLeft
-                src={ArrowLeftIcon}
-                alt="롤링페이퍼 목록페이지로 가기"
-              />
+          <GoListPageButtonBox>
+            <Link to={`/list`} as="button" type="button">
+              <GoListPageButton type="button">
+                <IconArrowLeft
+                  src={ArrowLeftIcon}
+                  alt="롤링페이퍼 목록페이지로 가기"
+                />
+                <GoListPageLabel>리스트로 돌아가기</GoListPageLabel>
+              </GoListPageButton>
             </Link>
-          </GoListPageButton>
+          </GoListPageButtonBox>
         </GoListPageButtonWrap>
         <MessageList
           messages={messages}
@@ -143,39 +146,66 @@ const MessageMainContainer = styled.div`
 `;
 const GoListPageButtonWrap = styled.div`
   width: 100%;
-  height: 113px;
-  @media ${({ theme }) => theme.device.Tablet} {
-    height: 93px;
-  }
-  @media ${({ theme }) => theme.device.Mobile} {
-    height: 80px;
-  }
+  height: 80px;
 `;
-const IconArrowLeft = styled.img``;
-const GoListPageButton = styled.button`
+
+const GoListPageButtonBox = styled.div`
   width: 1200px;
   height: 100%;
+  margin: 0 auto;
+
   display: flex;
   align-items: center;
-  margin: 0 auto;
-  transition: all 0.3s;
-  ${IconArrowLeft} {
-    width: 3rem;
-    height: 3rem;
-    @media ${({ theme }) => theme.device.Tablet} {
-      width: 2.5rem;
-    }
-    @media ${({ theme }) => theme.device.Mobile} {
-      width: 2rem;
-    }
-  }
-  &:hover {
-    transform: translateY(-10px);
-  }
+
   @media ${({ theme }) => theme.device.Tablet} {
     width: 720px;
   }
   @media ${({ theme }) => theme.device.Mobile} {
     width: 320px;
   }
+
+  & a {
+    text-decoration: none;
+  }
+`;
+
+const slideIn = keyframes`
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+`;
+
+const GoListPageLabel = styled.p`
+  font-size: ${({ theme }) => theme.fontsize.S_TITLE};
+  color: ${({ theme }) => theme.fontsize.DARK_DARKGRAY};
+  visibility: hidden;
+  opacity: 0;
+`;
+
+const GoListPageButton = styled.button`
+  width: 25px;
+  height: 25px;
+  transition: all 0.3s;
+
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  &:hover {
+    ${GoListPageLabel} {
+      animation: ${slideIn} 0.3s forwards; /* 호버 시에 애니메이션 효과 적용 */
+      visibility: visible;
+      opacity: 1;
+    }
+  }
+`;
+
+const IconArrowLeft = styled.img`
+  width: 100%;
+  height: 100%;
 `;

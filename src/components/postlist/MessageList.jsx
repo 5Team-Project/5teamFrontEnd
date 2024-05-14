@@ -198,7 +198,7 @@ const MessageList = ({
 export default MessageList;
 
 const MessageListContainer = styled.ul`
-  margin: 113px auto;
+  margin: 0 auto;
   padding-bottom: 64px;
   width: 1200px;
   min-height: 100vh;
@@ -402,7 +402,7 @@ const DeletePaperButton = styled.div`
   gap: 4px;
 
   position: absolute;
-  top: 10px;
+  top: -60px;
 
   background-color: ${({ theme }) => theme.colors.DARK_GRAY};
   color: ${({ theme }) => theme.colors.DARKGRAY};
