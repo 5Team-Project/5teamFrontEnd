@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import PlusIcon from '../../assets/icons/ic_plus.svg';
+import PlusIcon from '../../assets/icons/IconPlus.svg';
 import styled, { ThemeContext } from 'styled-components';
 import { formatDate } from '../../utils/formatDate';
 import MessageModal from './MessageModal';
@@ -172,8 +172,8 @@ const MessageList = ({
       <MessageListContainer>
         <AddMessageContainer>
           <MessageAddButton>
-            <Link to={`/post/${recipientId}/message/`}>
-              <Icon src={PlusIcon} alt="메세지 추가" />
+            <Link to={`/post/${recipientId}/message`}>
+              <IconPlus src={PlusIcon} alt="메세지 추가" />
             </Link>
           </MessageAddButton>
         </AddMessageContainer>
@@ -199,7 +199,6 @@ export default MessageList;
 
 const MessageListContainer = styled.ul`
   margin: 0 auto;
-  padding-top: 113px;
   padding-bottom: 64px;
   width: 1200px;
   min-height: 100vh;
@@ -210,7 +209,6 @@ const MessageListContainer = styled.ul`
   grid-row-gap: 28px;
 
   @media ${({ theme }) => theme.device.Tablet} {
-    padding-top: 93px;
     width: 720px;
     grid-template-columns: repeat(2, 1fr);
     grid-auto-rows: 284px;
@@ -218,7 +216,6 @@ const MessageListContainer = styled.ul`
     grid-row-gap: 16px;
   }
   @media ${({ theme }) => theme.device.Mobile} {
-    padding-top: 80px;
     width: 320px;
     grid-template-columns: repeat(1, 1fr);
     grid-auto-rows: 230px;
@@ -233,6 +230,10 @@ const MessageContainer = styled.div`
   padding: 28px 24px 24px 24px;
   position: relative;
   justify-content: center;
+  transition: all 0.3s;
+  &:hover {
+    transform: translateY(-10px);
+  }
   & p {
   }
   @media ${({ theme }) => theme.device.Tablet} {
@@ -248,9 +249,13 @@ const AddMessageContainer = styled(MessageContainer)`
   display: flex;
   justify-content: center;
   align-items: center;
+  transition: all 0.3s;
+  &:hover {
+    transform: translateY(-10px);
+  }
 `;
 
-const Icon = styled.img`
+const IconPlus = styled.img`
   height: 24px;
   width: 24px;
 `;
@@ -262,7 +267,7 @@ const MessageAddButton = styled.button`
   height: 56px;
   border-radius: 50%;
   background-color: ${({ theme }) => theme.colors.DARKGRAY};
-  ${Icon} {
+  ${IconPlus} {
     width: 1.5rem;
     height: 1.5rem;
   }

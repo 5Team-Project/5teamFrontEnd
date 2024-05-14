@@ -2,18 +2,19 @@ import MessageList from '../../components/postlist/MessageList';
 import styled, { ThemeContext, css } from 'styled-components';
 import { useContext, useEffect, useState } from 'react';
 import { getMessage, getBackgroundByRecipientId } from '../../api/getMessage';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import NavigationBar from '../../components/NavigationBar';
 import { getDataByRecipientId } from '../../api/getDataByRecipientId';
+import ArrowLeftIcon from '../../assets/icons/IconArrowLeft.svg';
 
 const MESSAGE_LIMIT = 8;
 
-const CONVERT_BGCOLOR = {
-  green: 'GREEN',
-  purple: 'PURPLE',
-  blue: 'BLUE',
-  beige: 'ORANGE',
-};
+const COLOR_LIST = [
+  { value: '#FFE5B4', name: 'beige' },
+  { value: '#DCB9FF', name: 'purple' },
+  { value: '#B9E0FF', name: 'blue' },
+  { value: '#B3F0C8', name: 'green' },
+];
 
 const RollingPaperPage = () => {
   const themeContext = useContext(ThemeContext);
@@ -27,6 +28,7 @@ const RollingPaperPage = () => {
   const [recipientData, setRecipientData] = useState({});
 
   const [bgImage, setBgImage] = useState();
+  const [resColor, setResColor] = useState('');
   const [bgColor, setBgColor] = useState('');
 
   const handleScroll = () => {
@@ -76,10 +78,21 @@ const RollingPaperPage = () => {
     const loadBackground = async (recipientId) => {
       const responseBackground = await getBackgroundByRecipientId(recipientId);
       setBgImage(responseBackground.backgroundImageURL);
-      setBgColor(responseBackground.backgroundColor);
+      setResColor(responseBackground.backgroundColor);
     };
     loadBackground(recipientId);
   }, [recipientId]);
+
+  useEffect(() => {
+    const tempColor = COLOR_LIST.find((elementColor) => {
+      return elementColor.name === resColor;
+    });
+    if (tempColor) {
+      setBgColor(tempColor.value);
+    } else {
+      setBgColor('#FFFFFF');
+    }
+  }, [resColor]);
 
   useEffect(() => {
     window.addEventListener('scroll', handleScroll);
@@ -92,6 +105,16 @@ const RollingPaperPage = () => {
     <>
       <NavigationBar recipientId={recipientId} recipientData={recipientData} />
       <MessageMainContainer bgImage={bgImage} bgColor={bgColor}>
+        <GoListPageButtonWrap>
+          <GoListPageButton>
+            <Link to={`/list`}>
+              <IconArrowLeft
+                src={ArrowLeftIcon}
+                alt="롤링페이퍼 목록페이지로 가기"
+              />
+            </Link>
+          </GoListPageButton>
+        </GoListPageButtonWrap>
         <MessageList
           messages={messages}
           recipientId={recipientId}
@@ -106,7 +129,7 @@ export default RollingPaperPage;
 const MessageMainContainer = styled.div`
   width: 100%;
   height: auto;
-  ${({ bgImage, bgColor, theme }) =>
+  ${({ bgImage, bgColor }) =>
     bgImage
       ? css`
           background-image: url(${bgImage});
@@ -115,6 +138,44 @@ const MessageMainContainer = styled.div`
           background-size: cover;
         `
       : css`
-          background-color: ${theme.colors[CONVERT_BGCOLOR[bgColor]]};
+          background-color: ${bgColor};
         `}
+`;
+const GoListPageButtonWrap = styled.div`
+  width: 100%;
+  height: 113px;
+  @media ${({ theme }) => theme.device.Tablet} {
+    height: 93px;
+  }
+  @media ${({ theme }) => theme.device.Mobile} {
+    height: 80px;
+  }
+`;
+const IconArrowLeft = styled.img``;
+const GoListPageButton = styled.button`
+  width: 1200px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  margin: 0 auto;
+  transition: all 0.3s;
+  ${IconArrowLeft} {
+    width: 3rem;
+    height: 3rem;
+    @media ${({ theme }) => theme.device.Tablet} {
+      width: 2.5rem;
+    }
+    @media ${({ theme }) => theme.device.Mobile} {
+      width: 2rem;
+    }
+  }
+  &:hover {
+    transform: translateY(-10px);
+  }
+  @media ${({ theme }) => theme.device.Tablet} {
+    width: 720px;
+  }
+  @media ${({ theme }) => theme.device.Mobile} {
+    width: 320px;
+  }
 `;
