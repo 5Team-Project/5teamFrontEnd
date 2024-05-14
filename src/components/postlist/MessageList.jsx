@@ -352,6 +352,7 @@ const DeleteMessageButton = styled.button`
   height: 36px;
   border-radius: 6px;
   border: 1px solid ${({ theme }) => theme.colors.GRAY};
+  background-color: ${({ theme }) => theme.colors.WHITE};
 
   font-size: 16px;
   line-height: 20px;
