@@ -50,41 +50,41 @@ const MessageListItem = ({
   };
 
   return (
-    <MessageContainer>
-      <ProfileContainer>
-        <ProfileImgWrap>
-          <ProfileImg src={message.profileImageURL} alt="프로필 이미지" />
-        </ProfileImgWrap>
-        <ProfileTextWrap>
-          <p>
-            From. <SenderName>{message.sender}</SenderName>
-          </p>
-          <ProfileRelation relation={message.relationship}>
-            {message.relationship}
-          </ProfileRelation>
-        </ProfileTextWrap>
-        {showDeleteButton && (
-          <>
+    <>
+      <ConfirmModal
+        isConfirmModalOpen={isConfirmModalOpen}
+        closeConfirmModal={closeConfirmModal}
+        handleDelete={handleDeleteMessage}
+      />
+      <MessageContainer>
+        <ProfileContainer>
+          <ProfileImgWrap>
+            <ProfileImg src={message.profileImageURL} alt="프로필 이미지" />
+          </ProfileImgWrap>
+          <ProfileTextWrap>
+            <p>
+              From. <SenderName>{message.sender}</SenderName>
+            </p>
+            <ProfileRelation relation={message.relationship}>
+              {message.relationship}
+            </ProfileRelation>
+          </ProfileTextWrap>
+          {showDeleteButton && (
             <DeleteMessageButton onClick={openConfirmModal} type="button">
               <Icons src={DeleteButton} alt="메세지삭제" />
             </DeleteMessageButton>
-            <ConfirmModal
-              isConfirmModalOpen={isConfirmModalOpen}
-              closeConfirmModal={closeConfirmModal}
-              handleDelete={handleDeleteMessage}
-            />
-          </>
-        )}
-      </ProfileContainer>
-      <MessageHr />
-      <MessageTextContainer>
-        <MessageText
-          dangerouslySetInnerHTML={{ __html: message.content }}
-          style={{ fontFamily: mapFontName(message.font) }}
-        />{' '}
-        <p>{formatDate(message.createdAt)}</p>
-      </MessageTextContainer>
-    </MessageContainer>
+          )}
+        </ProfileContainer>
+        <MessageHr />
+        <MessageTextContainer>
+          <MessageText
+            dangerouslySetInnerHTML={{ __html: message.content }}
+            style={{ fontFamily: mapFontName(message.font) }}
+          />{' '}
+          <p>{formatDate(message.createdAt)}</p>
+        </MessageTextContainer>
+      </MessageContainer>
+    </>
   );
 };
 const MessageList = ({
@@ -231,7 +231,7 @@ const MessageContainer = styled.div`
   position: relative;
   justify-content: center;
   cursor: pointer;
-  margin-top:113px;
+
   transition: all 0.3s;
   &:hover {
     transform: translateY(-10px);
@@ -355,6 +355,7 @@ const DeleteMessageButton = styled.button`
   height: 36px;
   border-radius: 6px;
   border: 1px solid ${({ theme }) => theme.colors.GRAY};
+  background-color: ${({ theme }) => theme.colors.WHITE};
 
   font-size: 16px;
   line-height: 20px;
@@ -368,6 +369,13 @@ const DeleteMessageButton = styled.button`
   position: absolute;
   top: 28px;
   right: 32px;
+
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.DARK_GRAY};
+  }
+  &:active {
+    background-color: ${({ theme }) => theme.colors.RED};
+  }
 
   @media ${({ theme }) => theme.device.Mobile} {
     width: 36px;
@@ -410,7 +418,7 @@ const DeletePaperButton = styled.div`
   gap: 4px;
 
   position: absolute;
-  top: 10px;
+  top: -60px;
 
   background-color: ${({ theme }) => theme.colors.DARK_GRAY};
   color: ${({ theme }) => theme.colors.DARKGRAY};
