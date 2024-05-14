@@ -170,13 +170,13 @@ const MessageList = ({
         closeModal={closeModal}
       />
       <MessageListContainer>
-        <AddMessageContainer>
-          <MessageAddButton>
-            <Link to={`/post/${recipientId}/message`}>
+        <Link to={`/post/${recipientId}/message`}>
+          <AddMessageContainer>
+            <MessageAddButton>
               <IconPlus src={PlusIcon} alt="메세지 추가" />
-            </Link>
-          </MessageAddButton>
-        </AddMessageContainer>
+            </MessageAddButton>
+          </AddMessageContainer>
+        </Link>
         {messages &&
           messages.map((message) => {
             return (
