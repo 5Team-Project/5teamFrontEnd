@@ -231,6 +231,7 @@ const MessageContainer = styled.div`
   position: relative;
   justify-content: center;
   cursor: pointer;
+
   transition: all 0.3s;
   &:hover {
     transform: translateY(-10px);
@@ -240,10 +241,12 @@ const MessageContainer = styled.div`
   @media ${({ theme }) => theme.device.Tablet} {
     width: 352px;
     height: 284px;
+    margin-top: 93px;
   }
   @media ${({ theme }) => theme.device.Mobile} {
     width: 320px;
     height: 230px;
+    margin-top: 80px;
   }
 `;
 const AddMessageContainer = styled(MessageContainer)`
