@@ -12,7 +12,7 @@ import ConfirmModal from './ConfirmModal';
 
 const RELATIONSHIPS = {
   가족: 'GREEN',
-  동료: 'PURPLE',
+  동료: 'VIOLET',
   친구: 'BLUE',
   지인: 'ORANGE',
 };
