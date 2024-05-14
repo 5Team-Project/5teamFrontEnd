@@ -40,7 +40,7 @@ const GlobalStyle = createGlobalStyle`
 
   * {
   box-sizing: border-box;
-  font-family: 'Pretendard', 'BMJUATtf', 'NanumMyeongjo', 'NanumPen',  sans-serif;
+  font-family: 'BMJUATtf', 'NanumMyeongjo', 'NanumPen',  sans-serif;
 }
 
   p {
@@ -78,7 +78,7 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
     border: none;
     background-color: transparent;
-    font-family: 'BMJUATtf', 'Pretendard', 'NanumMyeongjo', 'NanumPen',  sans-serif;
+    font-family:  'Pretendard', 'NanumMyeongjo', 'NanumPen',  sans-serif;
     resize: none;
   }
 
