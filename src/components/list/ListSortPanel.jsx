@@ -105,6 +105,7 @@ const ListSortPanel = ({ listSort, theme }) => {
   useEffect(() => {
     if (userLastList.length <= 0 || userList.length <= 0) return;
     if (slideList.length != 0) return;
+    if (searchValue) return;
 
     setSlideList([...userLastList, ...userList]);
 
@@ -129,7 +130,10 @@ const ListSortPanel = ({ listSort, theme }) => {
           item.name.includes(searchValue),
         );
 
+        console.log(filteredList);
+
         setSlideList(filteredList);
+
         setCurrentIndex(0);
 
         setIsLoading(false);
@@ -405,7 +409,7 @@ const ListSortPanel = ({ listSort, theme }) => {
 export default ListSortPanel;
 
 const ListSortWrap = styled.section`
-  margin-top: 40px;
+  margin-top: 20px;
   max-width: 100%;
   position: relative;
 
@@ -424,7 +428,7 @@ const ListSortSpan = styled.span`
 
 const ListCarousel = styled.div`
   width: 1180px;
-  margin-top: 16px;
+  margin-top: 0px;
   overflow: hidden;
   display: flex;
 
@@ -438,7 +442,7 @@ const ListCarousel = styled.div`
 `;
 
 const ListSortSlide = styled.div`
-  height: 290px;
+  height: 280px;
 
   display: flex;
   align-items: center;
@@ -446,13 +450,13 @@ const ListSortSlide = styled.div`
   gap: 20px;
 
   @media ${({ theme }) => theme.device.Tablet} {
-    height: 280px;
+    height: 250px;
 
     gap: 10px;
     padding: 0 2.5px;
   }
   @media ${({ theme }) => theme.device.Mobile} {
-    height: 330px;
+    height: 300px;
 
     gap: 10px;
     margin: 0 20px;
