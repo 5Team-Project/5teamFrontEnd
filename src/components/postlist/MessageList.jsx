@@ -230,6 +230,10 @@ const MessageContainer = styled.div`
   padding: 28px 24px 24px 24px;
   position: relative;
   justify-content: center;
+  transition: all 0.3s;
+  &:hover {
+    transform: translateY(-10px);
+  }
   & p {
   }
   @media ${({ theme }) => theme.device.Tablet} {
@@ -245,6 +249,10 @@ const AddMessageContainer = styled(MessageContainer)`
   display: flex;
   justify-content: center;
   align-items: center;
+  transition: all 0.3s;
+  &:hover {
+    transform: translateY(-10px);
+  }
 `;
 
 const IconPlus = styled.img`

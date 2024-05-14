@@ -158,6 +158,7 @@ const GoListPageButton = styled.button`
   display: flex;
   align-items: center;
   margin: 0 auto;
+  transition: all 0.3s;
   ${IconArrowLeft} {
     width: 3rem;
     height: 3rem;
@@ -167,6 +168,9 @@ const GoListPageButton = styled.button`
     @media ${({ theme }) => theme.device.Mobile} {
       width: 2rem;
     }
+  }
+  &:hover {
+    transform: translateY(-10px);
   }
   @media ${({ theme }) => theme.device.Tablet} {
     width: 720px;
