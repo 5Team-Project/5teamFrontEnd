@@ -27,7 +27,7 @@ const ListSearch = () => {
   return (
     <SearchContainer>
       <SearchFrom onSubmit={handleSubmit}>
-        <IconSearch src={icSearch} />
+        <IconSearch src={icSearch} alt="검색" />
         <SearchInput
           type="text"
           maxLength={20}

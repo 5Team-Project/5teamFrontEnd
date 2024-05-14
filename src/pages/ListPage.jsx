@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Link, useSearchParams } from 'react-router-dom';
 
-import ListSort from '../components/list/ListSort';
+import ListSortPanel from '../components/list/ListSortPanel';
 import ListSearch from '../components/list/ListSearch';
 
 const ListPage = () => {
@@ -13,17 +13,15 @@ const ListPage = () => {
       <ListSearch />
       <ListContent>
         {name ? (
-          <ListSort searchValue={name} />
+          <ListSortPanel searchValue={name} />
         ) : (
           <>
-            <ListSort listSort={'like'} />
-            <ListSort />
+            <ListSortPanel listSort={'like'} />
+            <ListSortPanel />
           </>
         )}
 
-        <ToPostPageDiv>
-          <Link to={'/post'}>나도 만들어보기</Link>
-        </ToPostPageDiv>
+        <LinkButton to="/post">나도 만들어보기</LinkButton>
       </ListContent>
     </ListMainContainer>
   );
@@ -52,47 +50,32 @@ const ListContent = styled.article`
   justify-content: start;
 `;
 
-const ToPostPageDiv = styled.div`
+const LinkButton = styled(Link)`
   margin-top: 25px;
+  width: 280px;
+  height: 56px;
+  border-radius: 12px;
+  background-color: ${({ theme }) => theme.colors.PURPLE};
+  font-size: ${({ theme }) => theme.fontsize.LARGE_TXT};
+  font-weight: ${({ theme }) => theme.fontweight.REGULAR};
+  line-height: 28px;
+  text-align: center;
+  text-decoration: none;
+  color: ${({ theme }) => theme.colors.WHITE};
+
   display: flex;
-  align-items: end;
+  align-items: center;
   justify-content: center;
 
-  flex-grow: 1;
-  & a {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    margin: 24px 0;
-
-    width: 280px;
-    height: 56px;
-
-    border-radius: 12px;
-    background-color: ${({ theme }) => theme.colors.PURPLE};
-
-    font-size: ${({ theme }) => theme.fontsize.LARGE_TXT};
-    font-weight: ${({ theme }) => theme.fontweight.REGULAR};
-    line-height: 28px;
-    text-align: center;
-
-    text-decoration: none;
-    color: ${({ theme }) => theme.colors.WHITE};
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.PURPLE_D};
   }
 
   @media ${({ theme }) => theme.device.Tablet} {
-    margin: 0;
-    & a {
-      width: 760px;
-      height: 56px;
-    }
+    width: 760px;
   }
 
   @media ${({ theme }) => theme.device.Mobile} {
-    & a {
-      width: 360px;
-      height: 56px;
-    }
+    width: 360px;
   }
 `;
