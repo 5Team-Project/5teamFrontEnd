@@ -9,18 +9,20 @@ import { ProfileImageSkeleton, OptionImageSkeleton } from './Skeleton';
 const ProfileImageComponent = ({ onImageSelect }) => {
   const [selectedImage, setSelectedImage] = useState('');
   const [imageOptions, setImageOptions] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isProfileImageLoading, setIsProfileImageLoading] = useState(true);
+  const [isOptionsLoading, setIsOptionsLoading] = useState(true);
 
   useEffect(() => {
     const fetchProfileImages = async () => {
       try {
-        setIsLoading(true);
+        setIsProfileImageLoading(false);
         const response = await getProfileImgs();
         setImageOptions(response.imageUrls);
-        setIsLoading(false);
+        setIsOptionsLoading(false);
       } catch (error) {
         console.error(error);
-        setIsLoading(false);
+        setIsProfileImageLoading(false);
+        setIsOptionsLoading(false);
       }
     };
     fetchProfileImages();
@@ -55,11 +57,17 @@ const ProfileImageComponent = ({ onImageSelect }) => {
   return (
     <ProfileContainer>
       <ProfileImageContainer>
-        {isLoading ? (
+        {selectedImage ? (
+          <ProfileImage
+            src={selectedImage}
+            alt="Profile Image"
+            onClick={() => document.getElementById('fileInput').click()}
+          />
+        ) : isProfileImageLoading ? (
           <ProfileImageSkeleton />
         ) : (
           <ProfileImage
-            src={selectedImage || defaultImage}
+            src={defaultImage}
             alt="Profile Image"
             onClick={() => document.getElementById('fileInput').click()}
           />
@@ -75,7 +83,7 @@ const ProfileImageComponent = ({ onImageSelect }) => {
       <OptionsContainer>
         <Description>프로필 이미지를 선택해주세요!</Description>
         <OptionImageContainer>
-          {isLoading
+          {isOptionsLoading
             ? Array.from({ length: 8 }).map((_, index) => (
                 <OptionImageSkeleton key={index} />
               ))
