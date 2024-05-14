@@ -193,7 +193,7 @@ const GoListPageButtonBox = styled.div`
 
 const slideIn = keyframes`
   from {
-    transform: translateX(100%);
+    transform: translateX(30%);
     opacity: 0;
   }
   to {
@@ -220,7 +220,7 @@ const GoListPageButton = styled.button`
 
   &:hover {
     ${GoListPageLabel} {
-      animation: ${slideIn} 0.3s forwards; /* 호버 시에 애니메이션 효과 적용 */
+      animation: ${slideIn} 0.5s forwards;
       visibility: visible;
       opacity: 1;
     }
