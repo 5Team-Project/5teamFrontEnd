@@ -1,5 +1,5 @@
 import React from 'react';
-import Dropdown from './DropDown';
+import DropdownWithFont from './DropDownWithFont';
 
 const DropdownFont = ({ onChange }) => {
   const items = ['Noto Sans', 'Pretendard', '나눔명조', '나눔손글씨 손편지체'];
@@ -10,7 +10,7 @@ const DropdownFont = ({ onChange }) => {
   };
 
   return (
-    <Dropdown
+    <DropdownWithFont
       items={items}
       defaultValue={defaultValue}
       onChange={handleChange}

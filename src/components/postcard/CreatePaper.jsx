@@ -17,10 +17,10 @@ const CreatePaper = () => {
   const [backGroundImages, setBackGroundImages] = useState([]);
 
   const COLOR_LIST = [
-    { value: '#FFE5B4', name: 'beige' },
-    { value: '#DCB9FF', name: 'purple' },
-    { value: '#B9E0FF', name: 'blue' },
-    { value: '#B3F0C8', name: 'green' },
+    { value: '#ffd8a8', name: 'beige' },
+    { value: '#f3d9fa', name: 'purple' },
+    { value: '#dbe4ff', name: 'blue' },
+    { value: '#e9fac8', name: 'green' },
   ];
 
   const navigate = useNavigate();
