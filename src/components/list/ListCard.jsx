@@ -11,13 +11,18 @@ import ReactionCount from '../ReactionCount';
 import ListCardSkeleton from './ListSkeleton';
 
 const ListCard = ({ data }) => {
-  const theme = useContext(ThemeContext);
   const [count, setCount] = useState(0);
   const [recent, setRecent] = useState([]);
   const [reaction, setReaction] = useState([]);
+
   const [isLoading, setIsLoading] = useState(true);
   const [isImageLoaded, setIsImageLoaded] = useState(true);
+
+  const [isBgImg, setIsBgImg] = useState();
+  const [bgColor, setBgColor] = useState('');
+
   const title = data.name.length >= 10 ? data.name : '';
+
   const COLOR_LIST = [
     { value: '#ffd8a8', name: 'beige' },
     { value: '#f3d9fa', name: 'purple' },
@@ -42,9 +47,6 @@ const ListCard = ({ data }) => {
     };
     handleLoad();
   }, []);
-
-  const [isBgImg, setIsBgImg] = useState();
-  const [bgColor, setBgColor] = useState('');
 
   useEffect(() => {
     setIsBgImg(!!data.backgroundImageURL);
