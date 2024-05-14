@@ -326,7 +326,7 @@ const MessageTextContainer = styled.div`
   gap: 16px;
 `;
 const MessageText = styled.div`
-  height: 104px;
+  height: 102px;
   overflow: hidden;
   word-wrap: break-word;
   word-break: break-all;
@@ -337,6 +337,10 @@ const MessageText = styled.div`
   line-height: 20px;
   font-size: ${({ theme }) => theme.fontsize.MEDIUM_TXT};
   font-weight: ${({ theme }) => theme.fontweight.REGULAR};
+  @media ${({ theme }) => theme.device.Tablet} {
+    height: 102px;
+    -webkit-line-clamp: 5;
+  }
   @media ${({ theme }) => theme.device.Mobile} {
     height: 42px;
     -webkit-line-clamp: 2;
