@@ -198,7 +198,7 @@ const MessageList = ({
 export default MessageList;
 
 const MessageListContainer = styled.ul`
-  margin: 0 auto;
+  margin: 113px auto;
   padding-bottom: 64px;
   width: 1200px;
   min-height: 100vh;
