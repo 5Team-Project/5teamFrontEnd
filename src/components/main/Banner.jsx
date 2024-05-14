@@ -195,7 +195,7 @@ const ButtonWrapper = styled.div`
     text-decoration: none;
 
     font-size: ${({ theme }) => theme.fontsize.LARGE_TXT};
-    color: ${({ theme }) => theme.colors.DARKGRAY};
+    color: ${({ theme }) => theme.colors.WHITE};
     background-color: ${({ theme }) => theme.colors.PURPLE};
 
     display: flex;

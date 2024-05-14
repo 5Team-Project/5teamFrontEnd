@@ -127,6 +127,8 @@ const TextLogoImg = styled.img`
   width: 110px;
   height: 28px;
   object-fit: cover;
+  position: relative;
+  top: 2px;
 
   @media ${({ theme }) => theme.device.Mobile} {
     display: none;
@@ -137,6 +139,8 @@ const ArchLogoImg = styled.img`
   width: 50px;
   display: none;
   object-fit: cover;
+  position: relative;
+  top: 2px;
 
   @media ${({ theme }) => theme.device.Mobile} {
     display: block;
@@ -147,6 +151,8 @@ const TextLogoImgDark = styled.img`
   width: 110px;
   height: 28px;
   object-fit: cover;
+  position: relative;
+  top: 2px;
 
   @media ${({ theme }) => theme.device.Mobile} {
     display: none;
@@ -156,6 +162,8 @@ const ArchLogoImgDark = styled.img`
   width: 50px;
   display: none;
   object-fit: cover;
+  position: relative;
+  top: 2px;
 
   @media ${({ theme }) => theme.device.Mobile} {
     display: block;

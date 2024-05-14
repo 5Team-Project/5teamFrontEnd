@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import styled, { css } from 'styled-components';
 import InputComponent from '../InputComponents';
 import { PostPaper } from '../../api/postPaper';
@@ -7,73 +7,22 @@ import BackgroundColorSelector from './BackGroundColorSelector';
 import BackgroundImageSelector from './BackGroundImageSelector';
 import { useNavigate } from 'react-router-dom';
 
+const COLOR_LIST = [
+  { value: '#ffd8a8', name: 'beige' },
+  { value: '#f3d9fa', name: 'purple' },
+  { value: '#dbe4ff', name: 'blue' },
+  { value: '#e9fac8', name: 'green' },
+];
+
 const CreatePaper = () => {
   const [inputValue, setInputValue] = useState('');
   const [selectedBackgroundImage, setSelectedBackgroundImage] = useState(null);
-  const [selectedColor, setSelectedColor] = useState();
+  const [selectedColor, setSelectedColor] = useState('');
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const [isColorSelected, setIsColorSelected] = useState(true);
   const [isImageSelected, setIsImageSelected] = useState(false);
   const [backGroundImages, setBackGroundImages] = useState([]);
-
-  const COLOR_LIST = [
-    { value: '#ffd8a8', name: 'beige' },
-    { value: '#f3d9fa', name: 'purple' },
-    { value: '#dbe4ff', name: 'blue' },
-    { value: '#e9fac8', name: 'green' },
-  ];
-
   const navigate = useNavigate();
-
-  const handleInputChange = (e) => {
-    setInputValue(e.target.value);
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    if (isImageSelected) {
-      const data = {
-        name: inputValue,
-        backgroundImageURL: selectedBackgroundImage,
-        backgroundColor: selectedColor || 'beige',
-      };
-
-      try {
-        const response = await PostPaper(data);
-        const paperId = response.id;
-        navigate(`/post/${paperId}`);
-      } catch (error) {
-        console.error('작성 실패:', error);
-      }
-    } else if (isColorSelected) {
-      const selectedColorName = COLOR_LIST.find(
-        (color) => color.value === selectedColor,
-      )?.name;
-      const data = {
-        name: inputValue,
-        backgroundColor: selectedColorName,
-      };
-
-      try {
-        const response = await PostPaper(data);
-        const paperId = response.id;
-        navigate(`/post/${paperId}`);
-      } catch (error) {
-        console.error('작성 실패:', error);
-      }
-    } else {
-      alert('이미지 또는 색상을 선택해주세요.');
-      return;
-    }
-  };
-
-  const handleInputBlur = () => {};
-
-  useEffect(() => {
-    const isInputEmpty = inputValue.trim() === '';
-    setIsButtonDisabled(isInputEmpty);
-  }, [inputValue]);
 
   useEffect(() => {
     const fetchProfileImages = async () => {
@@ -88,25 +37,85 @@ const CreatePaper = () => {
     fetchProfileImages();
   }, []);
 
-  const handleColorClick = (color) => {
+  const handleInputChange = useCallback((e) => {
+    setInputValue(e.target.value);
+  }, []);
+
+  const handleSubmit = useCallback(
+    async (e) => {
+      e.preventDefault();
+
+      if (isImageSelected) {
+        const data = {
+          name: inputValue,
+          backgroundImageURL: selectedBackgroundImage,
+          backgroundColor: selectedColor || 'beige',
+        };
+
+        try {
+          const response = await PostPaper(data);
+          const paperId = response.id;
+          navigate(`/post/${paperId}`);
+        } catch (error) {
+          console.error('작성 실패:', error);
+        }
+      } else if (isColorSelected) {
+        const selectedColorName = COLOR_LIST.find(
+          (color) => color.value === selectedColor,
+        )?.name;
+        const data = {
+          name: inputValue,
+          backgroundColor: selectedColorName,
+        };
+
+        try {
+          const response = await PostPaper(data);
+          const paperId = response.id;
+          navigate(`/post/${paperId}`);
+        } catch (error) {
+          console.error('작성 실패:', error);
+        }
+      } else {
+        alert('이미지 또는 색상을 선택해주세요.');
+        return;
+      }
+    },
+    [
+      inputValue,
+      selectedBackgroundImage,
+      selectedColor,
+      isColorSelected,
+      isImageSelected,
+      navigate,
+    ],
+  );
+
+  const handleInputBlur = useCallback(() => {}, []);
+
+  useEffect(() => {
+    const isInputEmpty = inputValue.trim() === '';
+    setIsButtonDisabled(isInputEmpty);
+  }, [inputValue]);
+
+  const handleColorClick = useCallback((color) => {
     const selectedColor = COLOR_LIST.find((c) => c.value === color);
     setSelectedColor(selectedColor.value);
     setSelectedBackgroundImage('');
     setIsImageSelected(false);
     setIsColorSelected(true);
-  };
+  }, []);
 
-  const handleImageClick = (imageUrl) => {
+  const handleImageClick = useCallback((imageUrl) => {
     setSelectedBackgroundImage(imageUrl);
     setSelectedColor('');
     setIsImageSelected(true);
     setIsColorSelected(false);
-  };
+  }, []);
 
-  const handleToggle = () => {
+  const handleToggle = useCallback(() => {
     setIsColorSelected(!isColorSelected);
     setIsImageSelected(!isImageSelected);
-  };
+  }, [isColorSelected, isImageSelected]);
 
   return (
     <AddPageWrapper>

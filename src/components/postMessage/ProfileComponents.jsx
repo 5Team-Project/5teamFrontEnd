@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import defaultImage from '../../assets/images/defaultimg.png';
 import { getProfileImg, getProfileImgs } from '../../api/getProfileImg';
@@ -7,9 +7,11 @@ import { storage } from '../../utils/firebase';
 import { ProfileImageSkeleton, OptionImageSkeleton } from './Skeleton';
 
 const ProfileImageComponent = ({ onImageSelect }) => {
-  const [selectedImage, setSelectedImage] = useState('');
+  const [selectedImage, setSelectedImage] = useState(defaultImage);
   const [imageOptions, setImageOptions] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const profileImageRef = useRef(null);
+  const optionImagesRef = useRef([]);
 
   useEffect(() => {
     const fetchProfileImages = async () => {
@@ -18,6 +20,14 @@ const ProfileImageComponent = ({ onImageSelect }) => {
         const response = await getProfileImgs();
         setImageOptions(response.imageUrls);
         setIsLoading(false);
+
+        // 스켈레톤 컴포넌트가 마운트된 후 실행
+        if (profileImageRef.current) {
+          profileImageRef.current.src = selectedImage;
+        }
+        optionImagesRef.current.forEach((ref, index) => {
+          ref.src = imageOptions[index];
+        });
       } catch (error) {
         console.error(error);
         setIsLoading(false);
@@ -59,7 +69,8 @@ const ProfileImageComponent = ({ onImageSelect }) => {
           <ProfileImageSkeleton />
         ) : (
           <ProfileImage
-            src={selectedImage || defaultImage}
+            ref={profileImageRef}
+            src={selectedImage}
             alt="Profile Image"
             onClick={() => document.getElementById('fileInput').click()}
           />
@@ -82,6 +93,7 @@ const ProfileImageComponent = ({ onImageSelect }) => {
             : imageOptions.map((imageUrl, index) => (
                 <OptionImage
                   key={index}
+                  ref={(el) => (optionImagesRef.current[index] = el)}
                   src={imageUrl}
                   alt={`Option ${index + 1}`}
                   onClick={() => handleImageClick(imageUrl)}
