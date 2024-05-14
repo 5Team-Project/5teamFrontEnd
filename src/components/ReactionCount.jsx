@@ -30,7 +30,7 @@ const ReactionButtonBox = styled.div`
 `;
 
 const ReactionButtons = styled.button`
-  min-width: 56px;
+  width: 65px;
   height: 36px;
   border-radius: 32px;
   padding: 8px;
