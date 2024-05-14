@@ -230,6 +230,7 @@ const MessageContainer = styled.div`
   padding: 28px 24px 24px 24px;
   position: relative;
   justify-content: center;
+  cursor: pointer;
   transition: all 0.3s;
   &:hover {
     transform: translateY(-10px);
