@@ -1,14 +1,15 @@
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 
 import { getList } from '../../api/getList';
 
 import useDeviceSize from '../../hooks/useDeviceSize';
+
 import ListCard from './ListCard';
 import ListSlideMoveButtons from './ListSlideMoveButtons';
-import { useSearchParams } from 'react-router-dom';
 
-const ListSort = ({ listSort, theme }) => {
+const ListSortPanel = ({ listSort, theme }) => {
   const isDarkMode = theme !== 'light';
 
   const sort = listSort;
@@ -254,10 +255,10 @@ const ListSort = ({ listSort, theme }) => {
     } else {
       if (isNext) {
         setSlideList([...userList, ...userLastList]);
-        setCurrentIndex(num - 6);
+        setCurrentIndex(num - userLastList.length);
       } else {
         setSlideList([...userList, ...userLastList]);
-        setCurrentIndex(dataLength - 6);
+        setCurrentIndex(dataLength - userLastList.length);
       }
     }
   };
@@ -358,6 +359,7 @@ const ListSort = ({ listSort, theme }) => {
                 ? '최근에 만든 롤링 페이퍼 ⭐️️'
                 : '인기 롤링 페이퍼 🔥'}
           </ListSortSpan>
+
           <ListCarousel
             onTouchStart={handleTouchStart}
             onTouchMove={handleTouchMove}
@@ -400,7 +402,7 @@ const ListSort = ({ listSort, theme }) => {
   );
 };
 
-export default ListSort;
+export default ListSortPanel;
 
 const ListSortWrap = styled.section`
   margin-top: 40px;

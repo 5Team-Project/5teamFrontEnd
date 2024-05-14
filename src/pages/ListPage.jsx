@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Link, useSearchParams } from 'react-router-dom';
 
-import ListSort from '../components/list/ListSort';
+import ListSortPanel from '../components/list/ListSortPanel';
 import ListSearch from '../components/list/ListSearch';
 
 const ListPage = () => {
@@ -13,11 +13,11 @@ const ListPage = () => {
       <ListSearch />
       <ListContent>
         {name ? (
-          <ListSort searchValue={name} />
+          <ListSortPanel searchValue={name} />
         ) : (
           <>
-            <ListSort listSort={'like'} />
-            <ListSort />
+            <ListSortPanel listSort={'like'} />
+            <ListSortPanel />
           </>
         )}
 
@@ -57,15 +57,19 @@ const LinkButton = styled(Link)`
   border-radius: 12px;
   background-color: ${({ theme }) => theme.colors.PURPLE};
   font-size: ${({ theme }) => theme.fontsize.LARGE_TXT};
-  font-weight: ${({ theme }) => theme.fontweight.BOLD};
+  font-weight: ${({ theme }) => theme.fontweight.REGULAR};
   line-height: 28px;
   text-align: center;
   text-decoration: none;
-  color: ${({ theme }) => theme.colors.DARKGRAY};
+  color: ${({ theme }) => theme.colors.WHITE};
 
   display: flex;
   align-items: center;
   justify-content: center;
+
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.PURPLE_D};
+  }
 
   @media ${({ theme }) => theme.device.Tablet} {
     width: 760px;

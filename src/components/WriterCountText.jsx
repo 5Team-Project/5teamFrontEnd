@@ -1,24 +1,32 @@
 import styled, { ThemeContext } from 'styled-components';
 import React, { useContext, useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 
 const WriterCountText = ({ count, isBgImg = false }) => {
   const theme = useContext(ThemeContext);
   const [fontColor, setFontColor] = useState();
+  const isListPage = useLocation().pathname;
 
   useEffect(() => {
-    setFontColor(!isBgImg ? '#484848' : '#fff');
+    '/list' !== isListPage
+      ? setFontColor(null)
+      : setFontColor(!isBgImg ? '#484848' : '#fff');
   }, []);
 
   if (count > 0) {
     return (
-      <WriterCountTextWrapper style={{ color: fontColor }}>
-        <CountText>{count}명이 작성했어요!</CountText>
+      <WriterCountTextWrapper>
+        <CountText style={{ color: fontColor }}>
+          {count}명이 작성했어요!
+        </CountText>
       </WriterCountTextWrapper>
     );
   } else {
     return (
-      <WriterCountTextWrapper style={{ color: fontColor }}>
-        <CountText>첫번째 편지를 작성해보세요!</CountText>
+      <WriterCountTextWrapper>
+        <CountText style={{ color: fontColor }}>
+          첫번째 편지를 작성해보세요!
+        </CountText>
       </WriterCountTextWrapper>
     );
   }
