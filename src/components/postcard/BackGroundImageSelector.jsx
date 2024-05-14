@@ -40,6 +40,12 @@ const BackgroundImageSelector = ({ onImageSelect }) => {
   const handleImageUpload = async (event) => {
     if (event.target.files && event.target.files.length > 0) {
       const imageFile = event.target.files[0];
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPreviewImage(reader.result);
+      };
+      reader.readAsDataURL(imageFile);
+
       const storageRef = ref(storage, `background/${imageFile.name}`);
       uploadBytes(storageRef, imageFile)
         .then((snapshot) => {
@@ -47,9 +53,7 @@ const BackgroundImageSelector = ({ onImageSelect }) => {
             .then((url) => {
               setSelectedImage(url);
               onImageSelect(url);
-              setPreviewImage(null);
               setUploadedImage(url);
-              setImageOptions([...imageOptions, url]);
             })
             .catch((error) => {
               console.error('Download URL을 가져오는 중 에러 발생:', error);
@@ -61,20 +65,6 @@ const BackgroundImageSelector = ({ onImageSelect }) => {
     }
   };
 
-  const handlePreviewImage = (e) => {
-    e.preventDefault();
-
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setPreviewImage(reader.result);
-        setSelectedImage('');
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
   return (
     <SelectImageWrapper>
       <ImageItem>
@@ -83,17 +73,13 @@ const BackgroundImageSelector = ({ onImageSelect }) => {
             id="fileInput"
             type="file"
             accept="image/*"
-            onChange={handlePreviewImage}
+            onChange={handleImageUpload}
             onClick={(e) => (e.target.value = null)}
           />
           <FileInputLabel htmlFor="fileInput">
             {previewImage ? (
               <PreviewImageContainer>
-                <PreviewImage
-                  src={previewImage}
-                  alt="Preview"
-                  onClick={handleImageUpload}
-                />
+                <PreviewImage src={previewImage} alt="Preview" />
               </PreviewImageContainer>
             ) : (
               <>
