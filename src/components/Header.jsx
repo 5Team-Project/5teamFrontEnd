@@ -5,6 +5,9 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import Switch from 'react-switch';
 import { FaSun, FaMoon } from 'react-icons/fa';
 
+import LogoIconFortune from '../assets/images/LogoIconFortune.jpeg';
+import LogoTextFortune from '../assets/images/LogoTextFortune.jpeg';
+
 const Header = ({ toggleTheme, isDarkMode }) => {
   const [showButton, setShowButton] = useState(false);
   const location = useLocation();
@@ -27,8 +30,8 @@ const Header = ({ toggleTheme, isDarkMode }) => {
     <HeaderWrapper>
       <HeaderBox>
         <Logo href="/">
-          <IconLogoImg src={IconLogo} alt="롤링로고" />
-          <TextLogo>Rolling</TextLogo>
+          <IconLogoImg src={LogoIconFortune} alt="포춘아이콘로고" />
+          <TextLogoImg src={LogoTextFortune} alt="포춘텍스트로고" />
         </Logo>
         <ButtonWrapper>
           {showButton && (
@@ -103,9 +106,8 @@ const IconLogoImg = styled.img`
   height: 28px;
 `;
 
-const TextLogo = styled.p`
-  font-size: ${({ theme }) => theme.fontsize.S_TITLE};
-  font-weight: ${({ theme }) => theme.fontweight.BOLD};
+const TextLogoImg = styled.img`
+  height: 28px;
 
   @media ${({ theme }) => theme.device.Mobile} {
     display: none;
