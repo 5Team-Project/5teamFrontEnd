@@ -30,7 +30,7 @@ const ListSearch = () => {
         <IconSearch src={icSearch} alt="검색" />
         <SearchInput
           type="text"
-          maxLength={20}
+          maxLength={15}
           placeholder="누구의 롤링페이퍼를 찾고 싶나요?"
           value={searchValue}
           onChange={handleChange}
@@ -45,8 +45,8 @@ export default ListSearch;
 
 const SearchContainer = styled.section`
   margin-top: 20px;
-  padding: 0 200px;
-  width: 100%;
+  margin: 20px auto 0;
+  max-width: 600px;
 
   @media ${({ theme }) => theme.device.Tablet} {
     padding: 0px;
@@ -66,21 +66,26 @@ const SearchFrom = styled.form`
 
 const IconSearch = styled.img`
   position: absolute;
-  left: 10px;
+  left: 20px;
 `;
 
 const SearchInput = styled.input`
-  flex-grow: 6;
+  flex-grow: 4;
 
   width: 100%;
   height: 60px;
 
-  padding: 5px 10px 5px 40px;
-  border: 1px solid ${({ theme }) => theme.colors.BLACK}1a;
+  padding: 5px 20px 5px 60px;
+  outline: 2px solid ${({ theme }) => theme.colors.BLACK}1a;
   border-radius: 16px;
 
   font-size: ${({ theme }) => theme.fontsize.S_TITLE};
   font-weight: ${({ theme }) => theme.fontweight.REGULAR};
+
+  &:focus {
+    outline: 2px solid ${({ theme }) => theme.colors.PURPLE};
+  }
+
   &::placeholder {
     color: ${({ theme }) => theme.colors.GRAY};
   }
@@ -104,7 +109,7 @@ const SearchButton = styled.button`
   border-radius: 16px;
 
   color: ${({ theme }) => theme.colors.WHITE};
-  font-size: ${({ theme }) => theme.fontsize.LARGE_TXT};
+  font-size: ${({ theme }) => theme.fontsize.M_TITLE};
   font-weight: ${({ theme }) => theme.fontweight.REGULAR};
 
   cursor: pointer;
