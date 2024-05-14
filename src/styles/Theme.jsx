@@ -20,6 +20,7 @@ export const lightTheme = {
     ACTIVE: '#f76707',
     DARK_GRAY: '#CCCCCC',
     DARK_DARKGRAY: '#484848',
+    VIOLET: '#DCB9FF',
   },
   fontsize: {
     TITLE: '28px',
@@ -64,6 +65,7 @@ export const darkTheme = {
     ACTIVE: '#f76707',
     DARK_GRAY: '#484848',
     DARK_DARKGRAY: '#CCCCCC',
+    VIOLET: '#4D2D6A',
   },
   fontsize: {
     TITLE: '28px',
