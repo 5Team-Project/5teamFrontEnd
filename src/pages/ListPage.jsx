@@ -32,7 +32,7 @@ export default ListPage;
 const ListMainContainer = styled.main`
   max-width: 1200px;
   margin: 0 auto;
-  height: 80dvh;
+
   @media ${({ theme }) => theme.device.Tablet} {
     max-width: 768px;
   }
@@ -51,17 +51,20 @@ const ListContent = styled.article`
 `;
 
 const LinkButton = styled(Link)`
-  margin-top: 25px;
+  margin: 25px 0;
+
   width: 280px;
-  height: 56px;
+  height: 50px;
   border-radius: 12px;
+
   background-color: ${({ theme }) => theme.colors.PURPLE};
+
+  color: ${({ theme }) => theme.colors.WHITE};
   font-size: ${({ theme }) => theme.fontsize.LARGE_TXT};
   font-weight: ${({ theme }) => theme.fontweight.REGULAR};
   line-height: 28px;
   text-align: center;
   text-decoration: none;
-  color: ${({ theme }) => theme.colors.WHITE};
 
   display: flex;
   align-items: center;

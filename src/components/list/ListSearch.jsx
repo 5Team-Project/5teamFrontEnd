@@ -75,7 +75,7 @@ const SearchInput = styled.input`
   width: 100%;
   height: 60px;
 
-  padding: 5px 80px 5px 40px;
+  padding: 5px 10px 5px 40px;
   border: 1px solid ${({ theme }) => theme.colors.BLACK}1a;
   border-radius: 16px;
 
