@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import styled from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 import ShareIcon from '../assets/icons/IconShare.svg';
 import useClickOutside from '../hooks/useClickOutside';
 import { kakaoShareWithtemplate } from '../utils/kakaoShareWithTemplate';
@@ -43,20 +43,37 @@ const ShareButton = ({ handleToast, theme, isEditMode }) => {
     <>
       <ShareButtonWrapper ref={dropdownRef} onClick={toggleDropdown}>
         <Icons src={ShareIcon} alt="공유" isDarkMode={isDarkMode} />
-        <DropDownList style={isOpen ? {} : { display: 'none' }}>
-          <DropDownItem onClick={kakaoShareWithtemplate}>
-            <DropDownLabel>카카오톡 공유</DropDownLabel>
-          </DropDownItem>
-          <DropDownItem onClick={handleCopyUrl}>
-            <DropDownLabel>URL 공유</DropDownLabel>
-          </DropDownItem>
-        </DropDownList>
+        {isOpen && (
+          <DropDownList isOpen={isOpen}>
+            <DropDownItem onClick={kakaoShareWithtemplate}>
+              <DropDownLabel>카카오톡 공유</DropDownLabel>
+            </DropDownItem>
+            <DropDownItem onClick={handleCopyUrl}>
+              <DropDownLabel>URL 공유</DropDownLabel>
+            </DropDownItem>
+          </DropDownList>
+        )}
       </ShareButtonWrapper>
     </>
   );
 };
 
 export default ShareButton;
+
+const balloonAnimation = keyframes`
+    0% {
+      transform: scaleY(0) translateY(-60%);
+      opacity: 0;
+    }
+    50% {
+      transform: scaleY(1.03) translateY(0);
+      opacity: 1;
+    }
+    100% {
+      transform: scaleY(1) translateY(0);
+      opacity: 1;
+    }
+  `;
 
 const ShareButtonWrapper = styled.button`
   height: 36px;
@@ -92,17 +109,6 @@ const ShareButtonWrapper = styled.button`
   }
 `;
 
-const DropDownList = styled.div`
-  position: absolute;
-  top: 42px;
-  right: 0;
-  padding: 10px 0;
-  background-color: ${({ theme }) => theme.colors.WHITE};
-  border: 1px solid ${({ theme }) => theme.colors.GRAY};
-  border-radius: 8px;
-  z-index: 100;
-`;
-
 const DropDownItem = styled.div`
   width: 120px;
   height: 50px;
@@ -116,6 +122,24 @@ const DropDownItem = styled.div`
   &:active {
     background-color: ${({ theme }) => theme.colors.PURPLE_D};
   }
+`;
+
+const DropDownList = styled.div`
+  position: absolute;
+  top: 42px;
+  right: 0;
+  padding: 10px 0;
+  background-color: ${({ theme }) => theme.colors.WHITE};
+  border: 1px solid ${({ theme }) => theme.colors.GRAY};
+  border-radius: 8px;
+  z-index: 100;
+
+  animation: ${({ isOpen }) =>
+    isOpen
+      ? css`
+          ${balloonAnimation} 0.5s ease
+        `
+      : 'none'};
 `;
 
 const DropDownLabel = styled.p`

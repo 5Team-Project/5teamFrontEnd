@@ -55,6 +55,8 @@ const ContentContainer = styled.main`
   flex-direction: column;
   gap: 24px;
 
+  overflow: hidden;
+
   @media ${({ theme }) => theme.device.Mobile} {
     margin: 42px auto;
   }

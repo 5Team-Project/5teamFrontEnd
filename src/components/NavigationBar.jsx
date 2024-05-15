@@ -137,7 +137,7 @@ const Title = styled.a`
   @media ${({ theme }) => theme.device.Mobile} {
     position: absolute;
     bottom: 75px;
-    left: 63px;
+    left: 85px;
     font-size: ${({ theme }) => theme.fontsize.S_TITLE};
     font-weight: ${({ theme }) => theme.fontweight.REGULAR};
     color: ${({ theme }) => theme.colors.DARKGRAY};
