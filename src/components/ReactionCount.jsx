@@ -43,6 +43,10 @@ const ReactionButtons = styled.button`
   color: ${({ theme }) => theme.colors.WHITE};
   font-size: ${({ theme }) => theme.fontsize.MEDIUM};
   font-weight: ${({ theme }) => theme.fontweight.REGULAR};
+
+  @media ${({ theme }) => theme.device.Mobile} {
+    width: 55px;
+  }
 `;
 
 export default ReactionCount;

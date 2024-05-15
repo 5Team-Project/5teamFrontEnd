@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 import React, { useRef, useState } from 'react';
 import ArrowDown from '../assets/icons/IconArrowdown.svg';
 import useClickOutside from '../hooks/useClickOutside';
@@ -17,8 +17,13 @@ const DropReactions = ({ reactions, theme }) => {
   });
 
   return (
-    <ReactionsWrapper>
-      <ShowAllButton ref={dropdownRef} onClick={toggleDropdown} type="button">
+    <ReactionsWrapper className="here">
+      <ShowAllButton
+        ref={dropdownRef}
+        onClick={toggleDropdown}
+        type="button"
+        style={reactions.length >= 4 ? {} : { display: 'none' }}
+      >
         <ArrowIcon
           src={ArrowDown}
           alt="리액션 전체 보기"
@@ -27,9 +32,7 @@ const DropReactions = ({ reactions, theme }) => {
         />
       </ShowAllButton>
       {isOpen && (
-        <AllReactionsBox
-          style={reactions.length >= 4 ? {} : { display: 'none' }}
-        >
+        <AllReactionsBox isOpen={isOpen}>
           {reactions.map((reaction) => {
             return (
               <Reactions key={reaction.id}>
@@ -64,18 +67,41 @@ const ArrowIcon = styled.img`
       : 'none'};
 `;
 
+const balloonAnimation = keyframes`
+    0% {
+      transform: scaleY(0) translateY(-60%);
+      opacity: 0;
+    }
+    50% {
+      transform: scaleY(1.03) translateY(0);
+      opacity: 1;
+    }
+    100% {
+      transform: scaleY(1) translateY(0);
+      opacity: 1;
+    }
+  `;
+
 const AllReactionsBox = styled.div`
   width: 350px;
   padding: 24px;
   border: 1px solid ${({ theme }) => theme.colors.GRAY};
   border-radius: 8px;
   background-color: ${({ theme }) => theme.colors.WHITE};
+
   position: absolute;
   left: -267px;
   top: 45px;
 
+  animation: ${({ isOpen }) =>
+    isOpen
+      ? css`
+          ${balloonAnimation} 0.5s ease
+        `
+      : 'none'};
+
   @media ${({ theme }) => theme.device.Mobile} {
-    left: -200px;
+    left: -65px;
   }
 
   display: grid;

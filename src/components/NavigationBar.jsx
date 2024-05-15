@@ -120,7 +120,7 @@ const NavBox = styled.div`
 `;
 
 const Title = styled.a`
-  width: 400px;
+  width: 100%;
   height: 42px;
   font-size: ${({ theme }) => theme.fontsize.TITLE};
   font-weight: ${({ theme }) => theme.fontweight.BOLD};
@@ -135,9 +135,10 @@ const Title = styled.a`
   justify-content: flex-start;
 
   @media ${({ theme }) => theme.device.Mobile} {
+    width: 55%;
     position: absolute;
     bottom: 75px;
-    left: 63px;
+    left: 85px;
     font-size: ${({ theme }) => theme.fontsize.S_TITLE};
     font-weight: ${({ theme }) => theme.fontweight.REGULAR};
     color: ${({ theme }) => theme.colors.DARKGRAY};
@@ -174,6 +175,7 @@ const ReactionCountWrapper = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
+  gap: 2px;
 `;
 
 const ActionButtons = styled.div`
