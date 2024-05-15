@@ -28,7 +28,7 @@ const DropReactions = ({ reactions, theme }) => {
       </ShowAllButton>
       {isOpen && (
         <AllReactionsBox
-          style={reactions.length >= 1 ? {} : { display: 'none' }}
+          style={reactions.length >= 4 ? {} : { display: 'none' }}
         >
           {reactions.map((reaction) => {
             return (
