@@ -14,6 +14,7 @@ const ShareButton = ({ handleToast, theme, isEditMode }) => {
   const isDarkMode = theme !== 'light';
 
   const baseUrl = process.env.REACT_APP_BASE_URL;
+  const shareUrl = 'https://fortunepapper.vercel.app/';
   const location = useLocation();
 
   const toggleDropdown = () => {
@@ -26,7 +27,7 @@ const ShareButton = ({ handleToast, theme, isEditMode }) => {
 
   const handleCopyUrl = async (text) => {
     try {
-      const currentUrl = new URL(baseUrl);
+      const currentUrl = new URL(shareUrl);
       currentUrl.pathname = location.pathname;
       await navigator.clipboard.writeText(currentUrl);
       handleToast('URL이 복사 되었습니다.');
