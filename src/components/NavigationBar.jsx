@@ -120,6 +120,7 @@ const NavBox = styled.div`
 `;
 
 const Title = styled.a`
+  max-width: 350px;
   width: 100%;
   height: 42px;
   font-size: ${({ theme }) => theme.fontsize.TITLE};
@@ -135,7 +136,8 @@ const Title = styled.a`
   justify-content: flex-start;
 
   @media ${({ theme }) => theme.device.Mobile} {
-    width: 55%;
+    max-width: 150px;
+    width: 100%;
     position: absolute;
     bottom: 75px;
     left: 85px;

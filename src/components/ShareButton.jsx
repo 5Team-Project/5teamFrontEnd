@@ -14,7 +14,7 @@ const ShareButton = ({ handleToast, theme, isEditMode }) => {
   const isDarkMode = theme !== 'light';
 
   const baseUrl = process.env.REACT_APP_BASE_URL;
-  const shareUrl = 'https://5team-front-end.vercel.app/';
+  const shareUrl = 'https://fortunepapper.vercel.app/';
   const location = useLocation();
 
   const toggleDropdown = () => {
