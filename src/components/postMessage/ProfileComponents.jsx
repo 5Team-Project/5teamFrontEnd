@@ -21,7 +21,6 @@ const ProfileImageComponent = ({ onImageSelect }) => {
         setImageOptions(response.imageUrls);
         setIsLoading(false);
 
-        // 스켈레톤 컴포넌트가 마운트된 후 실행
         if (profileImageRef.current) {
           profileImageRef.current.src = selectedImage;
         }
