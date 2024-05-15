@@ -22,7 +22,7 @@ const DropReactions = ({ reactions, theme }) => {
         ref={dropdownRef}
         onClick={toggleDropdown}
         type="button"
-        style={reactions.length >= 1 ? {} : { display: 'none' }}
+        style={reactions.length >= 4 ? {} : { display: 'none' }}
       >
         <ArrowIcon
           src={ArrowDown}

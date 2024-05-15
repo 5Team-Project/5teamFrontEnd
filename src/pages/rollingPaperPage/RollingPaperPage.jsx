@@ -32,7 +32,9 @@ const RollingPaperPage = () => {
   const [bgColor, setBgColor] = useState('');
 
   const handleScroll = () => {
-    const { scrollTop, clientHeight, scrollHeight } = document.documentElement;
+    //const { scrollTop, clientHeight, scrollHeight } = document.documentElement;
+    const { scrollTop, scrollHeight } = document.documentElement;
+    const clientHeight = window.innerHeight;
     if (scrollTop + clientHeight >= scrollHeight - 3 && !loading && hasNext) {
       setPage((prevPage) => prevPage + 1);
     }
@@ -98,6 +100,13 @@ const RollingPaperPage = () => {
     window.addEventListener('scroll', handleScroll);
     return () => {
       window.removeEventListener('scroll', handleScroll);
+    };
+  }, [handleScroll]);
+
+  useEffect(() => {
+    window.addEventListener('touchmove', handleScroll);
+    return () => {
+      window.removeEventListener('touchmove', handleScroll);
     };
   }, [handleScroll]);
 
