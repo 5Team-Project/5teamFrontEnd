@@ -93,6 +93,7 @@ const HeaderWrapper = styled.header`
   width: 100%;
   height: 64px;
   border-bottom: 1px solid ${({ theme }) => theme.colors.GRAY};
+  overflow: hidden;
 `;
 
 const HeaderBox = styled.div`

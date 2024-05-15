@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 import AddReactionIcon from '../assets/icons/IconAddReaction.svg';
 import { useRef, useState } from 'react';
 import EmojiPicker from 'emoji-picker-react';
@@ -58,8 +58,8 @@ const AddReactions = ({
         <Icons src={AddReactionIcon} alt="리액션추가" isDarkMode={isDarkMode} />
         {/* <ButtonLabel>추가</ButtonLabel> */}
       </ButtonWrapper>
-      {!isEditMode && (
-        <PickerWrapper>
+      {showPicker && (
+        <PickerWrapper showPicker={showPicker}>
           <EmojiPicker
             open={showPicker}
             onEmojiClick={handleEmojiClick}
@@ -72,6 +72,21 @@ const AddReactions = ({
     </AddReactionsWrapper>
   );
 };
+
+const balloonAnimation = keyframes`
+0% {
+transform: scaleY(0) translateY(-60%);
+opacity: 0;
+}
+50% {
+transform: scaleY(1.01) translateY(0);
+opacity: 1;
+}
+100% {
+transform: scaleY(1) translateY(0);
+opacity: 1;
+}
+`;
 
 const AddReactionsWrapper = styled.div``;
 
@@ -133,8 +148,17 @@ const PickerWrapper = styled.div`
   top: 40px;
   left: -200px;
 
+  z-index: 100;
+
   @media ${({ theme }) => theme.device.Mobile} {
     left: -228px;
   }
+
+  animation: ${({ showPicker }) =>
+    showPicker
+      ? css`
+          ${balloonAnimation} 0.5s ease
+        `
+      : 'none'};
 `;
 export default AddReactions;

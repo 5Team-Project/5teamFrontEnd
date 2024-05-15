@@ -6,7 +6,7 @@ import { mapFontName } from '../../utils/mapFont';
 const MakeModalContent = ({ message }) => {
   const theme = useContext(ThemeContext);
   return (
-    <>
+    <ModalContentWrapper>
       <ModalHeader>
         <ProfileBox>
           <ProfileImageBox>
@@ -28,7 +28,7 @@ const MakeModalContent = ({ message }) => {
         message={message}
         dangerouslySetInnerHTML={{ __html: message.content }}
       />
-    </>
+    </ModalContentWrapper>
   );
 };
 
@@ -48,6 +48,8 @@ const MessageModal = ({ message, isModalOpen, closeModal }) => {
   );
 };
 
+const ModalContentWrapper = styled.div``;
+
 const ModalHeader = styled.div`
   width: 520px;
   height: 56px;
@@ -56,6 +58,9 @@ const ModalHeader = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  @media ${({ theme }) => theme.device.Mobile} {
+    width: 325px;
+  }
 `;
 const ProfileBox = styled.div`
   display: flex;
@@ -132,6 +137,10 @@ const MessageBox = styled.div`
 
   scrollbar-width: thin;
   scrollbar-color: ${({ theme }) => theme.colors.GRAY} transparent;
+
+  @media ${({ theme }) => theme.device.Mobile} {
+    width: 325px;
+  }
 `;
 
 const MyModalBG = styled.div`
@@ -159,8 +168,14 @@ const MyModal = styled.div`
 
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   align-items: center;
   gap: 0;
+
+  @media ${({ theme }) => theme.device.Mobile} {
+    width: 375px;
+    padding: 25px;
+  }
 `;
 
 const ModalCloseButton = styled.button`
