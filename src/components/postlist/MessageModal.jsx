@@ -100,7 +100,7 @@ const SenderBadge = styled.div`
 `;
 const RELATIONSHIPS = {
   가족: 'GREEN',
-  동료: 'PURPLE',
+  동료: 'VIOLET',
   친구: 'BLUE',
   지인: 'ORANGE',
 };
@@ -114,11 +114,11 @@ const MessageBox = styled.div`
   height: 260px;
   padding: 16px 20px 0 0;
   border-top: 1px solid ${({ theme }) => theme.colors.GRAY};
-  overflow: scroll;
+  overflow-y: auto;
   font-family: ${({ message }) => mapFontName(message.font)};
 
   &::-webkit-scrollbar {
-    width: 6px;
+    width: 2px;
   }
 
   &::-webkit-scrollbar-thumb {
@@ -127,12 +127,11 @@ const MessageBox = styled.div`
   }
 
   &::-webkit-scrollbar-track {
-    background-color: ${({ theme }) => theme.colors.LIGHT_GRAY};
+    background-color: transparent;
   }
 
-  &::-webkit-scrollbar-button {
-    display: none;
-  }
+  scrollbar-width: thin;
+  scrollbar-color: ${({ theme }) => theme.colors.GRAY} transparent;
 `;
 
 const MyModalBG = styled.div`
