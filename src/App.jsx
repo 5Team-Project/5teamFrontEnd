@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { darkTheme, lightTheme } from './styles/Theme';
 import GlobalStyle from './styles/GlobalStyle';
 import LandingPage from './pages/LandingPage';
@@ -13,8 +13,17 @@ import CreatePaperPage from './pages/CreatePaperPage';
 
 function App() {
   const [isDarkMode, setIsDarkMode] = useState(false);
+
+  useEffect(() => {
+    const savedMode = localStorage.getItem('darkMode');
+    if (savedMode) {
+      setIsDarkMode(JSON.parse(savedMode));
+    }
+  }, []);
+
   const toggleTheme = () => {
     setIsDarkMode(!isDarkMode);
+    localStorage.setItem('darkMode', JSON.stringify(!isDarkMode));
   };
 
   return (
@@ -27,7 +36,6 @@ function App() {
           <Route path="/list" element={<ListPage />}>
             <Route path="?name=:name" element={<ListPage />} />
           </Route>
-
           <Route path="/post" element={<CreatePaperPage />} />
           <Route
             path="/post/:messageId/message"
